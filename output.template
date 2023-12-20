@@ -29,7 +29,7 @@ Resources:
             Effect: Allow
             Resource:
               - arn:aws:s3:::mybucket/athena-results/*
-        Version: "2012-10-17"
+        Version: '2012-10-17'
       Roles:
         - aws-quicksight-service-role-v0
         - aws-quicksight-s3-consumers-role-v0
@@ -38,7 +38,7 @@ Resources:
   Workgroup:
     Type: AWS::Athena::WorkGroup
     Properties:
-      Name: athena-titanic-wg
+      Name: athena-santander-wg
       RecursiveDeleteOption: true
       WorkGroupConfiguration:
         ResultConfiguration:
@@ -50,26 +50,24 @@ Resources:
   AthenaDataSource:
     Type: AWS::QuickSight::DataSource
     Properties:
-      AwsAccountId:
-        Ref: AWS::AccountId
-      DataSourceId: athena-titanic
+      AwsAccountId: !Ref AWS::AccountId
+      DataSourceId: athena-santander
       DataSourceParameters:
         AthenaParameters:
-          WorkGroup: athena-titanic-wg
-      Name: athena-titanic
+          WorkGroup: athena-santander-wg
+      Name: athena-santander
       Permissions:
         - Actions:
             - quicksight:DescribeDataSource
             - quicksight:DescribeDataSourcePermissions
             - quicksight:PassDataSource
-          Principal:
-            Fn::Join:
-              - ""
-              - - "arn:aws:quicksight:"
-                - Ref: AWS::Region
-                - ":"
-                - Ref: AWS::AccountId
-                - :user/default/jayro
+          Principal: !Join
+            - ''
+            - - 'arn:aws:quicksight:'
+              - !Ref AWS::Region
+              - ':'
+              - !Ref AWS::AccountId
+              - ':user/default/jayro'
       SslProperties:
         DisableSsl: false
       Type: ATHENA
@@ -77,14 +75,13 @@ Resources:
       - QuickSightPolicy
     Metadata:
       aws:cdk:path: QsStack/AthenaDataSource
-  Datasetathenatitanic:
+  Datasetathenasantander:
     Type: AWS::QuickSight::DataSet
     Properties:
-      AwsAccountId:
-        Ref: AWS::AccountId
-      DataSetId: athena-titanic-ds
+      AwsAccountId: !Ref AWS::AccountId
+      DataSetId: athena-santander-ds
       ImportMode: SPICE
-      Name: athena-titanic-ds
+      Name: athena-santander-ds
       Permissions:
         - Actions:
             - quicksight:DescribeDataSet
@@ -92,22 +89,18 @@ Resources:
             - quicksight:PassDataSet
             - quicksight:DescribeIngestion
             - quicksight:ListIngestions
-          Principal:
-            Fn::Join:
-              - ""
-              - - "arn:aws:quicksight:"
-                - Ref: AWS::Region
-                - ":"
-                - Ref: AWS::AccountId
-                - :user/default/jayro
+          Principal: !Join
+            - ''
+            - - 'arn:aws:quicksight:'
+              - !Ref AWS::Region
+              - ':'
+              - !Ref AWS::AccountId
+              - ':user/default/jayro'
       PhysicalTableMap:
-        athena-titanic-table:
+        athena-santander-table:
           RelationalTable:
             Catalog: AWSDataCatalog
-            DataSourceArn:
-              Fn::GetAtt:
-                - AthenaDataSource
-                - Arn
+            DataSourceArn: !GetAtt AthenaDataSource.Arn
             InputColumns:
               - Name: Survived
                 Type: INTEGER
@@ -125,18 +118,17 @@ Resources:
                 Type: INTEGER
               - Name: Fare
                 Type: DECIMAL
-            Name: titanic
+            Name: santander
             Schema: santander
     Metadata:
-      aws:cdk:path: QsStack/Dataset-athena-titanic
-  Datasetathenatitanicsql:
+      aws:cdk:path: QsStack/Dataset-athena-santander
+  Datasetathenasantandersql:
     Type: AWS::QuickSight::DataSet
     Properties:
-      AwsAccountId:
-        Ref: AWS::AccountId
-      DataSetId: athena-titanic-sql-ds
+      AwsAccountId: !Ref AWS::AccountId
+      DataSetId: athena-santander-sql-ds
       ImportMode: SPICE
-      Name: athena-titanic-sql-ds
+      Name: athena-santander-sql-ds
       Permissions:
         - Actions:
             - quicksight:DescribeDataSet
@@ -144,16 +136,15 @@ Resources:
             - quicksight:PassDataSet
             - quicksight:DescribeIngestion
             - quicksight:ListIngestions
-          Principal:
-            Fn::Join:
-              - ""
-              - - "arn:aws:quicksight:"
-                - Ref: AWS::Region
-                - ":"
-                - Ref: AWS::AccountId
-                - :user/default/jayro
+          Principal: !Join
+            - ''
+            - - 'arn:aws:quicksight:'
+              - !Ref AWS::Region
+              - ':'
+              - !Ref AWS::AccountId
+              - ':user/default/jayro'
       PhysicalTableMap:
-        athena-titanic-table-sql:
+        athena-santander-table-sql:
           CustomSql:
             Columns:
               - Name: Survived
@@ -164,28 +155,17 @@ Resources:
                 Type: STRING
               - Name: Related
                 Type: INTEGER
-            DataSourceArn:
-              Fn::GetAtt:
-                - AthenaDataSource
-                - Arn
-            Name: titanic-sql
-            SqlQuery: "
-
-              \            SELECT
-
-              \                Survived,
-
-              \                Name,
-
-              \                Sex,
-
-              \                \"Siblings/Spouses Aboard\"+\"Parents/Children Aboard\" AS Related
-
-              \            FROM santander.titanic
-
-              \        "
+            DataSourceArn: !GetAtt AthenaDataSource.Arn
+            Name: santander-sql
+            SqlQuery: |2-
+                          SELECT
+                              Survived,
+                              Name,
+                              Sex,
+                              "Siblings/Spouses Aboard"+"Parents/Children Aboard" AS Related
+                          FROM santander.santander
     Metadata:
-      aws:cdk:path: QsStack/Dataset-athena-titanic-sql
+      aws:cdk:path: QsStack/Dataset-athena-santander-sql
   CDKMetadata:
     Type: AWS::CDK::Metadata
     Properties:
@@ -194,77 +174,76 @@ Resources:
       aws:cdk:path: QsStack/CDKMetadata/Default
     Condition: CDKMetadataAvailable
 Conditions:
-  CDKMetadataAvailable:
-    Fn::Or:
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - af-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-northeast-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-northeast-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-southeast-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-southeast-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ca-central-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - cn-north-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - cn-northwest-1
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-central-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-north-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-3
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - me-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - sa-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-east-2
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-west-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-west-2
+  CDKMetadataAvailable: !Or
+    - !Or
+      - !Equals
+        - !Ref AWS::Region
+        - af-south-1
+      - !Equals
+        - !Ref AWS::Region
+        - ap-east-1
+      - !Equals
+        - !Ref AWS::Region
+        - ap-northeast-1
+      - !Equals
+        - !Ref AWS::Region
+        - ap-northeast-2
+      - !Equals
+        - !Ref AWS::Region
+        - ap-south-1
+      - !Equals
+        - !Ref AWS::Region
+        - ap-southeast-1
+      - !Equals
+        - !Ref AWS::Region
+        - ap-southeast-2
+      - !Equals
+        - !Ref AWS::Region
+        - ca-central-1
+      - !Equals
+        - !Ref AWS::Region
+        - cn-north-1
+      - !Equals
+        - !Ref AWS::Region
+        - cn-northwest-1
+    - !Or
+      - !Equals
+        - !Ref AWS::Region
+        - eu-central-1
+      - !Equals
+        - !Ref AWS::Region
+        - eu-north-1
+      - !Equals
+        - !Ref AWS::Region
+        - eu-south-1
+      - !Equals
+        - !Ref AWS::Region
+        - eu-west-1
+      - !Equals
+        - !Ref AWS::Region
+        - eu-west-2
+      - !Equals
+        - !Ref AWS::Region
+        - eu-west-3
+      - !Equals
+        - !Ref AWS::Region
+        - me-south-1
+      - !Equals
+        - !Ref AWS::Region
+        - sa-east-1
+      - !Equals
+        - !Ref AWS::Region
+        - us-east-1
+      - !Equals
+        - !Ref AWS::Region
+        - us-east-2
+    - !Or
+      - !Equals
+        - !Ref AWS::Region
+        - us-west-1
+      - !Equals
+        - !Ref AWS::Region
+        - us-west-2
 Parameters:
   BootstrapVersion:
     Type: AWS::SSM::Parameter::Value<String>
@@ -273,14 +252,12 @@ Parameters:
 Rules:
   CheckBootstrapVersion:
     Assertions:
-      - Assert:
-          Fn::Not:
-            - Fn::Contains:
-                - - "1"
-                  - "2"
-                  - "3"
-                  - "4"
-                  - "5"
-                - Ref: BootstrapVersion
+      - Assert: !Not
+          - Fn::Contains:
+              - - '1'
+                - '2'
+                - '3'
+                - '4'
+                - '5'
+              - !Ref BootstrapVersion
         AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
-

@@ -101,7 +101,7 @@ class QsStack(Stack):
             )
         ]
 
-        athena_workgroup_name = f"athena-titanic-wg"
+        athena_workgroup_name = f"athena-santander-wg"
         athena_workgroup = athena.CfnWorkGroup(
             self,
             "Workgroup",
@@ -119,7 +119,7 @@ class QsStack(Stack):
 
         qs_principal_arn = f"arn:aws:quicksight:{self.region}:{self.account}:user/default/{qs_username}"
 
-        qs_athena_data_source_name = "athena-titanic"
+        qs_athena_data_source_name = "athena-santander"
         qs_athena_data_source = quicksight.CfnDataSource(
             self,
             "AthenaDataSource",
@@ -140,7 +140,7 @@ class QsStack(Stack):
 
         qs_athena_data_source.add_depends_on(qs_managed_policy)
 
-        qs_athena_dataset_titanic_physical_table = (
+        qs_athena_dataset_santander_physical_table = (
             quicksight.CfnDataSet.PhysicalTableProperty(
                 relational_table=quicksight.CfnDataSet.RelationalTableProperty(
                     data_source_arn=qs_athena_data_source.attr_arn,
@@ -172,22 +172,22 @@ class QsStack(Stack):
                     ],
                     catalog="AWSDataCatalog",
                     schema=athena_database_name,
-                    name="titanic",
+                    name="santander",
                 )
             )
         )
 
         qs_import_mode = "SPICE"
-        qs_dataset_titanic_name = "athena-titanic-ds"
-        qs_athena_dataset_titanic = quicksight.CfnDataSet(
+        qs_dataset_santander_name = "athena-santander-ds"
+        qs_athena_dataset_santander = quicksight.CfnDataSet(
             self,
-            f"Dataset-athena-titanic",
+            f"Dataset-athena-santander",
             import_mode=qs_import_mode,
-            name=qs_dataset_titanic_name,
+            name=qs_dataset_santander_name,
             aws_account_id=self.account,
-            data_set_id=qs_dataset_titanic_name,
+            data_set_id=qs_dataset_santander_name,
             physical_table_map={
-                "athena-titanic-table": qs_athena_dataset_titanic_physical_table
+                "athena-santander-table": qs_athena_dataset_santander_physical_table
             },
             permissions=qs_dataset_permissions,
         )
@@ -198,12 +198,12 @@ class QsStack(Stack):
                 Name,
                 Sex,
                 "Siblings/Spouses Aboard"+"Parents/Children Aboard" AS Related
-            FROM {athena_database_name}.titanic
+            FROM {athena_database_name}.santander
         """
-        qs_athena_dataset_titanic_physical_table_sql = (
+        qs_athena_dataset_santander_physical_table_sql = (
             quicksight.CfnDataSet.PhysicalTableProperty(
                 custom_sql=quicksight.CfnDataSet.CustomSqlProperty(
-                    name="titanic-sql",
+                    name="santander-sql",
                     data_source_arn=qs_athena_data_source.attr_arn,
                     sql_query=sql_statement,
                     columns=[
@@ -224,16 +224,16 @@ class QsStack(Stack):
             )
         )
 
-        qs_dataset_titanic_sql_name = "athena-titanic-sql-ds"
-        qs_athena_dataset_titanic_sql = quicksight.CfnDataSet(
+        qs_dataset_santander_sql_name = "athena-santander-sql-ds"
+        qs_athena_dataset_santander_sql = quicksight.CfnDataSet(
             self,
-            f"Dataset-athena-titanic-sql",
+            f"Dataset-athena-santander-sql",
             import_mode=qs_import_mode,
-            name=qs_dataset_titanic_sql_name,
+            name=qs_dataset_santander_sql_name,
             aws_account_id=self.account,
-            data_set_id=qs_dataset_titanic_sql_name,
+            data_set_id=qs_dataset_santander_sql_name,
             physical_table_map={
-                "athena-titanic-table-sql": qs_athena_dataset_titanic_physical_table_sql
+                "athena-santander-table-sql": qs_athena_dataset_santander_physical_table_sql
             },
             permissions=qs_dataset_permissions,
         )
