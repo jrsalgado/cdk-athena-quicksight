@@ -1,9 +1,10 @@
 import os
 from aws_cdk import (
+    CfnParameter,
     Stack,
     aws_iam as iam,
     aws_quicksight as quicksight,
-    aws_athena as athena
+    aws_athena as athena,
 )
 from constructs import Construct
 
@@ -19,9 +20,51 @@ class QsStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
         bucket_name = "mybucket"
-        qs_username = "jayro"
-        athena_database_name = "santander"
         tags = TAGS
+
+        #Common Parameters
+        sb_project = CfnParameter(
+            self,
+            "Project",
+            description="Name of the project for the tag",
+            default="test")
+        
+        sb_environment = CfnParameter(
+            self,
+            "Environment",
+            description="Name of the environment for the tag",
+            default="dev",
+            allowed_values=["dev", "qa", "stg", "pre", "ocu", "sha", "prod"]            
+        )
+        
+        sb_country = CfnParameter(
+            self,
+            "Country",
+            description="Name of the country for the tag",
+            allowed_values=["es", "de", "pt", "nl", "ar", "mc", "mx", "us" ]            
+        )
+        
+
+        #Local Parameters Definition
+        qs_username = CfnParameter(
+            self, 
+            "QuickSightUsername",
+            type="String",
+            description="Quicksight username",
+            default="master",
+            min_length=5,
+            max_length=20,
+            constraint_description="QuickSight username must be between 5 and 20 characters",
+            )
+
+        athena_database_name = CfnParameter(
+            self,
+            "AthenaDatabaseName",
+            type="String",
+            description="Athena Database Name used for QS dataset queries",
+            default= "santander",
+        )
+                                   
         # AWS defined service role name
         qs_service_role_names = [
             "aws-quicksight-service-role-v0",
@@ -75,7 +118,7 @@ class QsStack(Stack):
             roles=qs_service_role_names,
         )
 
-        qs_principal_arn = f"arn:aws:quicksight:{self.region}:{self.account}:user/default/{qs_username}"
+        qs_principal_arn = f"arn:aws:quicksight:{self.region}:{self.account}:user/default/{qs_username.value_as_string}"
 
         qs_data_source_permissions = [
             quicksight.CfnDataSource.ResourcePermissionProperty(
@@ -115,9 +158,10 @@ class QsStack(Stack):
                 )
             ),
             recursive_delete_option=True,
+            tags= [{"key": "Project", "value": sb_project.value_as_string},]
         )
 
-        qs_principal_arn = f"arn:aws:quicksight:{self.region}:{self.account}:user/default/{qs_username}"
+        qs_principal_arn = f"arn:aws:quicksight:{self.region}:{self.account}:user/default/{qs_username.value_as_string}"
 
         qs_athena_data_source_name = "athena-santander"
         qs_athena_data_source = quicksight.CfnDataSource(
@@ -171,7 +215,7 @@ class QsStack(Stack):
                         ),
                     ],
                     catalog="AWSDataCatalog",
-                    schema=athena_database_name,
+                    schema=athena_database_name.value_as_string,
                     name="santander",
                 )
             )
@@ -198,7 +242,7 @@ class QsStack(Stack):
                 Name,
                 Sex,
                 "Siblings/Spouses Aboard"+"Parents/Children Aboard" AS Related
-            FROM {athena_database_name}.santander
+            FROM {athena_database_name.value_as_string}.santander
         """
         qs_athena_dataset_santander_physical_table_sql = (
             quicksight.CfnDataSet.PhysicalTableProperty(
@@ -244,7 +288,7 @@ class QsStack(Stack):
                 self.tags.set_tag(key, value)
 
 
-# Athena Wg -> QS-DS -> QS-Dset -> QS-Template -> QS-Dashboard
+# Athena WorkGroup -> QS-DataSource -> QS-Dset(Schemas) -> QS-Template -> QS-Dashboard
 ### input 
 
 

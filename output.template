@@ -1,3 +1,47 @@
+Parameters:
+  Project:
+    Type: String
+    Default: test
+    Description: Name of the project for the tag
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - qa
+      - stg
+      - pre
+      - ocu
+      - sha
+      - prod
+    Description: Name of the environment for the tag
+  Country:
+    Type: String
+    AllowedValues:
+      - es
+      - de
+      - pt
+      - nl
+      - ar
+      - mc
+      - mx
+      - us
+    Description: Name of the country for the tag
+  QuickSightUsername:
+    Type: String
+    Default: master
+    ConstraintDescription: QuickSight username must be between 5 and 20 characters
+    Description: Quicksight username
+    MaxLength: 20
+    MinLength: 5
+  AthenaDatabaseName:
+    Type: String
+    Default: santander
+    Description: Athena Database Name used for QS dataset queries
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
 Resources:
   QuickSightPolicy:
     Type: AWS::IAM::ManagedPolicy
@@ -40,6 +84,9 @@ Resources:
     Properties:
       Name: athena-santander-wg
       RecursiveDeleteOption: true
+      Tags:
+        - Key: Project
+          Value: !Ref Project
       WorkGroupConfiguration:
         ResultConfiguration:
           EncryptionConfiguration:
@@ -67,7 +114,8 @@ Resources:
               - !Ref AWS::Region
               - ':'
               - !Ref AWS::AccountId
-              - ':user/default/jayro'
+              - ':user/default/'
+              - !Ref QuickSightUsername
       SslProperties:
         DisableSsl: false
       Type: ATHENA
@@ -95,7 +143,8 @@ Resources:
               - !Ref AWS::Region
               - ':'
               - !Ref AWS::AccountId
-              - ':user/default/jayro'
+              - ':user/default/'
+              - !Ref QuickSightUsername
       PhysicalTableMap:
         athena-santander-table:
           RelationalTable:
@@ -119,7 +168,7 @@ Resources:
               - Name: Fare
                 Type: DECIMAL
             Name: santander
-            Schema: santander
+            Schema: !Ref AthenaDatabaseName
     Metadata:
       aws:cdk:path: QsStack/Dataset-athena-santander
   Datasetathenasantandersql:
@@ -142,7 +191,8 @@ Resources:
               - !Ref AWS::Region
               - ':'
               - !Ref AWS::AccountId
-              - ':user/default/jayro'
+              - ':user/default/'
+              - !Ref QuickSightUsername
       PhysicalTableMap:
         athena-santander-table-sql:
           CustomSql:
@@ -157,19 +207,24 @@ Resources:
                 Type: INTEGER
             DataSourceArn: !GetAtt AthenaDataSource.Arn
             Name: santander-sql
-            SqlQuery: |2-
-                          SELECT
-                              Survived,
-                              Name,
-                              Sex,
-                              "Siblings/Spouses Aboard"+"Parents/Children Aboard" AS Related
-                          FROM santander.santander
+            SqlQuery: !Join
+              - ''
+              - - |2-
+                              SELECT
+                                  Survived,
+                                  Name,
+                                  Sex,
+                                  "Siblings/Spouses Aboard"+"Parents/Children Aboard" AS Related
+                              FROM
+                - !Ref AthenaDatabaseName
+                - |-
+                  .santander
     Metadata:
       aws:cdk:path: QsStack/Dataset-athena-santander-sql
   CDKMetadata:
     Type: AWS::CDK::Metadata
     Properties:
-      Analytics: v2:deflate64:H4sIAAAAAAAA/z2JQQ6CMBAA38K9rKDGD2DiyYTAwaNZS4W1sNV2G0MIfxdi9DSZmS3k2R6yBN8h1Y1Ne7rBVAtqq5Z0nQgHKO58RsbWNKXrSY8KpTOMa784b0/exad6RdI2UNsJTMs4omDtotdG/czIPK9SmfAfheOGhBzPqhylc7zZQZ7DIXkEotRHFhoMVF9+AFbf1x6sAAAA
+      Analytics: v2:deflate64:H4sIAAAAAAAA/z2JQQ6CMBAA38K9rKDGD2DiyYTAwaNZywprodV2G0MIfxdi9DSZmS3k2R6yBN8h1Y1Je77BVAtqo4q7LdHjQEJeLf86MQ6w1DNabKkpXc96VCgdWVz7xXlz8i4+1SuyNoHbTmBaxhEFaxe9JvUzknlepaLwH4WzDQs7O6tylM7ZzQ7yHA7JIzCnPlrhgaD68gMIzH7XuQAAAA==
     Metadata:
       aws:cdk:path: QsStack/CDKMetadata/Default
     Condition: CDKMetadataAvailable
@@ -244,11 +299,6 @@ Conditions:
       - !Equals
         - !Ref AWS::Region
         - us-west-2
-Parameters:
-  BootstrapVersion:
-    Type: AWS::SSM::Parameter::Value<String>
-    Default: /cdk-bootstrap/hnb659fds/version
-    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
 Rules:
   CheckBootstrapVersion:
     Assertions:
