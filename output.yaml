@@ -1,0 +1,362 @@
+Parameters:
+  Country:
+    Type: String
+    Default: es
+    AllowedValues:
+      - es
+      - de
+      - pt
+      - nl
+      - ar
+      - mc
+      - mx
+      - us
+    Description: Name of the country for the tag
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - qa
+      - stg
+      - pre
+      - ocu
+      - sha
+      - prod
+    Description: Name of the environment for the tag
+  Project:
+    Type: String
+    Default: test
+    Description: Name of the project for the tag
+  AthenaDataSourceWorkgroup01:
+    Type: String
+    Default: primary
+    Description: The Athena workgroup quicksight uses to connect by datasource
+  AthenaDatabaseName:
+    Type: String
+    Default: santander
+    Description: Athena Database Name used for QS dataset queries
+  AthenaDataSourceName:
+    Type: String
+    Description: Athena Datasource from quicksight
+  AthenaDataSourceArn:
+    Type: String
+    Description: Athena DataSource Arn
+  AthenaDataSourceId:
+    Type: String
+    Description: Athena DataSource ID
+  PrincipalArn:
+    Type: String
+    Description: Permissions Principal ARN
+  QuickSightDashboardName:
+    Type: String
+    Description: Name for quicksight dashboard
+  QuickSightDashboardId:
+    Type: String
+    Description: Custom id for QuickSight Dashboard
+  QuickSightDashboardSheetId01:
+    Type: String
+    Description: Custom sheet id for QuickSight Dashboard
+  QuickSightDashboardSheetId02:
+    Type: String
+    Description: Custom sheet id for QuickSight Dashboard
+  QuickSightDataSetId:
+    Type: String
+    Description: Custom id for QuickSight DataSet
+  QuickSightUsername:
+    Type: String
+    Default: master
+    Description: Quicksight username
+  QuickSightPrincipalType:
+    Type: String
+    Default: user
+    Description: Is the type of user that has permissions to use the datas source usually is a user type or group
+  QuickSightNamespace:
+    Type: String
+    Default: default
+    Description: Name of the namespace this principal has access to
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Resources:
+  AthenaDataSource01:
+    Type: AWS::QuickSight::DataSource
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId: MyAthenaDataSource
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup:
+            Ref: AthenaDataSourceWorkgroup01
+      Name: MyAthenaDataSource
+      Permissions:
+        - Actions:
+            - quicksight:DescribeDataSource
+            - quicksight:DescribeDataSourcePermissions
+            - quicksight:PassDataSource
+            - quicksight:UpdateDataSource
+            - quicksight:DeleteDataSource
+            - quicksight:UpdateDataSourcePermissions
+            - quicksight:Query
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+              - aws_account:
+                  Ref: AWS::AccountId
+                aws_region:
+                  Ref: AWS::Region
+                principalType:
+                  Ref: QuickSightPrincipalType
+                user:
+                  Ref: QuickSightUsername
+                qsNamespace:
+                  Ref: QuickSightNamespace
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource01
+  AthenaDataSetTable01:
+    Type: AWS::QuickSight::DataSet
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSetId:
+        Ref: QuickSightDataSetId
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
+      ImportMode: SPICE
+      LogicalTableMap:
+        s3PhysicalTable:
+          Alias: Group 1
+          DataTransforms:
+            - RenameColumnOperation:
+                ColumnName: ColumnId-2
+                NewColumnName: Employee Name
+            - RenameColumnOperation:
+                ColumnName: ColumnId-3
+                NewColumnName: Employee ID
+            - RenameColumnOperation:
+                ColumnName: ColumnId-1
+                NewColumnName: Date
+            - RenameColumnOperation:
+                ColumnName: ColumnId-12
+                NewColumnName: Job Family
+            - RenameColumnOperation:
+                ColumnName: ColumnId-6
+                NewColumnName: Date of Birth
+            - RenameColumnOperation:
+                ColumnName: ColumnId-11
+                NewColumnName: Business Function
+            - RenameColumnOperation:
+                ColumnName: ColumnId-7
+                NewColumnName: Gender
+            - RenameColumnOperation:
+                ColumnName: ColumnId-14
+                NewColumnName: Notes
+            - RenameColumnOperation:
+                ColumnName: ColumnId-4
+                NewColumnName: Tenure
+            - RenameColumnOperation:
+                ColumnName: ColumnId-13
+                NewColumnName: Job Level
+            - RenameColumnOperation:
+                ColumnName: ColumnId-5
+                NewColumnName: Monthly Compensation
+            - RenameColumnOperation:
+                ColumnName: ColumnId-10
+                NewColumnName: Region
+            - RenameColumnOperation:
+                ColumnName: ColumnId-8
+                NewColumnName: Education
+            - RenameColumnOperation:
+                ColumnName: ColumnId-9
+                NewColumnName: Event Type
+            - RenameColumnOperation:
+                ColumnName: ColumnId-15
+                NewColumnName: isUnique
+            - CastColumnTypeOperation:
+                ColumnName: Monthly Compensation
+                NewColumnType: DECIMAL
+            - CastColumnTypeOperation:
+                ColumnName: Tenure
+                NewColumnType: INTEGER
+            - CastColumnTypeOperation:
+                ColumnName: Date of Birth
+                Format: yyyy-MM-dd
+                NewColumnType: DATETIME
+            - CastColumnTypeOperation:
+                ColumnName: Date
+                Format: yyyy-MM-dd
+                NewColumnType: DATETIME
+            - TagColumnOperation:
+                ColumnName: Region
+                Tags:
+                  - ColumnGeographicRole: STATE
+          Source:
+            PhysicalTableId: s3PhysicalTable
+      Name: AthenaDataSetTable01
+      Permissions:
+        - Actions:
+            - quicksight:DeleteDataSet
+            - quicksight:UpdateDataSetPermissions
+            - quicksight:PutDataSetRefreshProperties
+            - quicksight:CreateRefreshSchedule
+            - quicksight:CancelIngestion
+            - quicksight:ListRefreshSchedules
+            - quicksight:UpdateRefreshSchedule
+            - quicksight:PassDataSet
+            - quicksight:DeleteRefreshSchedule
+            - quicksight:DescribeDataSetRefreshProperties
+            - quicksight:DescribeDataSet
+            - quicksight:CreateIngestion
+            - quicksight:DescribeRefreshSchedule
+            - quicksight:ListIngestions
+            - quicksight:UpdateDataSet
+            - quicksight:DescribeDataSetPermissions
+            - quicksight:DeleteDataSetRefreshProperties
+            - quicksight:DescribeIngestion
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/${user}
+              - user:
+                  Ref: QuickSightUsername
+      PhysicalTableMap:
+        athena-santander-table:
+          RelationalTable:
+            Catalog: AWSDataCatalog
+            DataSourceArn:
+              Fn::GetAtt:
+                - AthenaDataSource01
+                - Arn
+            InputColumns:
+              - Name: ColumnId-1
+                Type: STRING
+              - Name: ColumnId-2
+                Type: STRING
+              - Name: ColumnId-3
+                Type: STRING
+              - Name: ColumnId-4
+                Type: STRING
+              - Name: ColumnId-5
+                Type: STRING
+              - Name: ColumnId-6
+                Type: STRING
+              - Name: ColumnId-7
+                Type: STRING
+              - Name: ColumnId-8
+                Type: STRING
+              - Name: ColumnId-9
+                Type: STRING
+              - Name: ColumnId-10
+                Type: STRING
+              - Name: ColumnId-11
+                Type: STRING
+              - Name: ColumnId-12
+                Type: STRING
+              - Name: ColumnId-13
+                Type: STRING
+              - Name: ColumnId-14
+                Type: STRING
+              - Name: ColumnId-15
+                Type: STRING
+            Name: santander
+            Schema: athena_database_name_value_as_string
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSetTable01
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/z2JUQ6CMBAFz8J/u1I1XgAPQOAAZi2rrJVtbLcxhnB3MUa/5s2bLbh6D3WFz2z9EOydzzD3ij6Y5iItJpxIKZm1nx6Ffch8HRXmNR5RsY8leTI/I10+u6P8/5soAytHWUz70jHKZgfOwaG6ZWabiihPBN2Xb0/8Nf+OAAAA
+    Metadata:
+      aws:cdk:path: QsStack/CDKMetadata/Default
+    Condition: CDKMetadataAvailable
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - af-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - "1"
+                  - "2"
+                  - "3"
+                  - "4"
+                  - "5"
+                - Ref: BootstrapVersion
+        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+

@@ -1,0 +1,18 @@
+DataSets:
+- id: 'S3Dataset01'
+  name: 'S3Dataset01'
+  aws_account_id: '064855577434'
+  data_set_id: 'f66f2dea-7000-4d37-8bbb-da6b33329c35'
+  import_mode: 'SPICE'
+
+- id: 'S3Dataset02'
+  name: 'S3Dataset02'
+  aws_account_id: '064855577434'
+  data_set_id: 'f66f2dea-7000-4d37-8bbb-da6b33329c35'
+  import_mode: 'SPICE'
+
+- id: 'S3Dataset03'
+  name: 'S3Dataset03'
+  aws_account_id: '064855577434'
+  data_set_id: 'f66f2dea-7000-4d37-8bbb-da6b33329c35'
+  import_mode: 'SPICE'

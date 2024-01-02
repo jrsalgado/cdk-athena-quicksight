@@ -7,6 +7,7 @@ from qs.qs_stack import QsStack
 
 
 app = cdk.App()
+
 QsStack(app, "QsStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,

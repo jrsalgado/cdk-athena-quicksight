@@ -1,0 +1,1943 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "former2"
+Description: ""
+Resources:
+    QuickSightDataSource:
+        Type: "AWS::QuickSight::DataSource"
+        Properties:
+            DataSourceId: "fb2b417e-7e9c-4095-8b49-0da454bd8ee5"
+            Name: "Web and Social Media Analytics"
+            AwsAccountId: !Ref AWS::AccountId
+            Type: "S3"
+            DataSourceParameters: 
+                S3Parameters: 
+                    ManifestFileLocation: 
+                        Bucket: !Sub "spaceneedle-samplefiles.prod.${AWS::Region}"
+                        Key: "marketing/manifest.json"
+
+    QuickSightDataSource2:
+        Type: "AWS::QuickSight::DataSource"
+        Properties:
+            DataSourceId: "b8cd5dce-827f-4e7e-a25b-7fa22223b15a"
+            Name: "Business Review"
+            AwsAccountId: !Ref AWS::AccountId
+            Type: "S3"
+            DataSourceParameters: 
+                S3Parameters: 
+                    ManifestFileLocation: 
+                        Bucket: !Sub "spaceneedle-samplefiles.prod.${AWS::Region}"
+                        Key: "revenue/manifest.json"
+
+    QuickSightDataSource3:
+        Type: "AWS::QuickSight::DataSource"
+        Properties:
+            DataSourceId: "d203fefb-99ab-4c9b-bd68-4f2af9be9bdc"
+            Name: "Business Review"
+            AwsAccountId: !Ref AWS::AccountId
+            Type: "S3"
+            DataSourceParameters: 
+                S3Parameters: 
+                    ManifestFileLocation: 
+                        Bucket: !Sub "spaceneedle-samplefiles.prod.${AWS::Region}"
+                        Key: "revenue/manifest.json"
+
+    QuickSightDataSource4:
+        Type: "AWS::QuickSight::DataSource"
+        Properties:
+            DataSourceId: "27cd8539-c183-4c99-b842-dd91c8d1e250"
+            Name: "Sales Pipeline"
+            AwsAccountId: !Ref AWS::AccountId
+            Type: "S3"
+            DataSourceParameters: 
+                S3Parameters: 
+                    ManifestFileLocation: 
+                        Bucket: !Sub "spaceneedle-samplefiles.prod.${AWS::Region}"
+                        Key: "sales/manifest.json"
+
+    QuickSightDataSource5:
+        Type: "AWS::QuickSight::DataSource"
+        Properties:
+            DataSourceId: "d7fe19c1-ff47-4b26-a860-c353a6f57ca2"
+            Name: "People Overview"
+            AwsAccountId: !Ref AWS::AccountId
+            Type: "S3"
+            DataSourceParameters: 
+                S3Parameters: 
+                    ManifestFileLocation: 
+                        Bucket: !Sub "spaceneedle-samplefiles.prod.${AWS::Region}"
+                        Key: "hr/manifest.json"
+
+    QuickSightDataSource6:
+        Type: "AWS::QuickSight::DataSource"
+        Properties:
+            DataSourceId: "f8147bfc-3e26-4f21-93bb-83fc5bca18ea"
+            Name: "Sales Pipeline"
+            AwsAccountId: !Ref AWS::AccountId
+            Type: "S3"
+            DataSourceParameters: 
+                S3Parameters: 
+                    ManifestFileLocation: 
+                        Bucket: !Sub "spaceneedle-samplefiles.prod.${AWS::Region}"
+                        Key: "sales/manifest.json"
+
+    QuickSightDataSource7:
+        Type: "AWS::QuickSight::DataSource"
+        Properties:
+            DataSourceId: "be540765-f31a-4088-9e3b-d035ae333b48"
+            Name: "Web and Social Media Analytics"
+            AwsAccountId: !Ref AWS::AccountId
+            Type: "S3"
+            DataSourceParameters: 
+                S3Parameters: 
+                    ManifestFileLocation: 
+                        Bucket: !Sub "spaceneedle-samplefiles.prod.${AWS::Region}"
+                        Key: "marketing/manifest.json"
+
+    QuickSightDataSource8:
+        Type: "AWS::QuickSight::DataSource"
+        Properties:
+            DataSourceId: "04d67882-9620-4501-99c9-ce83f25bf1df"
+            Name: "People Overview"
+            AwsAccountId: !Ref AWS::AccountId
+            Type: "S3"
+            DataSourceParameters: 
+                S3Parameters: 
+                    ManifestFileLocation: 
+                        Bucket: !Sub "spaceneedle-samplefiles.prod.${AWS::Region}"
+                        Key: "hr/manifest.json"
+
+    QuickSightDataSet:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "0da2b670-2b26-4a92-9c85-f0ba478995c5"
+            Name: "Business Review"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource2.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "Customer ID"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "Customer Name"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Service Line"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "Distinct ID"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Revenue Goal"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "Customer Region"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Segment"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Channel"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Billed Amount"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Cost"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Cost"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Billed Amount"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Revenue Goal"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Distinct ID"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "M/d/yyyy"
+                      - 
+                        TagColumnOperation: 
+                            ColumnName: "Customer Region"
+                            Tags: 
+                              - 
+                                ColumnGeographicRole: "STATE"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightDataSet2:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "44eca1ec-3c9d-4ffe-8ad9-e31e8f9cca4e"
+            Name: "People Overview"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource5.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-12"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-13"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-14"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-15"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "Employee Name"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "Employee ID"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-12"
+                            NewColumnName: "Job Family"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Date of Birth"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "Business Function"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Gender"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-14"
+                            NewColumnName: "Notes"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "Tenure"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-13"
+                            NewColumnName: "Job Level"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Monthly Compensation"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Region"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Education"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Event Type"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-15"
+                            NewColumnName: "isUnique"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Monthly Compensation"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Tenure"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date of Birth"
+                            NewColumnType: "DATETIME"
+                            Format: "yyyy-MM-dd"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "yyyy-MM-dd"
+                      - 
+                        TagColumnOperation: 
+                            ColumnName: "Region"
+                            Tags: 
+                              - 
+                                ColumnGeographicRole: "STATE"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightDataSet3:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "a4aeea4c-2d90-466f-a4ec-758679ece587"
+            Name: "Sales Pipeline"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource4.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-12"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "Salesperson"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "Lead Name"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-12"
+                            NewColumnName: "IsLatest"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Target Close"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "ActiveItem"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Forecasted Monthly Revenue"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "Segment"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Region"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Is Closed"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Opportunity Stage"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Weighted Revenue"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Weighted Revenue"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Forecasted Monthly Revenue"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Target Close"
+                            NewColumnType: "DATETIME"
+                            Format: "M/d/yyyy"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "IsLatest"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "M/d/yyyy"
+                      - 
+                        TagColumnOperation: 
+                            ColumnName: "Region"
+                            Tags: 
+                              - 
+                                ColumnGeographicRole: "STATE"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightDataSet4:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "180e00b8-a755-427c-a1c7-0951780cdf70"
+            Name: "Web and Social Media Analytics"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource7.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-12"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-13"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-14"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-15"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-16"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-17"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-18"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-19"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "New visitors SEO"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "New visitors CPC"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-12"
+                            NewColumnName: "Website Visits"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Twitter mentions"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "Website Pageviews"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Twitter followers adds"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-14"
+                            NewColumnName: "Mobile uniques"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "New visitors Social Media"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-13"
+                            NewColumnName: "Website Unique Visits"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Return visitors"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Mailing list cumulative"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Twitter followers cumulative"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Mailing list adds "
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-19"
+                            NewColumnName: "Events"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-16"
+                            NewColumnName: "Desktop uniques"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-15"
+                            NewColumnName: "Tablet uniques"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-18"
+                            NewColumnName: "Paid conversion"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-17"
+                            NewColumnName: "Free sign up"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Free sign up"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Paid conversion"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Tablet uniques"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Desktop uniques"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Mailing list adds "
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Twitter followers cumulative"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Mailing list cumulative"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Return visitors"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Website Unique Visits"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "New visitors Social Media"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Mobile uniques"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Twitter followers adds"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Website Pageviews"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Twitter mentions"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Website Visits"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "M/d/yyyy"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "New visitors CPC"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "New visitors SEO"
+                            NewColumnType: "INTEGER"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightDataSet5:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "f66f2dea-7000-4d37-8bbb-da6b33329c33"
+            Name: "People"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource5.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-12"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-13"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-14"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-15"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "Employee Name"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "Employee ID"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-12"
+                            NewColumnName: "Job Family"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Date of Birth"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "Business Function"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Gender"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-14"
+                            NewColumnName: "Notes"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "Tenure"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-13"
+                            NewColumnName: "Job Level"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Monthly Compensation"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Region"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Education"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Event Type"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-15"
+                            NewColumnName: "isUnique"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Monthly Compensation"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Tenure"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date of Birth"
+                            NewColumnType: "DATETIME"
+                            Format: "yyyy-MM-dd"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "yyyy-MM-dd"
+                      - 
+                        TagColumnOperation: 
+                            ColumnName: "Region"
+                            Tags: 
+                              - 
+                                ColumnGeographicRole: "STATE"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightDataSet6:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "92b5a28d-6baa-4a23-8503-ccd9fc6004a0"
+            Name: "Web and Social Media Analytics"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-12"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-13"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-14"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-15"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-16"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-17"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-18"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-19"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "New visitors SEO"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "New visitors CPC"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-12"
+                            NewColumnName: "Website Visits"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Twitter mentions"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "Website Pageviews"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Twitter followers adds"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-14"
+                            NewColumnName: "Mobile uniques"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "New visitors Social Media"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-13"
+                            NewColumnName: "Website Unique Visits"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Return visitors"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Mailing list cumulative"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Twitter followers cumulative"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Mailing list adds "
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-19"
+                            NewColumnName: "Events"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-16"
+                            NewColumnName: "Desktop uniques"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-15"
+                            NewColumnName: "Tablet uniques"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-18"
+                            NewColumnName: "Paid conversion"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-17"
+                            NewColumnName: "Free sign up"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Free sign up"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Paid conversion"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Tablet uniques"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Desktop uniques"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Mailing list adds "
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Twitter followers cumulative"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Mailing list cumulative"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Return visitors"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Website Unique Visits"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "New visitors Social Media"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Mobile uniques"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Twitter followers adds"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Website Pageviews"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Twitter mentions"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Website Visits"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "M/d/yyyy"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "New visitors CPC"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "New visitors SEO"
+                            NewColumnType: "INTEGER"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/japo-write"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightDataSet7:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "6caf1b57-facc-4d0e-8ee8-7162cec9b3cb"
+            Name: "Business Review"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource3.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "Customer ID"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "Customer Name"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Service Line"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "Distinct ID"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Revenue Goal"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "Customer Region"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Segment"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Channel"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Billed Amount"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Cost"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Cost"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Billed Amount"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Revenue Goal"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Distinct ID"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "M/d/yyyy"
+                      - 
+                        TagColumnOperation: 
+                            ColumnName: "Customer Region"
+                            Tags: 
+                              - 
+                                ColumnGeographicRole: "STATE"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/japo-write"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightDataSet8:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "1b5e0ce9-1c45-4617-8c62-936e47084640"
+            Name: "People Overview"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource8.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-12"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-13"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-14"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-15"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "Employee Name"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "Employee ID"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-12"
+                            NewColumnName: "Job Family"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Date of Birth"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "Business Function"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Gender"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-14"
+                            NewColumnName: "Notes"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "Tenure"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-13"
+                            NewColumnName: "Job Level"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Monthly Compensation"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Region"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Education"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Event Type"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-15"
+                            NewColumnName: "isUnique"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Monthly Compensation"
+                            NewColumnType: "DECIMAL"
+                            SubType: "FLOAT"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Tenure"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date of Birth"
+                            NewColumnType: "DATETIME"
+                            Format: "yyyy-MM-dd"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "yyyy-MM-dd"
+                      - 
+                        TagColumnOperation: 
+                            ColumnName: "Region"
+                            Tags: 
+                              - 
+                                ColumnGeographicRole: "STATE"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/japo-write"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightDataSet9:
+        Type: "AWS::QuickSight::DataSet"
+        Properties:
+            DataSetId: "bea7f081-abae-4828-af44-6d1302e49843"
+            Name: "Sales Pipeline"
+            AwsAccountId: !Ref AWS::AccountId
+            PhysicalTableMap: 
+                s3PhysicalTable: 
+                    S3Source: 
+                        DataSourceArn: !GetAtt QuickSightDataSource6.Arn
+                        UploadSettings: 
+                            Format: "CSV"
+                            StartFromRow: 1
+                            ContainsHeader: true
+                            TextQualifier: "DOUBLE_QUOTE"
+                            Delimiter: ","
+                        InputColumns: 
+                          - 
+                            Name: "ColumnId-1"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-2"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-3"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-4"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-5"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-6"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-7"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-8"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-9"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-10"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-11"
+                            Type: "STRING"
+                          - 
+                            Name: "ColumnId-12"
+                            Type: "STRING"
+            LogicalTableMap: 
+                s3PhysicalTable: 
+                    Alias: "Group 1"
+                    DataTransforms: 
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-2"
+                            NewColumnName: "Salesperson"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-3"
+                            NewColumnName: "Lead Name"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-1"
+                            NewColumnName: "Date"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-12"
+                            NewColumnName: "IsLatest"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-6"
+                            NewColumnName: "Target Close"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-11"
+                            NewColumnName: "ActiveItem"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-7"
+                            NewColumnName: "Forecasted Monthly Revenue"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-4"
+                            NewColumnName: "Segment"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-5"
+                            NewColumnName: "Region"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-10"
+                            NewColumnName: "Is Closed"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-8"
+                            NewColumnName: "Opportunity Stage"
+                      - 
+                        RenameColumnOperation: 
+                            ColumnName: "ColumnId-9"
+                            NewColumnName: "Weighted Revenue"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Weighted Revenue"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Forecasted Monthly Revenue"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Target Close"
+                            NewColumnType: "DATETIME"
+                            Format: "M/d/yyyy"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "IsLatest"
+                            NewColumnType: "INTEGER"
+                      - 
+                        CastColumnTypeOperation: 
+                            ColumnName: "Date"
+                            NewColumnType: "DATETIME"
+                            Format: "M/d/yyyy"
+                      - 
+                        TagColumnOperation: 
+                            ColumnName: "Region"
+                            Tags: 
+                              - 
+                                ColumnGeographicRole: "STATE"
+                    Source: 
+                        PhysicalTableId: "s3PhysicalTable"
+            ImportMode: "SPICE"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/japo-write"
+                Actions: 
+                  - "quicksight:DeleteDataSet"
+                  - "quicksight:UpdateDataSetPermissions"
+                  - "quicksight:PutDataSetRefreshProperties"
+                  - "quicksight:CreateRefreshSchedule"
+                  - "quicksight:CancelIngestion"
+                  - "quicksight:PassDataSet"
+                  - "quicksight:UpdateRefreshSchedule"
+                  - "quicksight:DeleteRefreshSchedule"
+                  - "quicksight:ListRefreshSchedules"
+                  - "quicksight:DescribeDataSetRefreshProperties"
+                  - "quicksight:DescribeDataSet"
+                  - "quicksight:CreateIngestion"
+                  - "quicksight:DescribeRefreshSchedule"
+                  - "quicksight:ListIngestions"
+                  - "quicksight:DescribeDataSetPermissions"
+                  - "quicksight:UpdateDataSet"
+                  - "quicksight:DeleteDataSetRefreshProperties"
+                  - "quicksight:DescribeIngestion"
+
+    QuickSightAnalysis:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "3fdd72f6-76fe-482b-a276-fbc8f53f8176"
+            Name: "Web and Social Media Analytics analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/japo-write"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+
+    QuickSightAnalysis2:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "ef1471da-d860-4823-8ba2-61a61efae863"
+            Name: "Sales Pipeline analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/japo-write"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+
+    QuickSightAnalysis3:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "0a19feda-8b7c-464d-b1ea-111fa53ebdbc"
+            Name: "People Overview analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/japo-write"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+
+    QuickSightAnalysis4:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "d261b686-2447-4542-8d92-0b2227336e8b"
+            Name: "Business Review analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/japo-write"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+
+    QuickSightAnalysis5:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "fc5a12e3-9fe3-4093-9bc2-73bd10834d2a"
+            Name: "Web and Social Media Analytics analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+
+    QuickSightAnalysis6:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "e3301c4c-e67b-400c-b36c-12edaacbc558"
+            Name: "People analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+
+    QuickSightAnalysis7:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "5cf45932-3d70-4c8d-8b88-ac910005292c"
+            Name: "People Overview analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+
+    QuickSightAnalysis8:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "b8b76b7c-0004-4db7-8fed-491bc6d8a513"
+            Name: "Business Review analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+
+    QuickSightAnalysis9:
+        Type: "AWS::QuickSight::Analysis"
+        Properties:
+            AnalysisId: "723deffa-11a7-479b-a341-9ed458669106"
+            Name: "Sales Pipeline analysis"
+            AwsAccountId: !Ref AWS::AccountId
+            SourceEntity: "REPLACEME"
+            Permissions: 
+              - 
+                Principal: !Sub "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/boss"
+                Actions: 
+                  - "quicksight:RestoreAnalysis"
+                  - "quicksight:UpdateAnalysisPermissions"
+                  - "quicksight:DeleteAnalysis"
+                  - "quicksight:DescribeAnalysisPermissions"
+                  - "quicksight:QueryAnalysis"
+                  - "quicksight:DescribeAnalysis"
+                  - "quicksight:UpdateAnalysis"
+

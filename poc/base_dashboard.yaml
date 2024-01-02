@@ -1,0 +1,357 @@
+Resources:
+  BaseDashboard:
+    Type: AWS::QuickSight::Dashboard
+    Properties:
+      # AwsAccountId: "XXXXXXXXXX" # TODO: PARAM REQUIRED
+      DashboardId: "e6390395-4a03-4d80-b862-a4d3506173c8"
+      Name: "dashboard02"
+      Permissions:
+        - Actions:
+            - quicksight:DescribeDashboard
+            - quicksight:ListDashboardVersions
+            - quicksight:UpdateDashboardPermissions
+            - quicksight:QueryDashboard
+            - quicksight:UpdateDashboard
+            - quicksight:DeleteDashboard
+            - quicksight:DescribeDashboardPermissions
+            - quicksight:UpdateDashboardPublishedVersion
+          Principal: arn:aws:quicksight:us-east-1:064855577434:user/default/boss
+      Definition:
+        AnalysisDefaults:
+          DefaultNewSheetConfiguration:
+            InteractiveLayoutConfiguration:
+              Grid:
+                CanvasSizeOptions:
+                  ScreenCanvasSizeOptions:
+                    OptimizedViewPortWidth: 1600px
+                    ResizeOption: FIXED
+            SheetContentType: INTERACTIVE
+        CalculatedFields: []
+        DataSetIdentifierDeclarations:
+          - DataSetArn: arn:aws:quicksight:us-east-1:064855577434:dataset/f66f2dea-7000-4d37-8bbb-da6b33329c34
+            Identifier: People02
+        FilterGroups: []
+        Options:
+          WeekStart: SUNDAY
+        ParameterDeclarations: []
+        Sheets:
+          - ContentType: INTERACTIVE
+            Layouts:
+              - Configuration:
+                  GridLayout:
+                    Elements:
+                      - ColumnIndex: 0
+                        ColumnSpan: 20
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+                        ElementType: VISUAL
+                        RowIndex: 0
+                        RowSpan: 6
+                      - ColumnSpan: 18
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+                        ElementType: VISUAL
+                        RowSpan: 12
+            Name: Sheet 1
+            SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_7aac16ad-0d41-4946-89b4-f51b819aa7c6
+            Visuals:
+              - LineChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: HIDDEN
+                    FieldWells:
+                      LineChartAggregatedFieldWells:
+                        Category:
+                          - DateDimensionField:
+                              Column:
+                                ColumnName: Date
+                                DataSetIdentifier: People02
+                              FieldId: ColumnId-1.0.1703687945115
+                              HierarchyId: ColumnId-1.0.1703687945115
+                        Colors: []
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      ColorItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-1.0.1703687945115
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                    Type: LINE
+                  ColumnHierarchies:
+                    - DateTimeHierarchy:
+                        HierarchyId: ColumnId-1.0.1703687945115
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+              - PieChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: VISIBLE
+                    DonutOptions:
+                      ArcOptions:
+                        ArcThickness: WHOLE
+                    FieldWells:
+                      PieChartAggregatedFieldWells:
+                        Category:
+                          - CategoricalDimensionField:
+                              Column:
+                                ColumnName: Region
+                                DataSetIdentifier: People02
+                              FieldId: ColumnId-10.0.1703688413615
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimit:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-10.0.1703688413615
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                  ColumnHierarchies: []
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+          - ContentType: INTERACTIVE
+            Layouts:
+              - Configuration:
+                  GridLayout:
+                    CanvasSizeOptions:
+                      ScreenCanvasSizeOptions:
+                        OptimizedViewPortWidth: 1600px
+                        ResizeOption: FIXED
+                    Elements:
+                      - ColumnSpan: 18
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
+                        ElementType: VISUAL
+                        RowSpan: 12
+            Name: Sheet 3
+            SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_3095803b-93db-4561-acd5-48391c0fe48d
+            Visuals:
+              - LineChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: HIDDEN
+                    FieldWells:
+                      LineChartAggregatedFieldWells:
+                        Category:
+                          - CategoricalDimensionField:
+                              Column:
+                                ColumnName: Region
+                                DataSetIdentifier: People02
+                              FieldId: ColumnId-10.0.1703691407556
+                        Colors: []
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      ColorItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-10.0.1703691407556
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                    Type: STACKED_AREA
+                  ColumnHierarchies: []
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
+  BaseDataSet:
+    Type: AWS::QuickSight::DataSet
+    Properties:
+      AwsAccountId: "XXXXXXXXXX" # TODO: PARAM REQUIRED
+      DataSetId: "f66f2dea-7000-4d37-8bbb-da6b33329c34" # Unique identifier for your dataset
+      Name: "ComplianceDataSet01" # Name of your dataset
+      Permissions:
+        - Actions:
+            - quicksight:DeleteDataSet
+            - quicksight:UpdateDataSetPermissions
+            - quicksight:PutDataSetRefreshProperties
+            - quicksight:CreateRefreshSchedule
+            - quicksight:CancelIngestion
+            - quicksight:ListRefreshSchedules
+            - quicksight:UpdateRefreshSchedule
+            - quicksight:PassDataSet
+            - quicksight:DeleteRefreshSchedule
+            - quicksight:DescribeDataSetRefreshProperties
+            - quicksight:DescribeDataSet
+            - quicksight:CreateIngestion
+            - quicksight:DescribeRefreshSchedule
+            - quicksight:ListIngestions
+            - quicksight:UpdateDataSet
+            - quicksight:DescribeDataSetPermissions
+            - quicksight:DeleteDataSetRefreshProperties
+            - quicksight:DescribeIngestion
+          Principal: arn:aws:quicksight:us-east-1:064855577434:user/default/boss
+      PhysicalTableMap:  
+        s3PhysicalTable:
+          S3Source:
+            DataSourceArn: "arn:aws:quicksight:us-east-1:064855577434:datasource/d7fe19c1-ff47-4b26-a860-c353a6f57ca2" # ARN of the data source
+            InputColumns:
+              - Name: "ColumnId-1"
+                Type: "STRING"
+              - Name: "ColumnId-2"
+                Type: "STRING"
+              - Name: "ColumnId-3"
+                Type: "STRING"
+              - Name: "ColumnId-4"
+                Type: "STRING"
+              - Name: "ColumnId-5"
+                Type: "STRING"
+              - Name: "ColumnId-6"
+                Type: "STRING"
+              - Name: "ColumnId-7"
+                Type: "STRING"
+              - Name: "ColumnId-8"
+                Type: "STRING"
+              - Name: "ColumnId-9"
+                Type: "STRING"
+              - Name: "ColumnId-10"
+                Type: "STRING"
+              - Name: "ColumnId-11"
+                Type: "STRING"
+              - Name: "ColumnId-12"
+                Type: "STRING"
+              - Name: "ColumnId-13"
+                Type: "STRING"
+              - Name: "ColumnId-14"
+                Type: "STRING"
+              - Name: "ColumnId-15"
+                Type: "STRING"
+            UploadSettings:
+              ContainsHeader: true
+              Delimiter: ","
+              Format: "CSV"
+              StartFromRow: 1
+              TextQualifier: "DOUBLE_QUOTE"
+      LogicalTableMap:
+        s3PhysicalTable:
+          Alias: Group 1
+          DataTransforms:
+            - RenameColumnOperation:
+                ColumnName: ColumnId-2
+                NewColumnName: Employee Name
+            - RenameColumnOperation:
+                ColumnName: ColumnId-3
+                NewColumnName: Employee ID
+            - RenameColumnOperation:
+                ColumnName: ColumnId-1
+                NewColumnName: Date
+            - RenameColumnOperation:
+                ColumnName: ColumnId-12
+                NewColumnName: Job Family
+            - RenameColumnOperation:
+                ColumnName: ColumnId-6
+                NewColumnName: Date of Birth
+            - RenameColumnOperation:
+                ColumnName: ColumnId-11
+                NewColumnName: Business Function
+            - RenameColumnOperation:
+                ColumnName: ColumnId-7
+                NewColumnName: Gender
+            - RenameColumnOperation:
+                ColumnName: ColumnId-14
+                NewColumnName: Notes
+            - RenameColumnOperation:
+                ColumnName: ColumnId-4
+                NewColumnName: Tenure
+            - RenameColumnOperation:
+                ColumnName: ColumnId-13
+                NewColumnName: Job Level
+            - RenameColumnOperation:
+                ColumnName: ColumnId-5
+                NewColumnName: Monthly Compensation
+            - RenameColumnOperation:
+                ColumnName: ColumnId-10
+                NewColumnName: Region
+            - RenameColumnOperation:
+                ColumnName: ColumnId-8
+                NewColumnName: Education
+            - RenameColumnOperation:
+                ColumnName: ColumnId-9
+                NewColumnName: Event Type
+            - RenameColumnOperation:
+                ColumnName: ColumnId-15
+                NewColumnName: isUnique
+            - CastColumnTypeOperation:
+                ColumnName: Monthly Compensation
+                NewColumnType: DECIMAL
+            - CastColumnTypeOperation:
+                ColumnName: Tenure
+                NewColumnType: INTEGER
+            - CastColumnTypeOperation:
+                ColumnName: Date of Birth
+                Format: yyyy-MM-dd
+                NewColumnType: DATETIME
+            - CastColumnTypeOperation:
+                ColumnName: Date
+                Format: yyyy-MM-dd
+                NewColumnType: DATETIME
+            - TagColumnOperation:
+                ColumnName: Region
+                Tags:
+                  - ColumnGeographicRole: STATE
+          Source:
+            PhysicalTableId: s3PhysicalTable
+      ImportMode: "SPICE" # Import mode (SPICE or DIRECT_QUERY)
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
+  BaseDataSource:
+    Type: 'AWS::QuickSight::DataSource'
+    Properties:
+      AwsAccountId: YOUR_ACCOUNT_ID
+      DataSourceId: MyAthenaDataSource
+      Name: MyAthenaDataSource
+      Type: ATHENA
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup: SANTANDER_ATHENA_WORKGROUP
+      Permissions:
+        - Principal: arn:aws:quicksight:us-east-1:YOUR_ACCOUNT_ID:user/default/boss  # Replace with your QuickSight user ARN
+          Actions:
+            - quicksight:DescribeDataSource
+            - quicksight:DescribeDataSourcePermissions
+            - quicksight:PassDataSource
+            - quicksight:UpdateDataSource
+            - quicksight:DeleteDataSource
+            - quicksight:UpdateDataSourcePermissions
+            - quicksight:Query
+      SslProperties:
+        DisableSsl: False
+

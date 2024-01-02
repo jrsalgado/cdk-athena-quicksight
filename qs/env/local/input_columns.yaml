@@ -1,0 +1,98 @@
+InputColumns:
+  - Name: "ColumnId-1"
+    Type: "STRING"
+  - Name: "ColumnId-2"
+    Type: "STRING"
+  - Name: "ColumnId-3"
+    Type: "STRING"
+  - Name: "ColumnId-4"
+    Type: "STRING"
+  - Name: "ColumnId-5"
+    Type: "STRING"
+  - Name: "ColumnId-6"
+    Type: "STRING"
+  - Name: "ColumnId-7"
+    Type: "STRING"
+  - Name: "ColumnId-8"
+    Type: "STRING"
+  - Name: "ColumnId-9"
+    Type: "STRING"
+  - Name: "ColumnId-10"
+    Type: "STRING"
+  - Name: "ColumnId-11"
+    Type: "STRING"
+  - Name: "ColumnId-12"
+    Type: "STRING"
+  - Name: "ColumnId-13"
+    Type: "STRING"
+  - Name: "ColumnId-14"
+    Type: "STRING"
+  - Name: "ColumnId-15"
+    Type: "STRING"
+  - Name: "ColumnId-16"
+    Type: "STRING"
+
+DataTransforms:
+- RenameColumnOperation:
+    ColumnName: ColumnId-2
+    NewColumnName: Employee Name
+- RenameColumnOperation:
+    ColumnName: ColumnId-3
+    NewColumnName: Employee ID
+- RenameColumnOperation:
+    ColumnName: ColumnId-1
+    NewColumnName: Date
+- RenameColumnOperation:
+    ColumnName: ColumnId-12
+    NewColumnName: Job Family
+- RenameColumnOperation:
+    ColumnName: ColumnId-6
+    NewColumnName: Date of Birth
+- RenameColumnOperation:
+    ColumnName: ColumnId-11
+    NewColumnName: Business Function
+- RenameColumnOperation:
+    ColumnName: ColumnId-7
+    NewColumnName: Gender
+- RenameColumnOperation:
+    ColumnName: ColumnId-14
+    NewColumnName: Notes
+- RenameColumnOperation:
+    ColumnName: ColumnId-4
+    NewColumnName: Tenure
+- RenameColumnOperation:
+    ColumnName: ColumnId-13
+    NewColumnName: Job Level
+- RenameColumnOperation:
+    ColumnName: ColumnId-5
+    NewColumnName: Monthly Compensation
+- RenameColumnOperation:
+    ColumnName: ColumnId-10
+    NewColumnName: Region
+- RenameColumnOperation:
+    ColumnName: ColumnId-8
+    NewColumnName: Education
+- RenameColumnOperation:
+    ColumnName: ColumnId-9
+    NewColumnName: Event Type
+- RenameColumnOperation:
+    ColumnName: ColumnId-15
+    NewColumnName: isUnique
+- CastColumnTypeOperation:
+    ColumnName: Monthly Compensation
+    NewColumnType: DECIMAL
+- CastColumnTypeOperation:
+    ColumnName: Tenure
+    NewColumnType: INTEGER
+- CastColumnTypeOperation:
+    ColumnName: Date of Birth
+    Format: yyyy-MM-dd
+    NewColumnType: DATETIME
+- CastColumnTypeOperation:
+    ColumnName: Date
+    Format: yyyy-MM-dd
+    NewColumnType: DATETIME
+- TagColumnOperation:
+    ColumnName: Region
+    Tags:
+    - ColumnGeographicRole: STATE

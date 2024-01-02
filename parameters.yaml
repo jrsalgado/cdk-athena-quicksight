@@ -1,0 +1,87 @@
+# Common Parameters
+Country:
+  Type: String
+  Default: es
+  AllowedValues:
+    - es
+    - de
+    - pt
+    - nl
+    - ar
+    - mc
+    - mx
+    - us
+  Description: Name of the country for the tag
+Environment:
+  Type: String
+  Default: dev
+  AllowedValues:
+    - dev
+    - qa
+    - stg
+    - pre
+    - ocu
+    - sha
+    - prod
+  Description: Name of the environment for the tag
+Project:
+  Type: String
+  Default: test
+  Description: Name of the project for the tag
+
+# Project Parameters
+# TODO: (Jayro) Enable a one or more workgroups
+AthenaDataSourceWorkgroup01:
+  Type: String
+  Default: primary
+  Description: The Athena workgroup quicksight uses to connect by datasource
+AthenaDatabaseName:
+  Type: String
+  Default: santander
+  Description: Athena Database Name used for QS dataset queries
+AthenaDataSourceName:
+  Type: String
+  Description: Athena Datasource from quicksight
+AthenaDataSourceArn:
+  Type: String
+  Description: "Athena DataSource Arn"
+AthenaDataSourceId:
+  Type: String
+  Description: "Athena DataSource ID"
+PrincipalArn:
+  Type: String
+  Description: Permissions Principal ARN
+QuickSightDashboardName:
+  Type: String
+  Description: Name for quicksight dashboard
+# FIXME: Permitir multiples parametros
+QuickSightDashboardId:
+  Type: String
+  Description: Custom id for QuickSight Dashboard
+QuickSightDashboardSheetId01:
+  Type: String
+  Description: Custom sheet id for QuickSight Dashboard
+QuickSightDashboardSheetId02:
+  Type: String
+  Description: Custom sheet id for QuickSight Dashboard
+# FIXME: Permitir multiples parametros
+QuickSightDataSetId:
+  Type: String
+  Description: Custom id for QuickSight DataSet
+QuickSightUsername:
+  Type: String
+  Default: master
+  ConstraintDescription: QuickSight username must be between 5 and 20 characters
+  Description: Quicksight username
+QuickSightPrincipalType:
+  Type: String
+  Default: user
+  ConstraintDescription: QuickSight Principal Type can also be a group
+  Description: Is the type of user that has permissions to use the datas source usually is a user type or group
+QuickSightNamespace:
+  Type: String
+  Default: default
+  Description: Name of the namespace this principal has access to
+
+# TODO: Implementar  
+# TODO: Sustituir dataSetNameSpace en DataSet[*].properties.definition.Permission[*].principal.arn variable namespace
