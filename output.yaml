@@ -75,202 +75,224 @@ Parameters:
     Type: String
     Default: default
     Description: Name of the namespace this principal has access to
+  QuickSightDashboardDataSetARN01:
+    Type: String
+    Description: ARN for QuickSight DataSet
+  QuickSightDashboardDataSetName01:
+    Type: String
+    Description: Name for QuickSight DataSet
   BootstrapVersion:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /cdk-bootstrap/hnb659fds/version
     Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
 Resources:
-  AthenaDataSource01:
-    Type: AWS::QuickSight::DataSource
+  dashboard02:
+    Type: AWS::QuickSight::Dashboard
     Properties:
       AwsAccountId:
         Ref: AWS::AccountId
-      DataSourceId: MyAthenaDataSource
-      DataSourceParameters:
-        AthenaParameters:
-          WorkGroup:
-            Ref: AthenaDataSourceWorkgroup01
-      Name: MyAthenaDataSource
+      DashboardId:
+        Ref: QuickSightDashboardId
+      Definition:
+        AnalysisDefaults:
+          DefaultNewSheetConfiguration:
+            InteractiveLayoutConfiguration:
+              Grid:
+                CanvasSizeOptions:
+                  ScreenCanvasSizeOptions:
+                    OptimizedViewPortWidth: 1600px
+                    ResizeOption: FIXED
+            SheetContentType: INTERACTIVE
+        CalculatedFields: []
+        DataSetIdentifierDeclarations:
+          - DataSetArn:
+              Ref: QuickSightDashboardDataSetARN01
+            Identifier:
+              Ref: QuickSightDashboardDataSetName01
+        FilterGroups: []
+        ParameterDeclarations: []
+        Sheets:
+          - ContentType: INTERACTIVE
+            Layouts:
+              - Configuration:
+                  GridLayout:
+                    Elements:
+                      - ColumnIndex: 0
+                        ColumnSpan: 20
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+                        ElementType: VISUAL
+                        RowIndex: 0
+                        RowSpan: 6
+                      - ColumnSpan: 18
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+                        ElementType: VISUAL
+                        RowSpan: 12
+            Name: Sheet 1
+            SheetId:
+              Ref: QuickSightDashboardSheetId01
+            Visuals:
+              - LineChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: HIDDEN
+                    FieldWells:
+                      LineChartAggregatedFieldWells:
+                        Category:
+                          - DateDimensionField:
+                              Column:
+                                ColumnName: Date
+                                DataSetIdentifier: dashboard02
+                              FieldId: ColumnId-1.0.1703687945115
+                              HierarchyId: ColumnId-1.0.1703687945115
+                        Colors: []
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      ColorItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-1.0.1703687945115
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                    Type: LINE
+                  ColumnHierarchies:
+                    - DateTimeHierarchy:
+                        DrillDownFilters: []
+                        HierarchyId: ColumnId-1.0.1703687945115
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: ce7svZarSaXIuCDKA7gh1gdWukhwNsnF6b787nwV9WfVoB2npubgTltgMoYivu1u
+              - PieChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: VISIBLE
+                    DonutOptions:
+                      ArcOptions:
+                        ArcThickness: WHOLE
+                    FieldWells:
+                      PieChartAggregatedFieldWells:
+                        Category:
+                          - CategoricalDimensionField:
+                              Column:
+                                ColumnName: Region
+                                DataSetIdentifier: dashboard02
+                              FieldId: ColumnId-10.0.1703688413615
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimit:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-10.0.1703688413615
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                  ColumnHierarchies: []
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: dwLn2QipbUtCEZmnq86lF7bBBGi8cxWgJuN539d0XdHXgIR0jghgC0W9vPrvxrIy
+          - ContentType: INTERACTIVE
+            Layouts:
+              - Configuration:
+                  GridLayout:
+                    CanvasSizeOptions:
+                      ScreenCanvasSizeOptions:
+                        OptimizedViewPortWidth: 1600px
+                        ResizeOption: FIXED
+                    Elements:
+                      - ColumnSpan: 18
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
+                        ElementType: VISUAL
+                        RowSpan: 12
+            Name: Sheet 3
+            SheetId:
+              Ref: QuickSightDashboardSheetId02
+            Visuals:
+              - LineChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: HIDDEN
+                    FieldWells:
+                      LineChartAggregatedFieldWells:
+                        Category:
+                          - CategoricalDimensionField:
+                              Column:
+                                ColumnName: Region
+                                DataSetIdentifier: dashboard02
+                              FieldId: ColumnId-10.0.1703691407556
+                        Colors: []
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      ColorItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-10.0.1703691407556
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                    Type: STACKED_AREA
+                  ColumnHierarchies: []
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: FmiL0jBCZprRIlskilazGcramWPjdROkYAxzd0UE04PUmbXwtNTRhyRsimcGLkFE
+      Name: dashboard02
       Permissions:
         - Actions:
-            - quicksight:DescribeDataSource
-            - quicksight:DescribeDataSourcePermissions
-            - quicksight:PassDataSource
-            - quicksight:UpdateDataSource
-            - quicksight:DeleteDataSource
-            - quicksight:UpdateDataSourcePermissions
-            - quicksight:Query
-          Principal:
-            Fn::Sub:
-              - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
-              - aws_account:
-                  Ref: AWS::AccountId
-                aws_region:
-                  Ref: AWS::Region
-                principalType:
-                  Ref: QuickSightPrincipalType
-                user:
-                  Ref: QuickSightUsername
-                qsNamespace:
-                  Ref: QuickSightNamespace
-      SslProperties:
-        DisableSsl: false
-      Type: ATHENA
-    Metadata:
-      aws:cdk:path: QsStack/AthenaDataSource01
-  AthenaDataSetTable01:
-    Type: AWS::QuickSight::DataSet
-    Properties:
-      AwsAccountId:
-        Ref: AWS::AccountId
-      DataSetId:
-        Ref: QuickSightDataSetId
-      DataSetUsageConfiguration:
-        DisableUseAsDirectQuerySource: false
-        DisableUseAsImportedSource: false
-      ImportMode: SPICE
-      LogicalTableMap:
-        s3PhysicalTable:
-          Alias: Group 1
-          DataTransforms:
-            - RenameColumnOperation:
-                ColumnName: ColumnId-2
-                NewColumnName: Employee Name
-            - RenameColumnOperation:
-                ColumnName: ColumnId-3
-                NewColumnName: Employee ID
-            - RenameColumnOperation:
-                ColumnName: ColumnId-1
-                NewColumnName: Date
-            - RenameColumnOperation:
-                ColumnName: ColumnId-12
-                NewColumnName: Job Family
-            - RenameColumnOperation:
-                ColumnName: ColumnId-6
-                NewColumnName: Date of Birth
-            - RenameColumnOperation:
-                ColumnName: ColumnId-11
-                NewColumnName: Business Function
-            - RenameColumnOperation:
-                ColumnName: ColumnId-7
-                NewColumnName: Gender
-            - RenameColumnOperation:
-                ColumnName: ColumnId-14
-                NewColumnName: Notes
-            - RenameColumnOperation:
-                ColumnName: ColumnId-4
-                NewColumnName: Tenure
-            - RenameColumnOperation:
-                ColumnName: ColumnId-13
-                NewColumnName: Job Level
-            - RenameColumnOperation:
-                ColumnName: ColumnId-5
-                NewColumnName: Monthly Compensation
-            - RenameColumnOperation:
-                ColumnName: ColumnId-10
-                NewColumnName: Region
-            - RenameColumnOperation:
-                ColumnName: ColumnId-8
-                NewColumnName: Education
-            - RenameColumnOperation:
-                ColumnName: ColumnId-9
-                NewColumnName: Event Type
-            - RenameColumnOperation:
-                ColumnName: ColumnId-15
-                NewColumnName: isUnique
-            - CastColumnTypeOperation:
-                ColumnName: Monthly Compensation
-                NewColumnType: DECIMAL
-            - CastColumnTypeOperation:
-                ColumnName: Tenure
-                NewColumnType: INTEGER
-            - CastColumnTypeOperation:
-                ColumnName: Date of Birth
-                Format: yyyy-MM-dd
-                NewColumnType: DATETIME
-            - CastColumnTypeOperation:
-                ColumnName: Date
-                Format: yyyy-MM-dd
-                NewColumnType: DATETIME
-            - TagColumnOperation:
-                ColumnName: Region
-                Tags:
-                  - ColumnGeographicRole: STATE
-          Source:
-            PhysicalTableId: s3PhysicalTable
-      Name: AthenaDataSetTable01
-      Permissions:
-        - Actions:
-            - quicksight:DeleteDataSet
-            - quicksight:UpdateDataSetPermissions
-            - quicksight:PutDataSetRefreshProperties
-            - quicksight:CreateRefreshSchedule
-            - quicksight:CancelIngestion
-            - quicksight:ListRefreshSchedules
-            - quicksight:UpdateRefreshSchedule
-            - quicksight:PassDataSet
-            - quicksight:DeleteRefreshSchedule
-            - quicksight:DescribeDataSetRefreshProperties
-            - quicksight:DescribeDataSet
-            - quicksight:CreateIngestion
-            - quicksight:DescribeRefreshSchedule
-            - quicksight:ListIngestions
-            - quicksight:UpdateDataSet
-            - quicksight:DescribeDataSetPermissions
-            - quicksight:DeleteDataSetRefreshProperties
-            - quicksight:DescribeIngestion
+            - quicksight:DescribeDashboard
+            - quicksight:ListDashboardVersions
+            - quicksight:UpdateDashboardPermissions
+            - quicksight:QueryDashboard
+            - quicksight:UpdateDashboard
+            - quicksight:DeleteDashboard
+            - quicksight:DescribeDashboardPermissions
+            - quicksight:UpdateDashboardPublishedVersion
           Principal:
             Fn::Sub:
               - arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/${user}
               - user:
                   Ref: QuickSightUsername
-      PhysicalTableMap:
-        athena-santander-table:
-          RelationalTable:
-            Catalog: AWSDataCatalog
-            DataSourceArn:
-              Fn::GetAtt:
-                - AthenaDataSource01
-                - Arn
-            InputColumns:
-              - Name: ColumnId-1
-                Type: STRING
-              - Name: ColumnId-2
-                Type: STRING
-              - Name: ColumnId-3
-                Type: STRING
-              - Name: ColumnId-4
-                Type: STRING
-              - Name: ColumnId-5
-                Type: STRING
-              - Name: ColumnId-6
-                Type: STRING
-              - Name: ColumnId-7
-                Type: STRING
-              - Name: ColumnId-8
-                Type: STRING
-              - Name: ColumnId-9
-                Type: STRING
-              - Name: ColumnId-10
-                Type: STRING
-              - Name: ColumnId-11
-                Type: STRING
-              - Name: ColumnId-12
-                Type: STRING
-              - Name: ColumnId-13
-                Type: STRING
-              - Name: ColumnId-14
-                Type: STRING
-              - Name: ColumnId-15
-                Type: STRING
-            Name: santander
-            Schema: athena_database_name_value_as_string
     Metadata:
-      aws:cdk:path: QsStack/AthenaDataSetTable01
+      aws:cdk:path: QsStack/dashboard02
   CDKMetadata:
     Type: AWS::CDK::Metadata
     Properties:
-      Analytics: v2:deflate64:H4sIAAAAAAAA/z2JUQ6CMBAFz8J/u1I1XgAPQOAAZi2rrJVtbLcxhnB3MUa/5s2bLbh6D3WFz2z9EOydzzD3ij6Y5iItJpxIKZm1nx6Ffch8HRXmNR5RsY8leTI/I10+u6P8/5soAytHWUz70jHKZgfOwaG6ZWabiihPBN2Xb0/8Nf+OAAAA
+      Analytics: v2:deflate64:H4sIAAAAAAAA/yWKQQ7CIBAA39I7rMUaP1Af0NQHmC2ssmIhhSWmMf7dNp5mkpkjmPYEbYPvoq0L+sUTfK6CNqj+HgfMOJNQVlu/LZVtKPzwAlu7YPFTwuz2caSSara0e5+iY+EUv2pYxad46MAYODfPwqxzjcIzwfjnDx/2RnSAAAAA
     Metadata:
       aws:cdk:path: QsStack/CDKMetadata/Default
     Condition: CDKMetadataAvailable

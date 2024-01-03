@@ -83,5 +83,13 @@ QuickSightNamespace:
   Default: default
   Description: Name of the namespace this principal has access to
 
+#NoDeps Dashboard
+QuickSightDashboardDataSetARN01:
+  Type: String
+  Description: ARN for QuickSight DataSet
+QuickSightDashboardDataSetName01:
+  Type: String
+  Description: Name for QuickSight DataSet
+
 # TODO: Implementar  
 # TODO: Sustituir dataSetNameSpace en DataSet[*].properties.definition.Permission[*].principal.arn variable namespace

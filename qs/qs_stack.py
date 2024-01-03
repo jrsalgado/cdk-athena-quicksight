@@ -12,7 +12,7 @@ from aws_cdk import (
 ###########################################################
 from qs.qs_datasource import createDataSource
 from qs.qs_dataset import createDataSet
-#from qs.qs_dashboards import createDashboard
+from qs.qs_dashboard import createDashboard, createNoDepsDashboard
 ###########################################################
 
 class QsStack(Stack):
@@ -27,11 +27,13 @@ class QsStack(Stack):
         ######################################################
 
         # TODO: refactor configparams to object instead map
-        data_source_01 = createDataSource( self, datasource_name="AthenaDataSource01" )
-        data_set_01 = createDataSet(self, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
-        #dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataset_object=dataset1)
+        # data_source_01 = createDataSource( self, datasource_name="AthenaDataSource01" )
+        # data_set_01 = createDataSet(self, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
+        # dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataset_object=data_set_01)
             
         ######################################################
+
+        dashboardNoDeps = createNoDepsDashboard(self)
 
 
     def read_params_file(self, params_file):

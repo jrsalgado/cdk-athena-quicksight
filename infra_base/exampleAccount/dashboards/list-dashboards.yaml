@@ -1,0 +1,17 @@
+DashboardSummaryList:
+- Arn: arn:aws:quicksight:us-east-1:064855577434:dashboard/e6390395-4a03-4d80-b862-a4d3506173c7
+  CreatedTime: '2023-12-27T07:42:31.337000-07:00'
+  DashboardId: e6390395-4a03-4d80-b862-a4d3506173c7
+  LastPublishedTime: '2023-12-27T07:42:31.337000-07:00'
+  LastUpdatedTime: '2023-12-27T08:38:52.405000-07:00'
+  Name: dashboard01
+  PublishedVersionNumber: 4
+- Arn: arn:aws:quicksight:us-east-1:064855577434:dashboard/e6390395-4a03-4d80-b862-a4d3506173c8
+  CreatedTime: '2023-12-27T12:04:38.632000-07:00'
+  DashboardId: e6390395-4a03-4d80-b862-a4d3506173c8
+  LastPublishedTime: '2023-12-27T12:04:38.632000-07:00'
+  LastUpdatedTime: '2023-12-27T12:04:39.016000-07:00'
+  Name: dashboard02
+  PublishedVersionNumber: 1
+RequestId: 8ab6e314-6e4f-416e-a0b9-c2db0042bb67
+Status: 200
