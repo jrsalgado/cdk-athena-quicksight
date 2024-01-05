@@ -25,8 +25,14 @@ def fetchQSAllResources(quicksight_client, qs_aws_account_id):
 # DataSources
 
 def fetchQSDataSourcesResources(quicksight_client, qs_aws_account_id: str) -> dict:
-    if not os.path.exists(f'./{qs_aws_account_id}/data-sources'):
-        os.makedirs(f'./{qs_aws_account_id}/data-sources', mode=0o666)
+    parent_dir = f'./{qs_aws_account_id}'
+    child_dir = f'./{qs_aws_account_id}/data-sources'
+
+    if not os.path.exists(parent_dir):
+        os.makedirs(parent_dir, mode=0o777)
+
+    if not os.path.exists(child_dir):
+        os.makedirs(child_dir, mode=0o777)
 
     dataSources, file_path = listQsResource(
         qs_aws_account_id,
@@ -79,8 +85,15 @@ def createDataSourceDescriptionYaml(quicksight_client, dataSourceId: str, qs_aws
 
 
 def fetchQSDataSetsResources(quicksight_client, qs_aws_account_id: str) -> dict:
-    if not os.path.exists(f'./{qs_aws_account_id}/data-sets'):
-        os.makedirs(f'./{qs_aws_account_id}/data-sets', mode=0o666)
+    parent_dir = f'./{qs_aws_account_id}'
+    child_dir = f'./{qs_aws_account_id}/data-sets'
+
+    if not os.path.exists(parent_dir):
+        os.makedirs(parent_dir, mode=0o777)
+
+    if not os.path.exists(child_dir):
+        os.makedirs(child_dir, mode=0o777)
+
 
     dataSets, file_path = listQsResource(
         qs_aws_account_id,
@@ -130,8 +143,14 @@ def createDataSetDescriptionYaml(quicksight_client, dataSetId: str, qs_aws_accou
 
 
 def fetchQSDashboardsResources(quicksight_client, qs_aws_account_id: str) -> dict:
-    if not os.path.exists(f'./{qs_aws_account_id}/dashboards'):
-        os.makedirs(f'./{qs_aws_account_id}/dashboards', mode=0o666)
+    parent_dir = f'./{qs_aws_account_id}'
+    child_dir = f'./{qs_aws_account_id}/dashboards'
+
+    if not os.path.exists(parent_dir):
+        os.makedirs(parent_dir, mode=0o777)
+
+    if not os.path.exists(child_dir):
+        os.makedirs(child_dir, mode=0o777)
 
     dashboards, file_path = listQsResource(
         qs_aws_account_id,
@@ -190,8 +209,14 @@ def createDashboardDescriptionYaml(quicksight_client, dashboardId: str, qs_aws_a
 
 
 def fetchQSAnalysesResources(quicksight_client, qs_aws_account_id: str) -> dict:
-    if not os.path.exists(f'./{qs_aws_account_id}/analyses'):
-        os.makedirs(f'./{qs_aws_account_id}/analyses', mode=0o666)
+    parent_dir = f'./{qs_aws_account_id}'
+    child_dir = f'./{qs_aws_account_id}/analyses'
+
+    if not os.path.exists(parent_dir):
+        os.makedirs(parent_dir, mode=0o777)
+
+    if not os.path.exists(child_dir):
+        os.makedirs(child_dir, mode=0o777)
 
     list_analysis, file_path = listQsResource(
         qs_aws_account_id,
