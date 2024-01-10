@@ -19,21 +19,33 @@ class QsStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
+        self.configParams = {}
+
+        general_params = self.node.try_get_context("general_params")
+        general_params_file = self.read_params_file(general_params)
+        self.define_parameters(general_params_file)
         
         params_file = self.node.try_get_context("params")
         file_params = self.read_params_file(params_file)
         self.define_parameters(file_params)
 
-        ######################################################
+        dataset_params = self.node.try_get_context("dataset_params")
+        dataset_params_files = self.read_params_file(dataset_params)
+        self.define_parameters(dataset_params_files)
 
-        # TODO: refactor configparams to object instead map
-        # data_source_01 = createDataSource( self, datasource_name="AthenaDataSource01" )
-        # data_set_01 = createDataSet(self, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
+        ######################################################
+        # Creates An Cloudformation file with: 
+        # DataSources
+        # DataSets
+        # Dashboards
+        # From already created Quicksight resources able to be deployed on any account
+        data_source_01 = createDataSource( self, datasource_name="AthenaDataSource01" )
+        data_set_01 = createDataSet(self, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
         # dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataset_object=data_set_01)
             
         ######################################################
 
-        dashboardNoDeps = createNoDepsDashboard(self)
+        #dashboardNoDeps = createNoDepsDashboard(self)
 
 
     def read_params_file(self, params_file):
@@ -42,7 +54,6 @@ class QsStack(Stack):
             return data
 
     def define_parameters(self, data):
-        self.configParams = {}
         for key, value in data.items():
             params = {
                 'type': value['Type'],

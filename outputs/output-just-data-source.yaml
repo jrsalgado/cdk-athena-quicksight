@@ -1,0 +1,161 @@
+Parameters:
+  DataSourceId01:
+    Type: String
+    Description: ID of Athena Data Source
+  DataSourceName01:
+    Type: String
+    Description: Name of the Data Source
+  DataSourceAthenaWorkGroup01:
+    Type: String
+    Default: primary
+    Description: Athena Workgroup for the Data Source
+  QuickSightPrincipalType:
+    Type: String
+    Default: user
+    Description: Principal type for the ARN
+  QuickSightUsername:
+    Type: String
+    Default: master
+    Description: Username with QuickSight permissions
+  QuickSightNamespace:
+    Type: String
+    Default: default
+    Description: Namespace for the ARN
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Resources:
+  AthenaDataSource01:
+    Type: AWS::QuickSight::DataSource
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId:
+        Ref: DataSourceId01
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup:
+            Ref: DataSourceAthenaWorkGroup01
+      Name:
+        Ref: DataSourceName01
+      Permissions:
+        - Actions:
+            - quicksight:DescribeDataSource
+            - quicksight:DescribeDataSourcePermissions
+            - quicksight:PassDataSource
+            - quicksight:UpdateDataSource
+            - quicksight:DeleteDataSource
+            - quicksight:UpdateDataSourcePermissions
+            - quicksight:Query
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+              - aws_account:
+                  Ref: AWS::AccountId
+                aws_region:
+                  Ref: AWS::Region
+                principalType:
+                  Ref: QuickSightPrincipalType
+                user:
+                  Ref: QuickSightUsername
+                qsNamespace:
+                  Ref: QuickSightNamespace
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource01
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/z2KQQ6CMBAA38K9XakaP4APIPAAs5ZV1so2tNsQYvy7GBNPM8nMHlx9hLrCJVs/BPvkK7x6RR9Mc5MWE06klMzWL3NhHzLfR4WtnVGxjyV5+p4d5b83UQZWjvI27apjlN0BnINT9cjMNhVRngi6Hz8UauYngQAAAA==
+    Metadata:
+      aws:cdk:path: QsStack/CDKMetadata/Default
+    Condition: CDKMetadataAvailable
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - af-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - "1"
+                  - "2"
+                  - "3"
+                  - "4"
+                  - "5"
+                - Ref: BootstrapVersion
+        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+

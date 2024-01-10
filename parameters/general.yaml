@@ -1,0 +1,13 @@
+  # Global
+  QuickSightPrincipalType:
+    Type: String
+    Default: user
+    Description: Principal type for the ARN 
+  QuickSightUsername:
+    Type: String
+    Default: master
+    Description: Username with QuickSight permissions
+  QuickSightNamespace:
+    Type: String
+    Default: default
+    Description: Namespace for the ARN

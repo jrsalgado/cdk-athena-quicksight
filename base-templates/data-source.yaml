@@ -1,0 +1,117 @@
+# Param Overrides
+# {   # Global
+#     "QuickSightNamespace": -----
+#     "QuickSightPrincipalType": -----
+#     "QuickSightUsername": -----
+#
+#.    # DataSource
+#     "DataSourceId01": "11e7f1b6-a92f-477e-95d9-dc36931443b2",
+#     "DataSourceName01": "AthenaTest",
+#     "DataSourceAthenaWorkGroup01": "primary",
+# }
+
+# Base 
+BaseDataSource:
+  Type: 'AWS::QuickSight::DataSource'
+  Properties:
+    AwsAccountId:
+      Ref: AWS::AccountId
+    # params: 11e7f1b6-a92f-477e-95d9-dc36931443b2
+    # DescribeDataSource.DataSource.DataSourceId
+    DataSourceId:
+      Ref: DataSourceId01
+    # params: AthenaTest
+    # DescribeDataSource.DataSource.Name
+    Name:
+      Ref: DataSourceName01
+    Type: ATHENA # hardcodeado
+    DataSourceParameters:
+      AthenaParameters:
+        # params: [default] primary
+        # DescribeDataSource.DataSourceParameters.AthenaParameters.WorkGroup
+        WorkGroup:
+          Ref: DataSourceAthenaWorkGroup01
+    Permissions:
+      - Principal: 
+          Fn::Sub:
+            - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+            - aws_account:
+                Ref: AWS::AccountId
+              aws_region:
+                Ref: AWS::Region
+              principal_type: # propiedad renombrada (antes: principalType)
+                Ref: QuickSightPrincipalType
+              namespace: # propiedad renombrada (antes: qsNamespace)
+                Ref: QuickSightNamespace
+              username: # propiedad renombrada (antes: user)
+                Ref: QuickSightUsername
+        # Acciones pueden ir hardcodeadas
+        Actions:
+          - quicksight:DescribeDataSource
+          - quicksight:DescribeDataSourcePermissions
+          - quicksight:PassDataSource
+          - quicksight:UpdateDataSource
+          - quicksight:DeleteDataSource
+          - quicksight:UpdateDataSourcePermissions
+          - quicksight:Query
+    SslProperties:
+      DisableSsl: False # copiar de origin
+
+
+# Output
+Parameters:
+  DataSourceId01:
+    Type: String
+    Description: ID of Athena Data Source
+  DataSourceName01:
+    Type: String
+    Description: Name of the Data Source
+  DataSourceAthenaWorkGroup01:
+    Type: String
+    Default: primary
+    Description: Athena Workgroup for the Data Source
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Resources:
+  AthenaDataSource01:
+    Type: AWS::QuickSight::DataSource
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId:
+        Ref: DataSourceId01
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup:
+            Ref: DataSourceAthenaWorkGroup01
+      Name:
+        Ref: DataSourceName01
+      Permissions:
+        - Actions:
+            - quicksight:DescribeDataSource
+            - quicksight:DescribeDataSourcePermissions
+            - quicksight:PassDataSource
+            - quicksight:UpdateDataSource
+            - quicksight:DeleteDataSource
+            - quicksight:UpdateDataSourcePermissions
+            - quicksight:Query
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+              # params: arn:aws:quicksight:us-east-1:064855577434:user/default/boss
+              # DescribeDataSourcePermissions.Permissions[0].Principal
+              - aws_account:
+                  Ref: AWS::AccountId
+                aws_region:
+                  Ref: AWS::Region
+                principal_type:
+                  Ref: QuickSightPrincipalType
+                namespace:
+                  Ref: QuickSightNamespace
+                username:
+                  Ref: QuickSightUsername
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA

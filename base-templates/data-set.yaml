@@ -1,0 +1,107 @@
+# Param Overrides
+# {   
+#.    # DataSet
+#    "DataSetAthenaId01": "2384dd87-5baa-4308-b2e4-1ec602bba012",
+#    "DataSetAthenaName01": "athenatesttable",
+#    "DataSetAthenaCatalog01": "AwsDataCatalog",
+#    "DataSetAthenaDataSourceArn01": "arn:aws:quicksight:us-east-1:064855577434:datasource/11e7f1b6-a92f-477e-95d9-dc36931443b2",
+#    "DataSetAthenaTableName01": "athenatesttable",
+#    "DataSetAthenaSchema01": "athenatestdatabase",
+# }
+
+# Base
+BaseDataSetAthenaRelationalTable:
+  Type: AWS::QuickSight::DataSet
+  Properties:
+    AwsAccountId: 
+      Ref: AWS::AccountId
+    # params: 11e7f1b6-a92f-477e-95d9-dc36931443b2
+    # DescribeDataSet.DataSet.DataSetId
+    DataSetId:
+      Ref: DataSetAthenaId01
+    # params: athenatesttable
+    # DescribeDataSet.DataSet.Name
+    Name: 
+      Ref: DataSetAthenaName01
+    Permissions:
+        # Acciones hardcodeados
+      - Actions:
+          - quicksight:DeleteDataSet
+          - quicksight:UpdateDataSetPermissions
+          - quicksight:PutDataSetRefreshProperties
+          - quicksight:CreateRefreshSchedule
+          - quicksight:CancelIngestion
+          - quicksight:ListRefreshSchedules
+          - quicksight:UpdateRefreshSchedule
+          - quicksight:PassDataSet
+          - quicksight:DeleteRefreshSchedule
+          - quicksight:DescribeDataSetRefreshProperties
+          - quicksight:DescribeDataSet
+          - quicksight:CreateIngestion
+          - quicksight:DescribeRefreshSchedule
+          - quicksight:ListIngestions
+          - quicksight:UpdateDataSet
+          - quicksight:DescribeDataSetPermissions
+          - quicksight:DeleteDataSetRefreshProperties
+          - quicksight:DescribeIngestion
+        Principal:
+          Fn::Sub:
+            - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username} # uso de nuevos nombres de propiedades
+            - aws_account:
+                Ref: AWS::AccountId
+              aws_region:
+                Ref: AWS::Region
+              principal_type: # propiedad renombrada (antes: principalType)
+                Ref: QuickSightPrincipalType
+              namespace: # propiedad renombrada (antes: qsNamespace)
+                Ref: QuickSightNamespace
+              username: # propiedad renombrada (antes: user)
+                Ref: QuickSightUsername
+    # PhysicalTableMap copiar desde origin
+    PhysicalTableMap: 
+      d18ab860-4845-4deb-ac1a-44756fa5d575:
+        RelationalTable:
+          # params: AwsDataCatalog
+          # DescribeDataSet.DataSet.PhysicalTableMap.[*].RelationalTable.Catalog
+          Catalog: 
+            Ref: DataSetAthenaCatalog01 # Cambiar post copy
+          # params: arn:aws:quicksight:us-east-1:064855577434:datasource/11e7f1b6-a92f-477e-95d9-dc36931443b2
+          # Referencia al datasource creado en el mismo stack
+          DataSourceArn: 
+            Fn::GetAtt: 
+              - BaseDataSource # Referencia al recurso de datasource creado BaseDataSource
+              - Arn
+          # Copia desde origen
+          # DescribeDataSet.DataSet.PhysicalTableMap.[*].RelationalTable.InputColumns
+          InputColumns:
+          - Name: id
+            Type: INTEGER
+          - Name: name
+            Type: STRING
+          - Name: age
+            Type: INTEGER
+          - Name: score
+            SubType: FLOAT
+            Type: DECIMAL
+          # params: athenatesttable
+          # DescribeDataSet.DataSet.PhysicalTableMap.[*].RelationalTable.Name
+          Name:
+            Ref: DataSetAthenaTableName01
+          # params: athenatestdatabase
+          # DescribeDataSet.DataSet.PhysicalTableMap.[*].RelationalTable.Schema
+          Schema: 
+            Ref: DataSetAthenaSchema01
+    # Copia desde origen
+    # base_dataset['LogicalTableMap'] = LogicalTableMap
+    LogicalTableMap:
+      e9d41384-e32a-4138-bead-d7321227170a:
+        # params: athenatesttable
+        # DescribeDataSet.DataSet.LogicalTableMap.[*].Alias
+        Alias:
+          Ref: DataSetAthenaTableName01
+        Source:
+          PhysicalTableId: d18ab860-4845-4deb-ac1a-44756fa5d575 # Referencia al physical table map creado en el mismo stack
+    ImportMode: "SPICE" # Import mode (SPICE or DIRECT_QUERY)
+    DataSetUsageConfiguration: # copiar desde origin
+      DisableUseAsDirectQuerySource: false
+      DisableUseAsImportedSource: false

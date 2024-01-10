@@ -1,0 +1,235 @@
+# Param Overrides
+# {   
+#.    # Dashboard
+#     "DashboardId01": "e6390395-4a03-4d80-b862-a4d3506173c8",
+#     "DashboardName01": "dashboard02",
+#     "DashboardDataSetIdentifier01": "People02"
+# }
+
+# Base
+BaseDashboard:
+  Type: AWS::QuickSight::Dashboard
+  Properties:
+    AwsAccountId:
+      Ref: AWS::AccountId
+    # params: e6390395-4a03-4d80-b862-a4d3506173c8
+    # DescribeDashboard.Dashboard.DashboardId
+    DashboardId: 
+      Ref: DashboardId01
+    # params: dashboard02
+    # DescribeDashboard.Dashboard.Name
+    Name: 
+      Ref: DashboardName01
+    Permissions:
+        # Acciones hardcodeadas
+      - Actions:
+          - quicksight:DescribeDashboard
+          - quicksight:ListDashboardVersions
+          - quicksight:UpdateDashboardPermissions
+          - quicksight:QueryDashboard
+          - quicksight:UpdateDashboard
+          - quicksight:DeleteDashboard
+          - quicksight:DescribeDashboardPermissions
+          - quicksight:UpdateDashboardPublishedVersion
+        Principal: 
+          Fn::Sub:
+            - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+            - aws_account:
+                Ref: AWS::AccountId
+              aws_region:
+                Ref: AWS::Region
+              principal_type: # propiedad renombrada (antes: principalType)
+                Ref: QuickSightPrincipalType
+              namespace: # propiedad renombrada (antes: qsNamespace)
+                Ref: QuickSightNamespace
+              username: # propiedad renombrada (antes: user)
+                Ref: QuickSightUsername
+    Definition:
+      # Copy from origin
+      # DescribeDashboardDefinition.Definition.AnalysisDefaults
+      AnalysisDefaults:
+        DefaultNewSheetConfiguration:
+          InteractiveLayoutConfiguration:
+            Grid:
+              CanvasSizeOptions:
+                ScreenCanvasSizeOptions:
+                  OptimizedViewPortWidth: 1600px
+                  ResizeOption: FIXED
+          SheetContentType: INTERACTIVE
+      # Copy from origin
+      # DescribeDashboardDefinition.Definition.CalculatedFields
+      CalculatedFields: []
+      DataSetIdentifierDeclarations:
+          # params: arn:aws:quicksight:us-east-1:064855577434:dataset/f66f2dea-7000-4d37-8bbb-da6b33329c34
+          # DescribeDashboardDefinition.Definition.DataSetIdentifierDeclarations[0].DataSetArn
+        - DataSetArn: 
+            Ref: BaseDataSetAthenaRelationalTable # Dependencia del dataset creado en el stack
+          # params: People02
+          # DescribeDashboardDefinition.Definition.DataSetIdentifierDeclarations[0].Identifier
+          Identifier: 
+            Ref: DashboardDataSetIdentifier
+      # Copy from origin
+      # DescribeDashboardDefinition.Definition.FilterGroups
+      FilterGroups: []
+      Options:
+        WeekStart: SUNDAY
+      ParameterDeclarations: []
+      Sheets:
+        - ContentType: INTERACTIVE
+          Layouts:
+            - Configuration:
+                GridLayout:
+                  Elements:
+                    - ColumnIndex: 0
+                      ColumnSpan: 20
+                      ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+                      ElementType: VISUAL
+                      RowIndex: 0
+                      RowSpan: 6
+                    - ColumnSpan: 18
+                      ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+                      ElementType: VISUAL
+                      RowSpan: 12
+          Name: Sheet 1
+          SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_7aac16ad-0d41-4946-89b4-f51b819aa7c6
+          Visuals:
+            - LineChartVisual:
+                Actions: []
+                ChartConfiguration:
+                  DataLabels:
+                    Overlap: DISABLE_OVERLAP
+                    Visibility: HIDDEN
+                  FieldWells:
+                    LineChartAggregatedFieldWells:
+                      Category:
+                        - DateDimensionField:
+                            Column:
+                              ColumnName: Date
+                              # Copy from origin
+                              # DescribeDashboardDefinition.Definition.Sheets
+                              DataSetIdentifier: People02
+                            FieldId: ColumnId-1.0.1703687945115
+                            HierarchyId: ColumnId-1.0.1703687945115
+                      Colors: []
+                      Values: []
+                  SortConfiguration:
+                    CategoryItemsLimitConfiguration:
+                      OtherCategories: INCLUDE
+                    ColorItemsLimitConfiguration:
+                      OtherCategories: INCLUDE
+                    SmallMultiplesLimitConfiguration:
+                      OtherCategories: INCLUDE
+                  Tooltip:
+                    FieldBasedTooltip:
+                      AggregationVisibility: HIDDEN
+                      TooltipFields:
+                        - FieldTooltipItem:
+                            FieldId: ColumnId-1.0.1703687945115
+                            Visibility: VISIBLE
+                      TooltipTitleType: PRIMARY_VALUE
+                    SelectedTooltipType: DETAILED
+                    TooltipVisibility: VISIBLE
+                  Type: LINE
+                ColumnHierarchies:
+                  - DateTimeHierarchy:
+                      HierarchyId: ColumnId-1.0.1703687945115
+                Subtitle:
+                  Visibility: VISIBLE
+                Title:
+                  Visibility: VISIBLE
+                VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+            - PieChartVisual:
+                Actions: []
+                ChartConfiguration:
+                  DataLabels:
+                    Overlap: DISABLE_OVERLAP
+                    Visibility: VISIBLE
+                  DonutOptions:
+                    ArcOptions:
+                      ArcThickness: WHOLE
+                  FieldWells:
+                    PieChartAggregatedFieldWells:
+                      Category:
+                        - CategoricalDimensionField:
+                            Column:
+                              ColumnName: Region
+                              DataSetIdentifier: People02
+                            FieldId: ColumnId-10.0.1703688413615
+                      Values: []
+                  SortConfiguration:
+                    CategoryItemsLimit:
+                      OtherCategories: INCLUDE
+                    SmallMultiplesLimitConfiguration:
+                      OtherCategories: INCLUDE
+                  Tooltip:
+                    FieldBasedTooltip:
+                      AggregationVisibility: HIDDEN
+                      TooltipFields:
+                        - FieldTooltipItem:
+                            FieldId: ColumnId-10.0.1703688413615
+                            Visibility: VISIBLE
+                      TooltipTitleType: PRIMARY_VALUE
+                    SelectedTooltipType: DETAILED
+                    TooltipVisibility: VISIBLE
+                ColumnHierarchies: []
+                Subtitle:
+                  Visibility: VISIBLE
+                Title:
+                  Visibility: VISIBLE
+                VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+        - ContentType: INTERACTIVE
+          Layouts:
+            - Configuration:
+                GridLayout:
+                  CanvasSizeOptions:
+                    ScreenCanvasSizeOptions:
+                      OptimizedViewPortWidth: 1600px
+                      ResizeOption: FIXED
+                  Elements:
+                    - ColumnSpan: 18
+                      ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
+                      ElementType: VISUAL
+                      RowSpan: 12
+          Name: Sheet 3
+          SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_3095803b-93db-4561-acd5-48391c0fe48d
+          Visuals:
+            - LineChartVisual:
+                Actions: []
+                ChartConfiguration:
+                  DataLabels:
+                    Overlap: DISABLE_OVERLAP
+                    Visibility: HIDDEN
+                  FieldWells:
+                    LineChartAggregatedFieldWells:
+                      Category:
+                        - CategoricalDimensionField:
+                            Column:
+                              ColumnName: Region
+                              DataSetIdentifier: People02
+                            FieldId: ColumnId-10.0.1703691407556
+                      Colors: []
+                      Values: []
+                  SortConfiguration:
+                    CategoryItemsLimitConfiguration:
+                      OtherCategories: INCLUDE
+                    ColorItemsLimitConfiguration:
+                      OtherCategories: INCLUDE
+                    SmallMultiplesLimitConfiguration:
+                      OtherCategories: INCLUDE
+                  Tooltip:
+                    FieldBasedTooltip:
+                      AggregationVisibility: HIDDEN
+                      TooltipFields:
+                        - FieldTooltipItem:
+                            FieldId: ColumnId-10.0.1703691407556
+                            Visibility: VISIBLE
+                      TooltipTitleType: PRIMARY_VALUE
+                    SelectedTooltipType: DETAILED
+                    TooltipVisibility: VISIBLE
+                  Type: STACKED_AREA
+                ColumnHierarchies: []
+                Subtitle:
+                  Visibility: VISIBLE
+                Title:
+                  Visibility: VISIBLE
+                VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300

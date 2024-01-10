@@ -6,12 +6,11 @@ from aws_cdk import Fn, Aws
 
 def createDataSource( stack: Stack, datasource_name: str ):
 
-    with open("poc/base_dashboard.yaml") as f:
+    with open("base-templates/data-source.yaml") as f:
         data = yaml.load(f, Loader=SafeLoader)
 
     converted_data = convert_keys_to_camel_case(data)
-    base_datasource = converted_data['resources']['baseDataSource']['properties'] # type: ignore
-
+    base_datasource = converted_data['baseDataSource']['properties'] # type: ignore
     aws_account_id = Aws.ACCOUNT_ID
 
     datasourcePrincipal= Fn.sub(
@@ -24,14 +23,16 @@ def createDataSource( stack: Stack, datasource_name: str ):
             'qsNamespace': stack.configParams['QuickSightNamespace'].value_as_string, # type: ignore
         }
     )
-    base_datasource['dataSourceParameters']['athenaParameters']['workGroup']= stack.configParams['AthenaDataSourceWorkgroup01'].value_as_string # type: ignore
+    
+    base_datasource['dataSourceParameters']['athenaParameters']['workGroup']= stack.configParams['DataSourceAthenaWorkGroup01'].value_as_string # type: ignore
     
     base_datasource['permissions'][0]['principal'] = datasourcePrincipal
     quicksightDataSource =  quicksight.CfnDataSource(stack,
         id= datasource_name,
         aws_account_id= aws_account_id,
-        data_source_id= base_datasource['dataSourceId'],
-        name=           base_datasource['name'],
+        #data_source_id= base_datasource['dataSourceId'],
+        data_source_id= stack.configParams['DataSourceId01'].value_as_string, # type: ignore
+        name=           stack.configParams['DataSourceName01'].value_as_string, # type: ignore
         type=           base_datasource['type'],
         data_source_parameters= base_datasource['dataSourceParameters'],
         permissions=    base_datasource['permissions'],
