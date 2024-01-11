@@ -13,9 +13,16 @@ aws_role_to_assume = os.getenv('AWS_ROLE_TO_ASSUME')
 aws_profile = os.getenv('AWS_PROFILE')
 
 session = boto3.Session(profile_name=aws_profile)
-#quicksight_session = session.client('quicksight')
 
-if aws_role_to_assume:
+if aws_access_key_id:
+    quicksight_client = session.client(
+        'quicksight',
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        region_name=aws_region
+    )
+
+elif aws_role_to_assume:
     sts_client = session.client('sts')
 
     response = sts_client.assume_role(
@@ -34,8 +41,6 @@ if aws_role_to_assume:
 else:
     quicksight_client = session.client(
         'quicksight',
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
         region_name=aws_region
     )
 
