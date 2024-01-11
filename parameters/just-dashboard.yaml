@@ -1,0 +1,9 @@
+DashboardId01:
+  Type: String
+  Description: TODO
+DashboardName01:
+  Type: String
+  Description: TODO
+DashboardDataSetIdentifier01:
+  Type: String
+  Description: TODO

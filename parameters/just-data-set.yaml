@@ -1,0 +1,15 @@
+DataSetAthenaId01:
+  Type: String
+  Description: ID for DataSetAthenaId01, e.g., '2384dd87-5baa-4308-b2e4-1ec602bba012'
+DataSetAthenaName01:
+  Type: String
+  Description: Name for DataSetAthenaName01, e.g., 'athenatesttable'
+DataSetAthenaCatalog01:
+  Type: String
+  Description: Catalog for DataSetAthenaCatalog01, e.g., 'AwsDataCatalog'
+DataSetAthenaTableName01:
+  Type: String
+  Description: TableName for DataSetAthenaTableName01, e.g., 'athenatesttable'
+DataSetAthenaSchema01:
+  Type: String
+  Description: Schema for DataSetAthenaSchema01, e.g., 'athenatestdatabase'
