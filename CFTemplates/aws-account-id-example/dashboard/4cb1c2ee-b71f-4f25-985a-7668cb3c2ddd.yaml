@@ -1,0 +1,364 @@
+Parameters:
+  QuickSightPrincipalType:
+    Type: String
+    Default: user
+    Description: Principal type for the ARN
+  QuickSightUsername:
+    Type: String
+    Default: master
+    Description: Username with QuickSight permissions
+  QuickSightNamespace:
+    Type: String
+    Default: default
+    Description: Namespace for the ARN
+  DataSourceId01:
+    Type: String
+    Description: ID of Athena Data Source
+  DataSourceName01:
+    Type: String
+    Description: Name of the Data Source
+  DataSourceAthenaWorkGroup01:
+    Type: String
+    Default: primary
+    Description: Athena Workgroup for the Data Source
+  DataSetAthenaId01:
+    Type: String
+    Description: ID for DataSetAthenaId01, e.g., '2384dd87-5baa-4308-b2e4-1ec602bba012'
+  DataSetAthenaName01:
+    Type: String
+    Description: Name for DataSetAthenaName01, e.g., 'athenatesttable'
+  DataSetAthenaCatalog01:
+    Type: String
+    Description: Catalog for DataSetAthenaCatalog01, e.g., 'AwsDataCatalog'
+  DataSetAthenaTableName01:
+    Type: String
+    Description: TableName for DataSetAthenaTableName01, e.g., 'athenatesttable'
+  DataSetAthenaSchema01:
+    Type: String
+    Description: Schema for DataSetAthenaSchema01, e.g., 'athenatestdatabase'
+  DashboardId01:
+    Type: String
+    Description: TODO
+  DashboardName01:
+    Type: String
+    Description: TODO
+  DashboardDataSetIdentifier01:
+    Type: String
+    Description: TODO
+Resources:
+  AthenaDataSource01:
+    Type: AWS::QuickSight::DataSource
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId:
+        Ref: DataSourceId01
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup:
+            Ref: DataSourceAthenaWorkGroup01
+      Name:
+        Ref: DataSourceName01
+      Permissions:
+        - Actions:
+            - quicksight:DescribeDataSource
+            - quicksight:DescribeDataSourcePermissions
+            - quicksight:PassDataSource
+            - quicksight:UpdateDataSource
+            - quicksight:DeleteDataSource
+            - quicksight:UpdateDataSourcePermissions
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+              - aws_account:
+                  Ref: AWS::AccountId
+                aws_region:
+                  Ref: AWS::Region
+                principalType:
+                  Ref: QuickSightPrincipalType
+                user:
+                  Ref: QuickSightUsername
+                qsNamespace:
+                  Ref: QuickSightNamespace
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource01
+  AthenaDataSetTable01:
+    Type: AWS::QuickSight::DataSet
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSetId:
+        Ref: DataSetAthenaId01
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
+      ImportMode: SPICE
+      LogicalTableMap:
+        e9d41384-e32a-4138-bead-d7321227170a:
+          Alias:
+            Ref: DataSetAthenaTableName01
+          Source:
+            PhysicalTableId: d18ab860-4845-4deb-ac1a-44756fa5d575
+      Name:
+        Ref: DataSetAthenaName01
+      Permissions:
+        - Actions:
+            - quicksight:DeleteDataSet
+            - quicksight:UpdateDataSetPermissions
+            - quicksight:PutDataSetRefreshProperties
+            - quicksight:CreateRefreshSchedule
+            - quicksight:CancelIngestion
+            - quicksight:ListRefreshSchedules
+            - quicksight:UpdateRefreshSchedule
+            - quicksight:PassDataSet
+            - quicksight:DeleteRefreshSchedule
+            - quicksight:DescribeDataSetRefreshProperties
+            - quicksight:DescribeDataSet
+            - quicksight:CreateIngestion
+            - quicksight:DescribeRefreshSchedule
+            - quicksight:ListIngestions
+            - quicksight:UpdateDataSet
+            - quicksight:DescribeDataSetPermissions
+            - quicksight:DeleteDataSetRefreshProperties
+            - quicksight:DescribeIngestion
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:${principal_type}/${namespace}/${username}
+              - aws_account:
+                  Ref: AWS::AccountId
+                aws_region:
+                  Ref: AWS::Region
+                principal_type:
+                  Ref: QuickSightPrincipalType
+                namespace:
+                  Ref: QuickSightNamespace
+                username:
+                  Ref: QuickSightUsername
+      PhysicalTableMap:
+        d18ab860-4845-4deb-ac1a-44756fa5d575:
+          RelationalTable:
+            Catalog: AwsDataCatalog
+            DataSourceArn:
+              Fn::GetAtt:
+                - AthenaDataSource01
+                - Arn
+            InputColumns:
+              - Name: id
+                Type: INTEGER
+              - Name: name
+                Type: STRING
+              - Name: age
+                Type: INTEGER
+              - Name: score
+                Type: DECIMAL
+            Name:
+              Ref: DataSetAthenaTableName01
+            Schema:
+              Ref: DataSetAthenaSchema01
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSetTable01
+  QuickSightDashboard01:
+    Type: AWS::QuickSight::Dashboard
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DashboardId:
+        Ref: DashboardId01
+      Definition:
+        AnalysisDefaults:
+          DefaultNewSheetConfiguration:
+            InteractiveLayoutConfiguration:
+              Grid:
+                CanvasSizeOptions:
+                  ScreenCanvasSizeOptions:
+                    OptimizedViewPortWidth: 1600px
+                    ResizeOption: FIXED
+            SheetContentType: INTERACTIVE
+        CalculatedFields: []
+        DataSetIdentifierDeclarations:
+          - DataSetArn:
+              Fn::GetAtt:
+                - AthenaDataSetTable01
+                - Arn
+            Identifier:
+              Ref: DataSetAthenaName01
+        FilterGroups: []
+        ParameterDeclarations: []
+        Sheets:
+          - ContentType: INTERACTIVE
+            Layouts:
+              - Configuration:
+                  GridLayout:
+                    Elements:
+                      - ColumnIndex: 0
+                        ColumnSpan: 20
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+                        ElementType: VISUAL
+                        RowIndex: 0
+                        RowSpan: 6
+                      - ColumnSpan: 18
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+                        ElementType: VISUAL
+                        RowSpan: 12
+            Name: Sheet 1
+            SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_7aac16ad-0d41-4946-89b4-f51b819aa7c6
+            Visuals:
+              - LineChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: HIDDEN
+                    FieldWells:
+                      LineChartAggregatedFieldWells:
+                        Category:
+                          - DateDimensionField:
+                              Column:
+                                ColumnName: Date
+                                DataSetIdentifier: People02
+                              FieldId: ColumnId-1.0.1703687945115
+                              HierarchyId: ColumnId-1.0.1703687945115
+                        Colors: []
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      ColorItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-1.0.1703687945115
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                    Type: LINE
+                  ColumnHierarchies:
+                    - DateTimeHierarchy:
+                        HierarchyId: ColumnId-1.0.1703687945115
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+              - PieChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: VISIBLE
+                    DonutOptions:
+                      ArcOptions:
+                        ArcThickness: WHOLE
+                    FieldWells:
+                      PieChartAggregatedFieldWells:
+                        Category:
+                          - CategoricalDimensionField:
+                              Column:
+                                ColumnName: Region
+                                DataSetIdentifier: People02
+                              FieldId: ColumnId-10.0.1703688413615
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimit:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-10.0.1703688413615
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                  ColumnHierarchies: []
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+          - ContentType: INTERACTIVE
+            Layouts:
+              - Configuration:
+                  GridLayout:
+                    CanvasSizeOptions:
+                      ScreenCanvasSizeOptions:
+                        OptimizedViewPortWidth: 1600px
+                        ResizeOption: FIXED
+                    Elements:
+                      - ColumnSpan: 18
+                        ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
+                        ElementType: VISUAL
+                        RowSpan: 12
+            Name: Sheet 3
+            SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_3095803b-93db-4561-acd5-48391c0fe48d
+            Visuals:
+              - LineChartVisual:
+                  Actions: []
+                  ChartConfiguration:
+                    DataLabels:
+                      Overlap: DISABLE_OVERLAP
+                      Visibility: HIDDEN
+                    FieldWells:
+                      LineChartAggregatedFieldWells:
+                        Category:
+                          - CategoricalDimensionField:
+                              Column:
+                                ColumnName: Region
+                                DataSetIdentifier: People02
+                              FieldId: ColumnId-10.0.1703691407556
+                        Colors: []
+                        Values: []
+                    SortConfiguration:
+                      CategoryItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      ColorItemsLimitConfiguration:
+                        OtherCategories: INCLUDE
+                      SmallMultiplesLimitConfiguration:
+                        OtherCategories: INCLUDE
+                    Tooltip:
+                      FieldBasedTooltip:
+                        AggregationVisibility: HIDDEN
+                        TooltipFields:
+                          - FieldTooltipItem:
+                              FieldId: ColumnId-10.0.1703691407556
+                              Visibility: VISIBLE
+                        TooltipTitleType: PRIMARY_VALUE
+                      SelectedTooltipType: DETAILED
+                      TooltipVisibility: VISIBLE
+                    Type: STACKED_AREA
+                  ColumnHierarchies: []
+                  Subtitle:
+                    Visibility: VISIBLE
+                  Title:
+                    Visibility: VISIBLE
+                  VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
+      Name: QuickSightDashboard01
+      Permissions:
+        - Actions:
+            - quicksight:DescribeDashboard
+            - quicksight:ListDashboardVersions
+            - quicksight:UpdateDashboardPermissions
+            - quicksight:QueryDashboard
+            - quicksight:UpdateDashboard
+            - quicksight:DeleteDashboard
+            - quicksight:DescribeDashboardPermissions
+            - quicksight:UpdateDashboardPublishedVersion
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/${user}
+              - user:
+                  Ref: QuickSightUsername
+    Metadata:
+      aws:cdk:path: QsStack/QuickSightDashboard01

@@ -53,7 +53,6 @@ BaseDataSource:
           - quicksight:UpdateDataSource
           - quicksight:DeleteDataSource
           - quicksight:UpdateDataSourcePermissions
-          - quicksight:Query
     SslProperties:
       DisableSsl: False # copiar de origin
 

@@ -2,7 +2,7 @@ import yaml
 from yaml.loader import SafeLoader
 from aws_cdk import aws_quicksight as quicksight
 from aws_cdk import Fn, Aws
-
+from os import getenv
 from qs.utils import generate_id
 from qs.utils import convert_keys_to_camel_case
 
@@ -31,13 +31,13 @@ def createDashboard(self, dashboard_name: str, dataset_object: quicksight.CfnDat
         }
     ]
 
-    modifyDataSetIdentifier(self, definition['sheets'], dataset_object.name)
+    #modifyDataSetIdentifier(self, definition['sheets'], dataset_object.name)
 
     quicksightdashboard = quicksight.CfnDashboard(
         self,
         dashboard_name,
         aws_account_id= Aws.ACCOUNT_ID,
-        dashboard_id=self.configParams['QuickSightDashboardId'].value_as_string,
+        dashboard_id=self.configParams['DashboardId01'].value_as_string,
         name=dashboard_name,
         permissions=permissions,
         definition=definition
@@ -47,12 +47,15 @@ def createDashboard(self, dashboard_name: str, dataset_object: quicksight.CfnDat
 
 
 def createNoDepsDashboard(self):
+    originDashboardtId= getenv('ORIGIN_DASHBOARD_ID')
+    originAWSAccounttId= getenv('ORIGIN_AWS_ACCOUNT_ID')
+    originalResourcePath=f"infra_base/{originAWSAccounttId}/dashboards/{originDashboardtId}.yaml"
 
-    with open("infra_base/jaypoc/e6390395-4a03-4d80-b862-a4d3506173c8.yaml") as f:
+    with open(originalResourcePath) as f:
         dashboard_data = yaml.load(f, Loader=SafeLoader)
     cvt_dashboard_data = convert_keys_to_camel_case(dashboard_data)
 
-    with open("poc/base_dashboard.yaml") as f:
+    with open("base-templates/dashboard.yaml") as f:
         data = yaml.load(f, Loader=SafeLoader)
 
     converted_data = convert_keys_to_camel_case(data)
@@ -94,7 +97,7 @@ def createNoDepsDashboard(self):
 #visuals[0]['lineChartVisual']['chartConfiguration']['fieldWells']['lineChartAggregatedFieldWells']['category'][0]['dateDimensionField']['column']['dataSetIdentifier'] = identifierName
 def modifyDataSetIdentifier(self, sheets, identifierName: str):
     for index, sheet in enumerate(sheets):
-        sheet['sheetId'] = self.configParams[f'QuickSightDashboardSheetId0{index+1}'].value_as_string
+        sheet['sheetId'] = self.configParams[f'QuickSightDashboardSheetId01'].value_as_string
         visuals = sheet['visuals']
 
         # Iterate through each visual in the list

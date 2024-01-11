@@ -1,0 +1,12 @@
+DataSourceId01=<Replace from original>
+DataSourceName01=<Replace from original>
+DataSourceAthenaWorkGroup01=primary
+
+DataSetAthenaId01=<Replace from original>
+DataSetAthenaName01=<Replace from original>
+DataSetAthenaCatalog01=AwsDataCatalog
+DataSetAthenaTableName01=<Replace from original>
+DataSetAthenaSchema01=<Replace from original>
+
+QuickSightUsername=<Replace from original>
+ 

@@ -2,6 +2,7 @@ import yaml
 from yaml.loader import SafeLoader
 from aws_cdk import aws_quicksight as quicksight
 from aws_cdk import Fn, Aws
+from os import getenv
 
 #from qs_utils.id_generator import generate_id
 #from qs_utils.case_parser import convert_keys_to_camel_case
@@ -14,11 +15,9 @@ def createDataSet(self, dataset_name: str, dataSource: quicksight.CfnDataSource 
     base_dataset = converted_data['baseDataSetAthenaRelationalTable']['properties'] # type: ignore
     
     # Copy from original resources
-    #TODO: (jayro) select from cdk synth context
-    # PhysicalTableMap.CustomSql
-    originalResourcePath="infra_base/064855577434/data-sets/2adf1225-b13e-4b4c-a701-ea6ccc5502a1.yaml"
-    # PhysicalTableMap.RelationalTable
-    #originalResourcePath="infra_base/064855577434/data-sets/2384dd87-5baa-4308-b2e4-1ec602bba012.yaml"
+    originDatasetId= getenv('ORIGIN_DATASET_ID')
+    originAWSAccounttId= getenv('ORIGIN_AWS_ACCOUNT_ID')
+    originalResourcePath=f"infra_base/{originAWSAccounttId}/data-sets/{originDatasetId}.yaml"
 
     with open(originalResourcePath) as f:
         originalResource = yaml.load(f, Loader=SafeLoader)
@@ -27,9 +26,9 @@ def createDataSet(self, dataset_name: str, dataSource: quicksight.CfnDataSource 
 
     permissions = base_dataset['permissions']
 
-    # Set principal arn to dataset
+    # Template - Permissions
     principal_arn = Fn.sub(
-        "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/${username}",
+        "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:${principal_type}/${namespace}/${username}",
         {
             "aws_account": Aws.ACCOUNT_ID,
             "aws_region": Aws.REGION,
@@ -38,25 +37,34 @@ def createDataSet(self, dataset_name: str, dataSource: quicksight.CfnDataSource 
             "username": self.configParams['QuickSightUsername'].value_as_string
         }
     )
-    permissions[0]['principal'] = principal_arn
+    
+    for i in range(len(permissions)):
+        permissions[i]['principal'] = principal_arn
     
     # Template - Physical Table Map
     physical_table_map = snakeOriginalResource['describe_data_set']['data_set']['physical_table_map']
     for key, ptmItem in physical_table_map.items():
         if 'custom_sql' in ptmItem:
-            physical_table_map[key] = physical_table_map_to_template(ptmItem['custom_sql'], quicksight.CfnDataSet.CustomSqlProperty,self.configParams['DataSetAthenaTableName01'].value_as_string, dataSource.attr_arn )
+            physical_table_map[key] = quicksight.CfnDataSet.PhysicalTableProperty(
+                 custom_sql= physical_table_map_to_template(ptmItem['custom_sql'], quicksight.CfnDataSet.CustomSqlProperty,self.configParams['DataSetAthenaTableName01'].value_as_string, dataSource.attr_arn )
+            )
+            
         elif 'relational_table' in ptmItem:
-            physical_table_map[key] = physical_table_map_to_template(ptmItem['relational_table'], quicksight.CfnDataSet.RelationalTableProperty, self.configParams['DataSetAthenaTableName01'].value_as_string, dataSource.attr_arn )
+            ptmItem['relational_table']['name'] = self.configParams['DataSetAthenaTableName01'].value_as_string
+            ptmItem['relational_table']['data_source_arn'] = dataSource.attr_arn
+            ptmItem['relational_table']['schema'] = self.configParams['DataSetAthenaSchema01'].value_as_string
+            physical_table_map[key] = quicksight.CfnDataSet.PhysicalTableProperty(
+                relational_table= quicksight.CfnDataSet.RelationalTableProperty(**ptmItem['relational_table'])
+            )
 
     # Template - Logical Table Map
     logical_table_map = snakeOriginalResource['describe_data_set']['data_set']['logical_table_map']
     camelLogicalTableMap = originalResource['describeDataSet']['dataSet']['logicalTableMap']
     for key, _ in logical_table_map.items():
-        logical_table_map[key]['alias'] = self.configParams['DataSetAthenaTableName01'].value_as_string
         logical_table_map[key] = quicksight.CfnDataSet.LogicalTableProperty(
             alias= self.configParams['DataSetAthenaTableName01'].value_as_string,
             source= quicksight.CfnDataSet.LogicalTableSourceProperty(**logical_table_map[key]['source']),
-            data_transforms= camelLogicalTableMap[key]['dataTransforms']
+            data_transforms= camelLogicalTableMap[key].get('dataTransforms', None)
         )
 
     # Template - Data Set reource
@@ -107,7 +115,4 @@ def convert_keys_to_snake_case(d):
 def physical_table_map_to_template(tableMapConfig, propertyClass, name, data_source_arn):
     tableMapConfig['name'] = name
     tableMapConfig['data_source_arn'] = data_source_arn
-    physical_table_map_property = quicksight.CfnDataSet.PhysicalTableProperty(
-        custom_sql= propertyClass(**tableMapConfig)
-    )
-    return physical_table_map_property
+    return propertyClass(**tableMapConfig)

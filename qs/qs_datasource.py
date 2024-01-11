@@ -23,14 +23,13 @@ def createDataSource( stack: Stack, datasource_name: str ):
             'qsNamespace': stack.configParams['QuickSightNamespace'].value_as_string, # type: ignore
         }
     )
-    
+
     base_datasource['dataSourceParameters']['athenaParameters']['workGroup']= stack.configParams['DataSourceAthenaWorkGroup01'].value_as_string # type: ignore
     
     base_datasource['permissions'][0]['principal'] = datasourcePrincipal
     quicksightDataSource =  quicksight.CfnDataSource(stack,
         id= datasource_name,
         aws_account_id= aws_account_id,
-        #data_source_id= base_datasource['dataSourceId'],
         data_source_id= stack.configParams['DataSourceId01'].value_as_string, # type: ignore
         name=           stack.configParams['DataSourceName01'].value_as_string, # type: ignore
         type=           base_datasource['type'],

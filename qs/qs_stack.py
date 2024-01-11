@@ -1,13 +1,11 @@
-import os, yaml
+import yaml
 from yaml.loader import SafeLoader
 from constructs import Construct
 from aws_cdk import (
     CfnParameter,
     Stack,
-    aws_iam as iam,
-    aws_quicksight as quicksight,
-    aws_athena as athena,
 )
+from os import getenv
 
 ###########################################################
 from qs.qs_datasource import createDataSource
@@ -24,29 +22,33 @@ class QsStack(Stack):
         general_params = self.node.try_get_context("general_params")
         general_params_file = self.read_params_file(general_params)
         self.define_parameters(general_params_file)
-        
-        params_file = self.node.try_get_context("params")
-        file_params = self.read_params_file(params_file)
-        self.define_parameters(file_params)
 
-        dataset_params = self.node.try_get_context("dataset_params")
-        dataset_params_files = self.read_params_file(dataset_params)
-        self.define_parameters(dataset_params_files)
+        if getenv('ORIGIN_DATASOURCE_ID'):
+            params_file = self.node.try_get_context("params")
+            file_params = self.read_params_file(params_file)
+            self.define_parameters(file_params)
+
+        if getenv('ORIGIN_DATASET_ID'):
+            dataset_params = self.node.try_get_context("dataset_params")
+            dataset_params_files = self.read_params_file(dataset_params)
+            self.define_parameters(dataset_params_files)
+
+        if getenv('ORIGIN_DASHBOARD_ID'):
+            dashboard_params = self.node.try_get_context("dashboard_params")
+            dashboard_params_files = self.read_params_file(dashboard_params)
+            self.define_parameters(dashboard_params_files)
 
         ######################################################
         # Creates An Cloudformation file with: 
-        # DataSources
-        # DataSets
-        # Dashboards
         # From already created Quicksight resources able to be deployed on any account
-        data_source_01 = createDataSource( self, datasource_name="AthenaDataSource01" )
-        data_set_01 = createDataSet(self, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
-        # dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataset_object=data_set_01)
+        if getenv('ORIGIN_DATASOURCE_ID'):
+            data_source_01 = createDataSource( self, datasource_name="AthenaDataSource01" )
+        if getenv('ORIGIN_DATASET_ID'):
+            data_set_01 = createDataSet(self, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
+        if getenv('ORIGIN_DASHBOARD_ID'):
+            dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataset_object=data_set_01)
             
         ######################################################
-
-        #dashboardNoDeps = createNoDepsDashboard(self)
-
 
     def read_params_file(self, params_file):
         with open(params_file) as f:

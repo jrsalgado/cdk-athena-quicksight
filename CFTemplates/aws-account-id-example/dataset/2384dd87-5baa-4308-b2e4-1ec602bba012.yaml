@@ -1,0 +1,250 @@
+Parameters:
+  QuickSightPrincipalType:
+    Type: String
+    Default: user
+    Description: Principal type for the ARN
+  QuickSightUsername:
+    Type: String
+    Default: master
+    Description: Username with QuickSight permissions
+  QuickSightNamespace:
+    Type: String
+    Default: default
+    Description: Namespace for the ARN
+  DataSourceId01:
+    Type: String
+    Description: ID of Athena Data Source
+  DataSourceName01:
+    Type: String
+    Description: Name of the Data Source
+  DataSourceAthenaWorkGroup01:
+    Type: String
+    Default: primary
+    Description: Athena Workgroup for the Data Source
+  DataSetAthenaId01:
+    Type: String
+    Description: ID for DataSetAthenaId01, e.g., '2384dd87-5baa-4308-b2e4-1ec602bba012'
+  DataSetAthenaName01:
+    Type: String
+    Description: Name for DataSetAthenaName01, e.g., 'athenatesttable'
+  DataSetAthenaCatalog01:
+    Type: String
+    Description: Catalog for DataSetAthenaCatalog01, e.g., 'AwsDataCatalog'
+  DataSetAthenaTableName01:
+    Type: String
+    Description: TableName for DataSetAthenaTableName01, e.g., 'athenatesttable'
+  DataSetAthenaSchema01:
+    Type: String
+    Description: Schema for DataSetAthenaSchema01, e.g., 'athenatestdatabase'
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Resources:
+  AthenaDataSource01:
+    Type: AWS::QuickSight::DataSource
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId:
+        Ref: DataSourceId01
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup:
+            Ref: DataSourceAthenaWorkGroup01
+      Name:
+        Ref: DataSourceName01
+      Permissions:
+        - Actions:
+            - quicksight:DescribeDataSource
+            - quicksight:DescribeDataSourcePermissions
+            - quicksight:PassDataSource
+            - quicksight:UpdateDataSource
+            - quicksight:DeleteDataSource
+            - quicksight:UpdateDataSourcePermissions
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+              - aws_account:
+                  Ref: AWS::AccountId
+                aws_region:
+                  Ref: AWS::Region
+                principalType:
+                  Ref: QuickSightPrincipalType
+                user:
+                  Ref: QuickSightUsername
+                qsNamespace:
+                  Ref: QuickSightNamespace
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource01
+  AthenaDataSetTable01:
+    Type: AWS::QuickSight::DataSet
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSetId:
+        Ref: DataSetAthenaId01
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
+      ImportMode: SPICE
+      LogicalTableMap:
+        e9d41384-e32a-4138-bead-d7321227170a:
+          Alias:
+            Ref: DataSetAthenaTableName01
+          Source:
+            PhysicalTableId: d18ab860-4845-4deb-ac1a-44756fa5d575
+      Name:
+        Ref: DataSetAthenaName01
+      Permissions:
+        - Actions:
+            - quicksight:DeleteDataSet
+            - quicksight:UpdateDataSetPermissions
+            - quicksight:PutDataSetRefreshProperties
+            - quicksight:CreateRefreshSchedule
+            - quicksight:CancelIngestion
+            - quicksight:ListRefreshSchedules
+            - quicksight:UpdateRefreshSchedule
+            - quicksight:PassDataSet
+            - quicksight:DeleteRefreshSchedule
+            - quicksight:DescribeDataSetRefreshProperties
+            - quicksight:DescribeDataSet
+            - quicksight:CreateIngestion
+            - quicksight:DescribeRefreshSchedule
+            - quicksight:ListIngestions
+            - quicksight:UpdateDataSet
+            - quicksight:DescribeDataSetPermissions
+            - quicksight:DeleteDataSetRefreshProperties
+            - quicksight:DescribeIngestion
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:${principal_type}/${namespace}/${username}
+              - aws_account:
+                  Ref: AWS::AccountId
+                aws_region:
+                  Ref: AWS::Region
+                principal_type:
+                  Ref: QuickSightPrincipalType
+                namespace:
+                  Ref: QuickSightNamespace
+                username:
+                  Ref: QuickSightUsername
+      PhysicalTableMap:
+        d18ab860-4845-4deb-ac1a-44756fa5d575:
+          RelationalTable:
+            Catalog: AwsDataCatalog
+            DataSourceArn:
+              Fn::GetAtt:
+                - AthenaDataSource01
+                - Arn
+            InputColumns:
+              - Name: id
+                Type: INTEGER
+              - Name: name
+                Type: STRING
+              - Name: age
+                Type: INTEGER
+              - Name: score
+                Type: DECIMAL
+            Name:
+              Ref: DataSetAthenaTableName01
+            Schema:
+              Ref: DataSetAthenaSchema01
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSetTable01
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/z2JUQ6CMBAFz8J/u1I1XgAPQOAAZi2rrJVtbLcxhnB3MUa/5s2bLbh6D3WFz2z9EOydzzD3ij6Y5iItJpxIKZm1nx6Ffch8HRXmNR5RsY8leTI/I10+u6P8/5soAytHWUz70jHKZgfOwaG6ZWabiihPBN2Xb0/8Nf+OAAAA
+    Metadata:
+      aws:cdk:path: QsStack/CDKMetadata/Default
+    Condition: CDKMetadataAvailable
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - af-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - "1"
+                  - "2"
+                  - "3"
+                  - "4"
+                  - "5"
+                - Ref: BootstrapVersion
+        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+
