@@ -28,7 +28,7 @@ def createDataSet(self, dataset_name: str, dataSource: quicksight.CfnDataSource 
 
     # Template - Permissions
     principal_arn = Fn.sub(
-        "arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:${principal_type}/${namespace}/${username}",
+        "arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}",
         {
             "aws_account": Aws.ACCOUNT_ID,
             "aws_region": Aws.REGION,

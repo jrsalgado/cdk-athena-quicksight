@@ -46,7 +46,7 @@ class QsStack(Stack):
         if getenv('ORIGIN_DATASET_ID'):
             data_set_01 = createDataSet(self, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
         if getenv('ORIGIN_DASHBOARD_ID'):
-            dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataset_object=data_set_01)
+            dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataSet=data_set_01)
             
         ######################################################
 

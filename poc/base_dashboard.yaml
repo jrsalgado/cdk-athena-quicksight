@@ -194,10 +194,18 @@ Resources:
   BaseDataSet:
     Type: AWS::QuickSight::DataSet
     Properties:
-      AwsAccountId: "XXXXXXXXXX" # TODO: PARAM REQUIRED
-      DataSetId: "f66f2dea-7000-4d37-8bbb-da6b33329c34" # Unique identifier for your dataset
-      Name: "ComplianceDataSet01" # Name of your dataset
+      AwsAccountId:
+        Ref: AWS::AccountId
+      # params: 11e7f1b6-a92f-477e-95d9-dc36931443b2
+      # DescribeDataSet.DataSet.DataSetId
+      DataSetId:
+        Ref: DataSetId
+      # params: 
+      # DescribeDataSet.DataSet.DataSetId
+      Name: 
+        Ref: DataSetName
       Permissions:
+          # Acciones hardcodeadas
         - Actions:
             - quicksight:DeleteDataSet
             - quicksight:UpdateDataSetPermissions
@@ -217,11 +225,20 @@ Resources:
             - quicksight:DescribeDataSetPermissions
             - quicksight:DeleteDataSetRefreshProperties
             - quicksight:DescribeIngestion
-          Principal: arn:aws:quicksight:us-east-1:064855577434:user/default/boss
+          Principal:
+            Fn::Sub:
+              - arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/${user}
+              # params: arn:aws:quicksight:us-east-1:064855577434:user/default/boss
+              # DescribeDataSetPermissions.Permissions[0].Principal
+              - user:
+                  Ref: DataSetUserPrincipal
       PhysicalTableMap:  
         s3PhysicalTable:
           S3Source:
-            DataSourceArn: "arn:aws:quicksight:us-east-1:064855577434:datasource/d7fe19c1-ff47-4b26-a860-c353a6f57ca2" # ARN of the data source
+            # params: arn:aws:quicksight:us-east-1:064855577434:datasource/27cd8539-c183-4c99-b842-dd91c8d1e250
+            # Referencia al datasource creado en el mismo stack
+            DataSourceArn:
+              Ref: DataSetS3DataSourceArn
             InputColumns:
               - Name: "ColumnId-1"
                 Type: "STRING"
@@ -259,6 +276,8 @@ Resources:
               Format: "CSV"
               StartFromRow: 1
               TextQualifier: "DOUBLE_QUOTE"
+      # Copiar de origen
+      # base_dataset['LogicalTableMap'] = LogicalTableMap
       LogicalTableMap:
         s3PhysicalTable:
           Alias: Group 1
@@ -335,15 +354,31 @@ Resources:
   BaseDataSource:
     Type: 'AWS::QuickSight::DataSource'
     Properties:
-      AwsAccountId: YOUR_ACCOUNT_ID
-      DataSourceId: MyAthenaDataSource
-      Name: MyAthenaDataSource
+      AwsAccountId:
+        Ref: AWS::AccountId
+      # params: 11e7f1b6-a92f-477e-95d9-dc36931443b2
+      # DescribeDataSource.DataSource.DataSourceId
+      DataSourceId:
+        Ref: DataSourceId
+      # params: AthenaTest
+      # DescribeDataSource.DataSource.Name
+      Name:
+        Ref: DataSourceName
       Type: ATHENA
       DataSourceParameters:
         AthenaParameters:
-          WorkGroup: SANTANDER_ATHENA_WORKGROUP
+          # params: [default] primary
+          # DescribeDataSource.DataSourceParameters.AthenaParameters
+          WorkGroup: 
+            Ref: DataSourceAthenaWorkGroup
       Permissions:
-        - Principal: arn:aws:quicksight:us-east-1:YOUR_ACCOUNT_ID:user/default/boss  # Replace with your QuickSight user ARN
+        - Principal: 
+            Fn::Sub:
+              - arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/${user}
+              # params: arn:aws:quicksight:us-east-1:064855577434:user/default/boss
+              # DescribeDataSourcePermissions.Permissions[0].Principal
+              - user:
+                  Ref: DataSourceUserPrincipal
           Actions:
             - quicksight:DescribeDataSource
             - quicksight:DescribeDataSourcePermissions
@@ -354,4 +389,87 @@ Resources:
             - quicksight:Query
       SslProperties:
         DisableSsl: False
-
+  BaseDataSetAthenaRelationalTable:
+    Type: AWS::QuickSight::DataSet
+    Properties:
+      AwsAccountId: 
+        Ref: AWS::AccountId
+      # params: 11e7f1b6-a92f-477e-95d9-dc36931443b2
+      # DescribeDataSet.DataSet.DataSetId
+      DataSetId:
+        Ref: DataSetAthenaId
+      # params: athenatesttable
+      # DescribeDataSet.DataSet.Name
+      Name: 
+        Ref: DataSetAthenaName
+      Permissions:
+          # Acciones hardcodeados
+        - Actions:
+            - quicksight:DeleteDataSet
+            - quicksight:UpdateDataSetPermissions
+            - quicksight:PutDataSetRefreshProperties
+            - quicksight:CreateRefreshSchedule
+            - quicksight:CancelIngestion
+            - quicksight:ListRefreshSchedules
+            - quicksight:UpdateRefreshSchedule
+            - quicksight:PassDataSet
+            - quicksight:DeleteRefreshSchedule
+            - quicksight:DescribeDataSetRefreshProperties
+            - quicksight:DescribeDataSet
+            - quicksight:CreateIngestion
+            - quicksight:DescribeRefreshSchedule
+            - quicksight:ListIngestions
+            - quicksight:UpdateDataSet
+            - quicksight:DescribeDataSetPermissions
+            - quicksight:DeleteDataSetRefreshProperties
+            - quicksight:DescribeIngestion
+          Principal: 
+            Fn::Sub:
+              - arn:aws:quicksight:${AWS::Region}:${AWS::AccountId}:user/default/${user}
+              # params: arn:aws:quicksight:us-east-1:064855577434:user/default/boss
+              # DescribeDataSetPermissions.Permissions[0].Principal
+              - user:
+                  Ref: DataSetAthenaUserPrincipal
+      # PhysicalTableMap copiar desde origin
+      PhysicalTableMap: 
+        d18ab860-4845-4deb-ac1a-44756fa5d575:
+          RelationalTable:
+            # params: AwsDataCatalog
+            # DescribeDataSet.DataSet.PhysicalTableMap.[*].RelationalTable.Catalog
+            Catalog: 
+              Ref: DataSetAthenaCatalog
+            # params: arn:aws:quicksight:us-east-1:064855577434:datasource/11e7f1b6-a92f-477e-95d9-dc36931443b2
+            # Referencia al datasource creado en el mismo stack
+            DataSourceArn: 
+              Ref: DataSetAthenaDataSourceArn
+            # Copia desde origen
+            # DescribeDataSet.DataSet.PhysicalTableMap.[*].RelationalTable.InputColumns
+            InputColumns:
+            - Name: id
+              Type: INTEGER
+            - Name: name
+              Type: STRING
+            - Name: age
+              Type: INTEGER
+            - Name: score
+              SubType: FLOAT
+              Type: DECIMAL
+            # params: athenatesttable
+            # DescribeDataSet.DataSet.PhysicalTableMap.[*].RelationalTable.Name
+            Name:
+              Ref: DataSetAthenaTableName
+            # params: athenatestdatabase
+            # DescribeDataSet.DataSet.PhysicalTableMap.[*].RelationalTable.Schema
+            Schema: 
+              Ref: DataSetAthenaSchema
+      # Copia desde origen
+      # base_dataset['LogicalTableMap'] = LogicalTableMap
+      LogicalTableMap:
+        e9d41384-e32a-4138-bead-d7321227170a:
+          Alias: athenatesttable
+          Source:
+            PhysicalTableId: d18ab860-4845-4deb-ac1a-44756fa5d575
+      ImportMode: "SPICE" # Import mode (SPICE or DIRECT_QUERY)
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
