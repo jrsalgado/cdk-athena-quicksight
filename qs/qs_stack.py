@@ -10,7 +10,7 @@ from os import getenv
 ###########################################################
 from qs.qs_datasource import createDataSource
 from qs.qs_dataset import createDataSet
-from qs.qs_dashboard import createDashboard, createNoDepsDashboard
+from qs.qs_dashboard import createDashboard
 ###########################################################
 
 class QsStack(Stack):
