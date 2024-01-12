@@ -6,13 +6,7 @@ from os import getenv
 from qs.utils import generate_id
 from qs.utils import convert_keys_to_camel_case
 
-def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
-
-    with open("base-templates/dashboard.yaml") as f:
-        base_template = yaml.load(f, Loader=SafeLoader)
-    camel_base_template = convert_keys_to_camel_case(base_template)
-    base_dashboard = camel_base_template['baseDashboard']['properties'] # type: ignore
-
+def readFromOriginResourceFile():
     # Copy from original resources
     originDashboardtId= getenv('ORIGIN_DASHBOARD_ID')
     originAWSAccounttId= getenv('ORIGIN_AWS_ACCOUNT_ID')
@@ -20,9 +14,19 @@ def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
 
     with open(originalResourcePath) as f:
         originalResource = yaml.load(f, Loader=SafeLoader)
-    originalResource = convert_keys_to_camel_case(originalResource)
+    camelOriginalResource = convert_keys_to_camel_case(originalResource)
     snakeOriginalResource =  convert_keys_to_snake_case(originalResource)
 
+    return camelOriginalResource, snakeOriginalResource
+
+def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
+
+    with open("base-templates/dashboard.yaml") as f:
+        base_template = yaml.load(f, Loader=SafeLoader)
+    camel_base_template = convert_keys_to_camel_case(base_template)
+    base_dashboard = camel_base_template['baseDashboard']['properties'] # type: ignore
+
+    originalResource, snakeOriginalResource = readFromOriginResourceFile()
     # Template - Permissions
     permissions = base_dashboard['permissions']
     principal_arn = Fn.sub(

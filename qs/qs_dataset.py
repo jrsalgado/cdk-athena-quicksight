@@ -7,7 +7,7 @@ from os import getenv
 #from qs_utils.id_generator import generate_id
 #from qs_utils.case_parser import convert_keys_to_camel_case
 
-def createDataSet(self, dataset_name: str, dataSource: quicksight.CfnDataSource ):
+def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: quicksight.CfnDataSource ):
 
     with open("base-templates/data-set.yaml") as f:
         template = yaml.load(f, Loader=SafeLoader)
@@ -15,7 +15,7 @@ def createDataSet(self, dataset_name: str, dataSource: quicksight.CfnDataSource 
     base_dataset = converted_data['baseDataSetAthenaRelationalTable']['properties'] # type: ignore
     
     # Copy from original resources
-    originDatasetId= getenv('ORIGIN_DATASET_ID')
+    #originDatasetId= getenv('ORIGIN_DATASET_ID')
     originAWSAccounttId= getenv('ORIGIN_AWS_ACCOUNT_ID')
     originalResourcePath=f"infra_base/{originAWSAccounttId}/data-sets/{originDatasetId}.yaml"
 

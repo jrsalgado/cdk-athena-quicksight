@@ -10,6 +10,13 @@ export ORIGIN_AWS_ACCOUNT_ID
 # TODO: Create top resource with dependencies from REF or PARAMS
 #CFTemplate01 = dsource1(REF origin resource) -> dset1(REF origin resource) -> dashboard01(ORIGIN_DASHBOARD_ID)
 #																			-> analysis01
+#DescribeDashboard.Dashboard.Version.DataSetArns[0]
+#arn:aws:quicksight:us-east-1:064855577434:dataset/2384dd87-5baa-4308-b2e4-1ec602bba012
+
+#DescribeDataSet.DataSet.PhysicalTableMap.ANY_KEY.ANY_KEY.DataSourceArn
+#arn:aws:quicksight:us-east-1:064855577434:datasource/11e7f1b6-a92f-477e-95d9-dc36931443b2
+
+
 #CFTemplate02 = dsource1(REF origin resource) -> dset1(ORIGIN_DATASET_ID)
 #CFTemplate03 = dsource1(ORIGIN_DATASORCE_ID)
 
@@ -42,6 +49,14 @@ synth-till-dashboard:
 	mkdir -p ./CFTemplates/${ORIGIN_AWS_ACCOUNT_ID}/dashboard && \
 	rm -rf ./CFTemplates/${ORIGIN_AWS_ACCOUNT_ID}/dashboard/${ORIGIN_DASHBOARD_ID}.yaml && \
 	cdk synth --context general_params=parameters/general.yaml --context params=parameters/just-data-source.yaml --context dataset_params=parameters/just-data-set.yaml --context dashboard_params=parameters/just-dashboard.yaml > ./CFTemplates/${ORIGIN_AWS_ACCOUNT_ID}/dashboard/${ORIGIN_DASHBOARD_ID}.yaml
+
+synth-till-dashboard-resolve:
+	export ORIGIN_DASHBOARD_ID=${ORIGIN_DASHBOARD_ID}; \
+	export ORIGIN_IDS_RESOLVE=True; \
+	mkdir -p ./CFTemplates/${ORIGIN_AWS_ACCOUNT_ID}/dashboard && \
+	rm -rf ./CFTemplates/${ORIGIN_AWS_ACCOUNT_ID}/dashboard/${ORIGIN_DASHBOARD_ID}.yaml && \
+	cdk synth --context general_params=parameters/general.yaml --context params=parameters/just-data-source.yaml --context dataset_params=parameters/just-data-set.yaml --context dashboard_params=parameters/just-dashboard.yaml > ./CFTemplates/${ORIGIN_AWS_ACCOUNT_ID}/dashboard/${ORIGIN_DASHBOARD_ID}.yaml
+
 
 synth-dev:
 	cdk synth --context params=parameters.yaml > output.yaml
