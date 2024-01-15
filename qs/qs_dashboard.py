@@ -60,10 +60,16 @@ def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
     # Template - Sheets
     #   Sheets[].Visuals[].ANY_KEY.ChartConfiguration.FieldWells.ANY_KEY.ANY_KEY[].ANY_KEY.Column.DataSetIdentifier
     raw_definition_mod= replace_data_set_identifier_iterative(raw_definition.get('sheets', None), self.configParams['DashboardDataSetIdentifier01'].value_as_string)
-
+    camel_raw_definition_mod = replace_data_set_identifier_iterative(camel_raw_definition.get('sheets', None), self.configParams['DashboardDataSetIdentifier01'].value_as_string)
     sheets= []
+
     for i in range(len(raw_definition_mod)):
-        sheets.append(quicksight.CfnDashboard.SheetDefinitionProperty(**raw_definition_mod[i]))
+        raw_definition_mod[i].pop('visuals', None)
+        camel_visuals = camel_raw_definition_mod[i]['visuals']
+        sheets.append(quicksight.CfnDashboard.SheetDefinitionProperty(
+            visuals= camel_visuals,
+            **raw_definition_mod[i])
+        )
 
     definition = quicksight.CfnDashboard.DashboardVersionDefinitionProperty(
         data_set_identifier_declarations= data_set_identifier_declarations,

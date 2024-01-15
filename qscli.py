@@ -35,7 +35,6 @@ def cloneAllDashboards(account_id):
     click.echo(f'Cloning from AWS AccountId = {account_id} ...')
     # for each dashboard on the --list-dashboard file
     camelOriginalResource, _ = readFromOriginResourceFile('dashboards', 'list-dashboards', account_id)
-    print(camelOriginalResource['dashboardSummaryList'])
     for dashboard in camelOriginalResource['dashboardSummaryList']:
         cdk_synth(account_id, dashboard['dashboardId'])
 
