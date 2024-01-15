@@ -82,3 +82,24 @@ def find_all_values_iterative(obj, keySearch):
 
     return founds
 
+
+def mask_account_ids(obj):
+    aws_account_id_pattern = re.compile(r'\b\d{12}\b')
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            if isinstance(value, (str, int)):
+                # Replace AWS account IDs in strings and integers
+                obj[key] = aws_account_id_pattern.sub('MASKED_ACCOUNT_ID', str(value))
+            elif isinstance(value, (dict, list)):
+                # Recursively mask AWS account IDs in nested structures
+                mask_account_ids(value)
+    elif isinstance(obj, list):
+        for i, item in enumerate(obj):
+            if isinstance(item, (str, int)):
+                # Replace AWS account IDs in strings and integers
+                obj[i] = aws_account_id_pattern.sub('MASKED_ACCOUNT_ID', str(item))
+            elif isinstance(item, (dict, list)):
+                # Recursively mask AWS account IDs in nested structures
+                mask_account_ids(item)
+    return obj
+
