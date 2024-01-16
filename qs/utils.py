@@ -21,9 +21,9 @@ def convert_keys_to_camel_case(d):
     else:
         return d
 
-def generate_id():
+def generate_id(n=64):
     characters = string.ascii_letters + string.digits
-    alphanumeric_id = ''.join(random.choice(characters) for _ in range(64))
+    alphanumeric_id = ''.join(random.choice(characters) for _ in range(n))
     return alphanumeric_id
 
 def extract_id_from_arn(arn):
@@ -143,3 +143,28 @@ def mask_aws_account_id(account_id):
     else:
         # Handle the case where the account ID is less than 8 characters
         return account_id
+
+def updateTemplateAfterSynth(template_path: str):
+    # Read YAML file
+    with open(template_path) as f:
+        templateOutput = yaml.load(f, Loader=SafeLoader)
+
+    # Delete BootstrapVersion from parameters
+    if 'BootstrapVersion' in templateOutput['Parameters']:
+        del templateOutput['Parameters']['BootstrapVersion']
+
+    # Delete CDKMetadata from resources
+    if 'CDKMetadata' in templateOutput['Resources']:
+        del templateOutput['Resources']['CDKMetadata']
+
+    # Delete Rules section
+    if 'Rules' in templateOutput:
+        del templateOutput['Rules']
+
+    # Delete conditions
+    if 'Conditions' in templateOutput:
+        del templateOutput['Conditions']
+
+    # Write updated dictionary to the same YAML file
+    with open(template_path, 'w') as yaml_file:
+        yaml.dump(templateOutput, yaml_file, default_flow_style=False)
