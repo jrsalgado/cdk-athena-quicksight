@@ -1,0 +1,50 @@
+DescribeDataSource:
+  DataSource:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/da37fdb2-a502-4498-a59e-84a0521770ff
+    CreatedTime: 2024-01-12 08:54:49.677000-07:00
+    DataSourceId: da37fdb2-a502-4498-a59e-84a0521770ff
+    DataSourceParameters:
+      AthenaParameters:
+        WorkGroup: primary
+    LastUpdatedTime: 2024-01-12 08:54:49.677000-07:00
+    Name: ManualDataSource
+    SslProperties:
+      DisableSsl: 'False'
+    Status: CREATION_SUCCESSFUL
+    Type: ATHENA
+  RequestId: 9f510902-f555-4612-9725-0f5008be1e0e
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1522'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:00 GMT
+      x-amzn-requestid: 9f510902-f555-4612-9725-0f5008be1e0e
+    HTTPStatusCode: '200'
+    RequestId: 9f510902-f555-4612-9725-0f5008be1e0e
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSourcePermissions:
+  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/da37fdb2-a502-4498-a59e-84a0521770ff
+  DataSourceId: da37fdb2-a502-4498-a59e-84a0521770ff
+  Permissions:
+  - Actions:
+    - quicksight:PassDataSource
+    - quicksight:DescribeDataSourcePermissions
+    - quicksight:UpdateDataSource
+    - quicksight:UpdateDataSourcePermissions
+    - quicksight:DescribeDataSource
+    - quicksight:DeleteDataSource
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
+  RequestId: ea740489-c4bb-4424-8ac4-8987d9c4402e
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '544'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:01 GMT
+      x-amzn-requestid: ea740489-c4bb-4424-8ac4-8987d9c4402e
+    HTTPStatusCode: '200'
+    RequestId: ea740489-c4bb-4424-8ac4-8987d9c4402e
+    RetryAttempts: '0'
+  Status: '200'

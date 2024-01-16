@@ -1,0 +1,92 @@
+DescribeDataSet:
+  DataSet:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/d989ff00-d02d-4a01-84d9-0a03ae27ccee
+    ConsumedSpiceCapacityInBytes: '680064'
+    CreatedTime: 2024-01-12 08:56:13.062000-07:00
+    DataSetId: d989ff00-d02d-4a01-84d9-0a03ae27ccee
+    DataSetUsageConfiguration:
+      DisableUseAsDirectQuerySource: 'False'
+      DisableUseAsImportedSource: 'False'
+    ImportMode: SPICE
+    LastUpdatedTime: 2024-01-12 08:57:58.146000-07:00
+    LogicalTableMap:
+      b92281c9-df0f-41c0-8048-68800db19cb7:
+        Alias: athenatesttable
+        Source:
+          PhysicalTableId: aa27c141-0d42-4f63-87ea-095eefbaf752
+    Name: athenatesttable
+    OutputColumns:
+    - Name: id
+      Type: INTEGER
+    - Name: name
+      Type: STRING
+    - Name: age
+      Type: INTEGER
+    - Name: score
+      SubType: FLOAT
+      Type: DECIMAL
+    PhysicalTableMap:
+      aa27c141-0d42-4f63-87ea-095eefbaf752:
+        RelationalTable:
+          Catalog: AwsDataCatalog
+          DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/8965f8bd-3a5f-4870-8a8b-cd82b1fe1de9
+          InputColumns:
+          - Name: id
+            Type: INTEGER
+          - Name: name
+            Type: STRING
+          - Name: age
+            Type: INTEGER
+          - Name: score
+            SubType: FLOAT
+            Type: DECIMAL
+          Name: athenatesttable
+          Schema: athenatestdatabase
+  RequestId: 70877991-0998-4423-8bfb-1ac3b4f411c1
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1687'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:44 GMT
+      x-amzn-requestid: 70877991-0998-4423-8bfb-1ac3b4f411c1
+    HTTPStatusCode: '200'
+    RequestId: 70877991-0998-4423-8bfb-1ac3b4f411c1
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSetPermissions:
+  DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/d989ff00-d02d-4a01-84d9-0a03ae27ccee
+  DataSetId: d989ff00-d02d-4a01-84d9-0a03ae27ccee
+  Permissions:
+  - Actions:
+    - quicksight:DeleteDataSet
+    - quicksight:UpdateDataSetPermissions
+    - quicksight:PutDataSetRefreshProperties
+    - quicksight:CreateRefreshSchedule
+    - quicksight:CancelIngestion
+    - quicksight:UpdateRefreshSchedule
+    - quicksight:DeleteRefreshSchedule
+    - quicksight:ListRefreshSchedules
+    - quicksight:PassDataSet
+    - quicksight:DescribeDataSetRefreshProperties
+    - quicksight:DescribeDataSet
+    - quicksight:CreateIngestion
+    - quicksight:DescribeRefreshSchedule
+    - quicksight:ListIngestions
+    - quicksight:UpdateDataSet
+    - quicksight:DescribeDataSetPermissions
+    - quicksight:DeleteDataSetRefreshProperties
+    - quicksight:DescribeIngestion
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
+  RequestId: 70b02ed3-24d5-486a-8b3e-48a09adbd8c0
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '973'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:46 GMT
+      x-amzn-requestid: 70b02ed3-24d5-486a-8b3e-48a09adbd8c0
+    HTTPStatusCode: '200'
+    RequestId: 70b02ed3-24d5-486a-8b3e-48a09adbd8c0
+    RetryAttempts: '0'
+  Status: '200'

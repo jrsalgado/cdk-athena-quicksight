@@ -1,0 +1,229 @@
+DataSources:
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/11e7f1b6-a92f-477e-95d9-dc36931443b2
+  CreatedTime: 2024-01-04 19:32:23.191000-07:00
+  DataSourceId: 11e7f1b6-a92f-477e-95d9-dc36931443b2
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-04 19:32:23.191000-07:00
+  Name: AthenaTest
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/17af4434-bcc5-498a-a4fa-1d8108528b42
+  CreatedTime: 2024-01-09 09:58:34.106000-07:00
+  DataSourceId: 17af4434-bcc5-498a-a4fa-1d8108528b42
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-09 09:58:34.106000-07:00
+  Name: jsCustomOriginal
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/40388f5f-e8e2-4a72-974e-741efb555cb0
+  CreatedTime: 2024-01-09 08:58:54.350000-07:00
+  DataSourceId: 40388f5f-e8e2-4a72-974e-741efb555cb0
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-09 08:58:54.350000-07:00
+  Name: dropthis
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/6960ebd5-40b0-42d4-a586-b5ff98e9bd2e
+  CreatedTime: 2024-01-09 09:54:19.660000-07:00
+  DataSourceId: 6960ebd5-40b0-42d4-a586-b5ff98e9bd2e
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-09 09:54:19.660000-07:00
+  Name: JSoriginal
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/7840d012-3cde-4893-821f-4e82e1bc93c2
+  CreatedTime: 2024-01-04 18:51:10.205000-07:00
+  DataSourceId: 7840d012-3cde-4893-821f-4e82e1bc93c2
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-04 18:51:10.205000-07:00
+  Name: AthenaTest
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/8965f8bd-3a5f-4870-8a8b-cd82b1fe1de9
+  CreatedTime: 2024-01-12 08:55:19.433000-07:00
+  DataSourceId: 8965f8bd-3a5f-4870-8a8b-cd82b1fe1de9
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-12 08:55:19.433000-07:00
+  Name: ManualDataSource
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/969d91e9-f31f-4d75-9660-b47654cfc318
+  CreatedTime: 2024-01-09 10:02:22.285000-07:00
+  DataSourceId: 969d91e9-f31f-4d75-9660-b47654cfc318
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-09 10:02:22.285000-07:00
+  Name: jsCustomOriginal
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/bc95e88b-9cd6-4e12-ac6c-390aca6a07d8
+  CreatedTime: 2024-01-09 10:01:40.424000-07:00
+  DataSourceId: bc95e88b-9cd6-4e12-ac6c-390aca6a07d8
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-09 10:01:40.424000-07:00
+  Name: jsCustomOriginal
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/c1e945c0-9c12-4887-a6b0-f490b5e02965
+  CreatedTime: 2024-01-09 08:57:45.631000-07:00
+  DataSourceId: c1e945c0-9c12-4887-a6b0-f490b5e02965
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-09 08:57:45.631000-07:00
+  Name: dropthis
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/da37fdb2-a502-4498-a59e-84a0521770ff
+  CreatedTime: 2024-01-12 08:54:49.677000-07:00
+  DataSourceId: da37fdb2-a502-4498-a59e-84a0521770ff
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-12 08:54:49.677000-07:00
+  Name: ManualDataSource
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/04d67882-9620-4501-99c9-ce83f25bf1df
+  CreatedTime: 2023-12-26 09:00:18.063000-07:00
+  DataSourceId: 04d67882-9620-4501-99c9-ce83f25bf1df
+  DataSourceParameters:
+    S3Parameters:
+      ManifestFileLocation:
+        Bucket: spaceneedle-samplefiles.prod.us-east-1
+        Key: hr/manifest.json
+  LastUpdatedTime: 2023-12-26 09:00:18.195000-07:00
+  Name: People Overview
+  Status: UPDATE_SUCCESSFUL
+  Type: S3
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/27cd8539-c183-4c99-b842-dd91c8d1e250
+  CreatedTime: 2023-12-26 08:32:47.965000-07:00
+  DataSourceId: 27cd8539-c183-4c99-b842-dd91c8d1e250
+  DataSourceParameters:
+    S3Parameters:
+      ManifestFileLocation:
+        Bucket: spaceneedle-samplefiles.prod.us-east-1
+        Key: sales/manifest.json
+  LastUpdatedTime: 2023-12-26 08:32:48.077000-07:00
+  Name: Sales Pipeline
+  Status: UPDATE_SUCCESSFUL
+  Type: S3
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/b8cd5dce-827f-4e7e-a25b-7fa22223b15a
+  CreatedTime: 2023-12-26 08:32:47.962000-07:00
+  DataSourceId: b8cd5dce-827f-4e7e-a25b-7fa22223b15a
+  DataSourceParameters:
+    S3Parameters:
+      ManifestFileLocation:
+        Bucket: spaceneedle-samplefiles.prod.us-east-1
+        Key: revenue/manifest.json
+  LastUpdatedTime: 2023-12-26 08:32:48.080000-07:00
+  Name: Business Review
+  Status: UPDATE_SUCCESSFUL
+  Type: S3
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/be540765-f31a-4088-9e3b-d035ae333b48
+  CreatedTime: 2023-12-26 08:32:47.964000-07:00
+  DataSourceId: be540765-f31a-4088-9e3b-d035ae333b48
+  DataSourceParameters:
+    S3Parameters:
+      ManifestFileLocation:
+        Bucket: spaceneedle-samplefiles.prod.us-east-1
+        Key: marketing/manifest.json
+  LastUpdatedTime: 2023-12-26 08:32:48.078000-07:00
+  Name: Web and Social Media Analytics
+  Status: UPDATE_SUCCESSFUL
+  Type: S3
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/d203fefb-99ab-4c9b-bd68-4f2af9be9bdc
+  CreatedTime: 2023-12-26 09:00:18.039000-07:00
+  DataSourceId: d203fefb-99ab-4c9b-bd68-4f2af9be9bdc
+  DataSourceParameters:
+    S3Parameters:
+      ManifestFileLocation:
+        Bucket: spaceneedle-samplefiles.prod.us-east-1
+        Key: revenue/manifest.json
+  LastUpdatedTime: 2023-12-26 09:00:18.162000-07:00
+  Name: Business Review
+  Status: UPDATE_SUCCESSFUL
+  Type: S3
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/d7fe19c1-ff47-4b26-a860-c353a6f57ca2
+  CreatedTime: 2023-12-26 08:32:47.972000-07:00
+  DataSourceId: d7fe19c1-ff47-4b26-a860-c353a6f57ca2
+  DataSourceParameters:
+    S3Parameters:
+      ManifestFileLocation:
+        Bucket: spaceneedle-samplefiles.prod.us-east-1
+        Key: hr/manifest.json
+  LastUpdatedTime: 2023-12-26 08:32:48.083000-07:00
+  Name: People Overview
+  Status: UPDATE_SUCCESSFUL
+  Type: S3
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/f8147bfc-3e26-4f21-93bb-83fc5bca18ea
+  CreatedTime: 2023-12-26 09:00:18.039000-07:00
+  DataSourceId: f8147bfc-3e26-4f21-93bb-83fc5bca18ea
+  DataSourceParameters:
+    S3Parameters:
+      ManifestFileLocation:
+        Bucket: spaceneedle-samplefiles.prod.us-east-1
+        Key: sales/manifest.json
+  LastUpdatedTime: 2023-12-26 09:00:18.178000-07:00
+  Name: Sales Pipeline
+  Status: UPDATE_SUCCESSFUL
+  Type: S3
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/fb2b417e-7e9c-4095-8b49-0da454bd8ee5
+  CreatedTime: 2023-12-26 09:00:18.045000-07:00
+  DataSourceId: fb2b417e-7e9c-4095-8b49-0da454bd8ee5
+  DataSourceParameters:
+    S3Parameters:
+      ManifestFileLocation:
+        Bucket: spaceneedle-samplefiles.prod.us-east-1
+        Key: marketing/manifest.json
+  LastUpdatedTime: 2023-12-26 09:00:18.168000-07:00
+  Name: Web and Social Media Analytics
+  Status: UPDATE_SUCCESSFUL
+  Type: S3
+RequestId: 1cdb839c-aa22-4132-9547-c8c222718359
+ResponseMetadata:
+  HTTPHeaders:
+    connection: keep-alive
+    content-length: '26746'
+    content-type: application/json
+    date: Tue, 16 Jan 2024 01:58:39 GMT
+    x-amzn-requestid: 1cdb839c-aa22-4132-9547-c8c222718359
+  HTTPStatusCode: '200'
+  RequestId: 1cdb839c-aa22-4132-9547-c8c222718359
+  RetryAttempts: '0'
+Status: '200'

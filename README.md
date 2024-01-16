@@ -56,3 +56,45 @@ command.
  * `cdk docs`        open CDK documentation
 
 Enjoy!
+
+
+# QuickSight Fetcher CLI
+## Overview
+This Python CLI script provides functionality to interact with Amazon QuickSight resources. It allows you to fetch QuickSight resources, clone dashboards, and clone all dashboards from a specified AWS account.
+
+## Prerequisites
+- Python 3.x
+- AWS CLI & Profile configured with necessary permissions
+
+## Installation
+Clone the repository:
+```bash
+git clone https://github.com/jrsalgado/cdk-athena-quicksight
+```
+
+Create a virtual environment:
+```bash
+python3 -m venv .venv
+
+source .venv/bin/activate
+```
+
+Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+## Usage
+Fetch All QuickSight Resources, By default, --profile is "default"
+```bash
+./qscli.py fetchallquicksightresources --account-id <ACCOUNT_ID> --profile <PROFILE_NAME>
+```
+
+Clone Dashboard From Dashboard ID
+```bash
+./qscli.py clonefromdashboardid --account-id <ACCOUNT_ID> <DASHBOARD_ID>
+```
+
+Clone All Dashboards
+```bash
+./qscli.py clonealldashboards --account-id <ACCOUNT_ID>
+```

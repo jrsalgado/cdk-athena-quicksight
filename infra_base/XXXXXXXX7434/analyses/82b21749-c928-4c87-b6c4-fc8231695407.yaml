@@ -1,0 +1,287 @@
+DescribeAnalysis:
+  Analysis:
+    AnalysisId: 82b21749-c928-4c87-b6c4-fc8231695407
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/82b21749-c928-4c87-b6c4-fc8231695407
+    CreatedTime: 2024-01-09 13:42:34.283000-07:00
+    DataSetArns:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2384dd87-5baa-4308-b2e4-1ec602bba012
+    LastUpdatedTime: 2024-01-11 18:07:19.885000-07:00
+    Name: athenatesttable analysis
+    Sheets:
+    - Name: Sheet 1
+      SheetId: 36a812ca-940b-46a0-8eda-8c514fa7fdd0
+    - Name: Sheet 2
+      SheetId: dd57ff13-afa5-4b9f-9d3f-402b6327efb8
+    Status: CREATION_SUCCESSFUL
+  RequestId: acb46863-1c10-46f0-a984-baf3a904048a
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1078'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:32 GMT
+      x-amzn-requestid: acb46863-1c10-46f0-a984-baf3a904048a
+    HTTPStatusCode: '200'
+    RequestId: acb46863-1c10-46f0-a984-baf3a904048a
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisDefinition:
+  AnalysisId: 82b21749-c928-4c87-b6c4-fc8231695407
+  Definition:
+    AnalysisDefaults:
+      DefaultNewSheetConfiguration:
+        InteractiveLayoutConfiguration:
+          Grid:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+        SheetContentType: INTERACTIVE
+    CalculatedFields:
+    - DataSetIdentifier: athenatesttable
+      Expression: avg(age)
+      Name: avgAge
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2384dd87-5baa-4308-b2e4-1ec602bba012
+      Identifier: athenatesttable
+    FilterGroups: []
+    Options:
+      WeekStart: SUNDAY
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            Elements:
+            - ColumnIndex: '3'
+              ColumnSpan: '18'
+              ElementId: f6b8ca8f-3fd4-448c-8fc4-e1908a32402e
+              ElementType: VISUAL
+              RowIndex: '0'
+              RowSpan: '12'
+            - ColumnIndex: '0'
+              ColumnSpan: '18'
+              ElementId: a72d8f88-7700-4808-93bd-0ca03e571149
+              ElementType: VISUAL
+              RowIndex: '12'
+              RowSpan: '12'
+      Name: Sheet 1
+      SheetId: 36a812ca-940b-46a0-8eda-8c514fa7fdd0
+      Visuals:
+      - PieChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DataLabels:
+              Overlap: DISABLE_OVERLAP
+              Visibility: VISIBLE
+            DonutOptions:
+              ArcOptions:
+                ArcThickness: WHOLE
+            FieldWells:
+              PieChartAggregatedFieldWells:
+                Category:
+                - NumericalDimensionField:
+                    Column:
+                      ColumnName: id
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.0.1704833126439
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: age
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1704833127261
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              CategorySort:
+              - FieldSort:
+                  Direction: DESC
+                  FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1704833127261
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.0.1704833126439
+                    Visibility: VISIBLE
+                - FieldTooltipItem:
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1704833127261
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: a72d8f88-7700-4808-93bd-0ca03e571149
+      - TableVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldWells:
+              TableAggregatedFieldWells:
+                GroupBy:
+                - NumericalDimensionField:
+                    Column:
+                      ColumnName: id
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.1.1705021500107
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: name
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.name.2.1705021501966
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: age
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.0.1705021495726
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: score
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.score.3.1705021502866
+            SortConfiguration: {}
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: f6b8ca8f-3fd4-448c-8fc4-e1908a32402e
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1024px
+                ResizeOption: FIXED
+            Elements:
+            - ColumnSpan: '18'
+              ElementId: 7964363d-9714-4584-a202-67d19dd3e33a
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 2
+      SheetId: dd57ff13-afa5-4b9f-9d3f-402b6327efb8
+      Visuals:
+      - ScatterPlotVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldWells:
+              ScatterPlotCategoricallyAggregatedFieldWells:
+                Category:
+                - NumericalDimensionField:
+                    Column:
+                      ColumnName: id
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.2.1705021637355
+                Label:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: name
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.name.3.1705021638014
+                Size:
+                - NumericalMeasureField:
+                    Column:
+                      ColumnName: avgAge
+                      DataSetIdentifier: athenatesttable
+                    FieldId: b222babd-162c-43b7-b366-9ade4a611968.0.1705021630831
+                XAxis:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: age
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1705021634142
+                YAxis:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: score
+                      DataSetIdentifier: athenatesttable
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.score.4.1705021638866
+            SortConfiguration:
+              ScatterPlotLimitConfiguration:
+                ItemsLimit: '2500'
+                OtherCategories: EXCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: b222babd-162c-43b7-b366-9ade4a611968.0.1705021630831
+                    Visibility: VISIBLE
+                - FieldTooltipItem:
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1705021634142
+                    Visibility: VISIBLE
+                - FieldTooltipItem:
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.2.1705021637355
+                    Visibility: VISIBLE
+                - FieldTooltipItem:
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.name.3.1705021638014
+                    Visibility: VISIBLE
+                - FieldTooltipItem:
+                    FieldId: e9d41384-e32a-4138-bead-d7321227170a.score.4.1705021638866
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: 7964363d-9714-4584-a202-67d19dd3e33a
+  Name: athenatesttable analysis
+  RequestId: 88ba3096-bf48-4c90-8f71-d2cd4a487851
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '10941'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:33 GMT
+      x-amzn-requestid: 88ba3096-bf48-4c90-8f71-d2cd4a487851
+    HTTPStatusCode: '200'
+    RequestId: 88ba3096-bf48-4c90-8f71-d2cd4a487851
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisPermissions:
+  AnalysisArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/82b21749-c928-4c87-b6c4-fc8231695407
+  AnalysisId: 82b21749-c928-4c87-b6c4-fc8231695407
+  Permissions:
+  - Actions:
+    - quicksight:RestoreAnalysis
+    - quicksight:UpdateAnalysisPermissions
+    - quicksight:DeleteAnalysis
+    - quicksight:DescribeAnalysisPermissions
+    - quicksight:QueryAnalysis
+    - quicksight:DescribeAnalysis
+    - quicksight:UpdateAnalysis
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: 49b14d2b-4b04-4bd2-bf2a-47019194d993
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '550'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:34 GMT
+      x-amzn-requestid: 49b14d2b-4b04-4bd2-bf2a-47019194d993
+    HTTPStatusCode: '200'
+    RequestId: 49b14d2b-4b04-4bd2-bf2a-47019194d993
+    RetryAttempts: '0'
+  Status: '200'

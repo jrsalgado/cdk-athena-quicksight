@@ -1,0 +1,266 @@
+DescribeDataSet:
+  DataSet:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/92b5a28d-6baa-4a23-8503-ccd9fc6004a0
+    ConsumedSpiceCapacityInBytes: '365982'
+    CreatedTime: 2023-12-26 09:00:18.983000-07:00
+    DataSetId: 92b5a28d-6baa-4a23-8503-ccd9fc6004a0
+    DataSetUsageConfiguration:
+      DisableUseAsDirectQuerySource: 'False'
+      DisableUseAsImportedSource: 'False'
+    ImportMode: SPICE
+    LastUpdatedTime: 2023-12-26 09:00:33.239000-07:00
+    LogicalTableMap:
+      s3PhysicalTable:
+        Alias: Group 1
+        DataTransforms:
+        - RenameColumnOperation:
+            ColumnName: ColumnId-2
+            NewColumnName: New visitors SEO
+        - RenameColumnOperation:
+            ColumnName: ColumnId-3
+            NewColumnName: New visitors CPC
+        - RenameColumnOperation:
+            ColumnName: ColumnId-1
+            NewColumnName: Date
+        - RenameColumnOperation:
+            ColumnName: ColumnId-12
+            NewColumnName: Website Visits
+        - RenameColumnOperation:
+            ColumnName: ColumnId-6
+            NewColumnName: Twitter mentions
+        - RenameColumnOperation:
+            ColumnName: ColumnId-11
+            NewColumnName: Website Pageviews
+        - RenameColumnOperation:
+            ColumnName: ColumnId-7
+            NewColumnName: Twitter followers adds
+        - RenameColumnOperation:
+            ColumnName: ColumnId-14
+            NewColumnName: Mobile uniques
+        - RenameColumnOperation:
+            ColumnName: ColumnId-4
+            NewColumnName: New visitors Social Media
+        - RenameColumnOperation:
+            ColumnName: ColumnId-13
+            NewColumnName: Website Unique Visits
+        - RenameColumnOperation:
+            ColumnName: ColumnId-5
+            NewColumnName: Return visitors
+        - RenameColumnOperation:
+            ColumnName: ColumnId-10
+            NewColumnName: Mailing list cumulative
+        - RenameColumnOperation:
+            ColumnName: ColumnId-8
+            NewColumnName: Twitter followers cumulative
+        - RenameColumnOperation:
+            ColumnName: ColumnId-9
+            NewColumnName: 'Mailing list adds '
+        - RenameColumnOperation:
+            ColumnName: ColumnId-19
+            NewColumnName: Events
+        - RenameColumnOperation:
+            ColumnName: ColumnId-16
+            NewColumnName: Desktop uniques
+        - RenameColumnOperation:
+            ColumnName: ColumnId-15
+            NewColumnName: Tablet uniques
+        - RenameColumnOperation:
+            ColumnName: ColumnId-18
+            NewColumnName: Paid conversion
+        - RenameColumnOperation:
+            ColumnName: ColumnId-17
+            NewColumnName: Free sign up
+        - CastColumnTypeOperation:
+            ColumnName: Free sign up
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Paid conversion
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Tablet uniques
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Desktop uniques
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: 'Mailing list adds '
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Twitter followers cumulative
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Mailing list cumulative
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Return visitors
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Website Unique Visits
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: New visitors Social Media
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Mobile uniques
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Twitter followers adds
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Website Pageviews
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Twitter mentions
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Website Visits
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Date
+            Format: M/d/yyyy
+            NewColumnType: DATETIME
+        - CastColumnTypeOperation:
+            ColumnName: New visitors CPC
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: New visitors SEO
+            NewColumnType: INTEGER
+        Source:
+          PhysicalTableId: s3PhysicalTable
+    Name: Web and Social Media Analytics
+    OutputColumns:
+    - Name: Date
+      Type: DATETIME
+    - Name: New visitors SEO
+      Type: INTEGER
+    - Name: New visitors CPC
+      Type: INTEGER
+    - Name: New visitors Social Media
+      Type: INTEGER
+    - Name: Return visitors
+      Type: INTEGER
+    - Name: Twitter mentions
+      Type: INTEGER
+    - Name: Twitter followers adds
+      Type: INTEGER
+    - Name: Twitter followers cumulative
+      Type: INTEGER
+    - Name: 'Mailing list adds '
+      Type: INTEGER
+    - Name: Mailing list cumulative
+      Type: INTEGER
+    - Name: Website Pageviews
+      Type: INTEGER
+    - Name: Website Visits
+      Type: INTEGER
+    - Name: Website Unique Visits
+      Type: INTEGER
+    - Name: Mobile uniques
+      Type: INTEGER
+    - Name: Tablet uniques
+      Type: INTEGER
+    - Name: Desktop uniques
+      Type: INTEGER
+    - Name: Free sign up
+      Type: INTEGER
+    - Name: Paid conversion
+      Type: INTEGER
+    - Name: Events
+      Type: STRING
+    PhysicalTableMap:
+      s3PhysicalTable:
+        S3Source:
+          DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/fb2b417e-7e9c-4095-8b49-0da454bd8ee5
+          InputColumns:
+          - Name: ColumnId-1
+            Type: STRING
+          - Name: ColumnId-2
+            Type: STRING
+          - Name: ColumnId-3
+            Type: STRING
+          - Name: ColumnId-4
+            Type: STRING
+          - Name: ColumnId-5
+            Type: STRING
+          - Name: ColumnId-6
+            Type: STRING
+          - Name: ColumnId-7
+            Type: STRING
+          - Name: ColumnId-8
+            Type: STRING
+          - Name: ColumnId-9
+            Type: STRING
+          - Name: ColumnId-10
+            Type: STRING
+          - Name: ColumnId-11
+            Type: STRING
+          - Name: ColumnId-12
+            Type: STRING
+          - Name: ColumnId-13
+            Type: STRING
+          - Name: ColumnId-14
+            Type: STRING
+          - Name: ColumnId-15
+            Type: STRING
+          - Name: ColumnId-16
+            Type: STRING
+          - Name: ColumnId-17
+            Type: STRING
+          - Name: ColumnId-18
+            Type: STRING
+          - Name: ColumnId-19
+            Type: STRING
+          UploadSettings:
+            ContainsHeader: 'True'
+            Delimiter: ','
+            Format: CSV
+            StartFromRow: '1'
+            TextQualifier: DOUBLE_QUOTE
+  RequestId: 04906311-9863-40f7-973c-947920a40d5f
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '15044'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:36 GMT
+      x-amzn-requestid: 04906311-9863-40f7-973c-947920a40d5f
+    HTTPStatusCode: '200'
+    RequestId: 04906311-9863-40f7-973c-947920a40d5f
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSetPermissions:
+  DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/92b5a28d-6baa-4a23-8503-ccd9fc6004a0
+  DataSetId: 92b5a28d-6baa-4a23-8503-ccd9fc6004a0
+  Permissions:
+  - Actions:
+    - quicksight:DeleteDataSet
+    - quicksight:UpdateDataSetPermissions
+    - quicksight:PutDataSetRefreshProperties
+    - quicksight:CreateRefreshSchedule
+    - quicksight:CancelIngestion
+    - quicksight:ListRefreshSchedules
+    - quicksight:UpdateRefreshSchedule
+    - quicksight:DeleteRefreshSchedule
+    - quicksight:PassDataSet
+    - quicksight:DescribeDataSetRefreshProperties
+    - quicksight:DescribeDataSet
+    - quicksight:CreateIngestion
+    - quicksight:DescribeRefreshSchedule
+    - quicksight:ListIngestions
+    - quicksight:UpdateDataSet
+    - quicksight:DescribeDataSetPermissions
+    - quicksight:DeleteDataSetRefreshProperties
+    - quicksight:DescribeIngestion
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
+  RequestId: fea09d0a-8aa9-4ced-afab-23ad9b04030e
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '973'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:37 GMT
+      x-amzn-requestid: fea09d0a-8aa9-4ced-afab-23ad9b04030e
+    HTTPStatusCode: '200'
+    RequestId: fea09d0a-8aa9-4ced-afab-23ad9b04030e
+    RetryAttempts: '0'
+  Status: '200'

@@ -1,0 +1,50 @@
+DescribeDataSource:
+  DataSource:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/fb2b417e-7e9c-4095-8b49-0da454bd8ee5
+    CreatedTime: 2023-12-26 09:00:18.045000-07:00
+    DataSourceId: fb2b417e-7e9c-4095-8b49-0da454bd8ee5
+    DataSourceParameters:
+      S3Parameters:
+        ManifestFileLocation:
+          Bucket: spaceneedle-samplefiles.prod.us-east-1
+          Key: marketing/manifest.json
+    LastUpdatedTime: 2023-12-26 09:00:18.168000-07:00
+    Name: Web and Social Media Analytics
+    Status: UPDATE_SUCCESSFUL
+    Type: S3
+  RequestId: 44f6e662-4034-4900-a849-e78d6ffc5992
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1596'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:16 GMT
+      x-amzn-requestid: 44f6e662-4034-4900-a849-e78d6ffc5992
+    HTTPStatusCode: '200'
+    RequestId: 44f6e662-4034-4900-a849-e78d6ffc5992
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSourcePermissions:
+  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/fb2b417e-7e9c-4095-8b49-0da454bd8ee5
+  DataSourceId: fb2b417e-7e9c-4095-8b49-0da454bd8ee5
+  Permissions:
+  - Actions:
+    - quicksight:PassDataSource
+    - quicksight:DescribeDataSourcePermissions
+    - quicksight:UpdateDataSource
+    - quicksight:UpdateDataSourcePermissions
+    - quicksight:DescribeDataSource
+    - quicksight:DeleteDataSource
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
+  RequestId: 4ac782e0-b2ad-4b5d-a986-987a7fd6efe3
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '544'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:17 GMT
+      x-amzn-requestid: 4ac782e0-b2ad-4b5d-a986-987a7fd6efe3
+    HTTPStatusCode: '200'
+    RequestId: 4ac782e0-b2ad-4b5d-a986-987a7fd6efe3
+    RetryAttempts: '0'
+  Status: '200'

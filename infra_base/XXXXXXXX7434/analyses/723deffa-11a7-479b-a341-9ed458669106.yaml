@@ -1,0 +1,301 @@
+DescribeAnalysis:
+  Analysis:
+    AnalysisId: 723deffa-11a7-479b-a341-9ed458669106
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/723deffa-11a7-479b-a341-9ed458669106
+    CreatedTime: 2023-12-26 08:32:49.403000-07:00
+    DataSetArns:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/a4aeea4c-2d90-466f-a4ec-758679ece587
+    LastUpdatedTime: 2023-12-26 08:32:49.403000-07:00
+    Name: Sales Pipeline analysis
+    Sheets:
+    - Name: Sheet 1
+      SheetId: 45ced7a9-d2b7-4d72-8696-6b326b1e3c33
+    Status: CREATION_SUCCESSFUL
+  RequestId: 5b07feb1-28eb-4d49-815d-cc8b184aceeb
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '864'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:30 GMT
+      x-amzn-requestid: 5b07feb1-28eb-4d49-815d-cc8b184aceeb
+    HTTPStatusCode: '200'
+    RequestId: 5b07feb1-28eb-4d49-815d-cc8b184aceeb
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisDefinition:
+  AnalysisId: 723deffa-11a7-479b-a341-9ed458669106
+  Definition:
+    CalculatedFields: []
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/a4aeea4c-2d90-466f-a4ec-758679ece587
+      Identifier: Sales Pipeline
+    FilterGroups: []
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            Elements:
+            - ColumnIndex: '0'
+              ColumnSpan: '12'
+              ElementId: 155addb1-ac26-40dd-8aa5-be09985055bd
+              ElementType: VISUAL
+              RowIndex: '0'
+              RowSpan: '4'
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: 0253fdbd-80c6-44fa-b551-dbe71e3074fa
+              ElementType: VISUAL
+              RowIndex: '4'
+              RowSpan: '4'
+            - ColumnIndex: '6'
+              ColumnSpan: '6'
+              ElementId: 762ad11a-f430-425d-804a-a8666fab09cd
+              ElementType: VISUAL
+              RowIndex: '4'
+              RowSpan: '4'
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: e2a78ce3-e7da-4a90-8938-396fa7d76535
+              ElementType: VISUAL
+              RowIndex: '8'
+              RowSpan: '4'
+            - ColumnIndex: '6'
+              ColumnSpan: '6'
+              ElementId: b0505f7c-a56a-4f44-99b8-45c0176217b0
+              ElementType: VISUAL
+              RowIndex: '8'
+              RowSpan: '4'
+      Name: Sheet 1
+      SheetId: 45ced7a9-d2b7-4d72-8696-6b326b1e3c33
+      Visuals:
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId2
+                    HierarchyId: FieldId2
+                Colors:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Opportunity Stage
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId1
+                Values: []
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Type: LINE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId2
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Historical  opportunity pipeline
+            Visibility: VISIBLE
+          VisualId: 155addb1-ac26-40dd-8aa5-be09985055bd
+      - PieChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DonutOptions:
+              ArcOptions:
+                ArcThickness: WHOLE
+            FieldWells:
+              PieChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Opportunity Stage
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId1
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: COUNT
+                    Column:
+                      ColumnName: Weighted Revenue
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId2
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              CategorySort:
+              - FieldSort:
+                  Direction: DESC
+                  FieldId: FieldId1
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Current open pipeline by weighted revenue
+            Visibility: VISIBLE
+          VisualId: 0253fdbd-80c6-44fa-b551-dbe71e3074fa
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: CLUSTERED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Segment
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId2
+                Colors:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Opportunity Stage
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId1
+                Values: []
+            Orientation: HORIZONTAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              CategorySort:
+              - FieldSort:
+                  Direction: DESC
+                  FieldId: FieldId2
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: YTD Opportunities by Stage and Segment
+            Visibility: VISIBLE
+          VisualId: 762ad11a-f430-425d-804a-a8666fab09cd
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: CLUSTERED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Region
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId2
+                Colors:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Opportunity Stage
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId1
+                Values: []
+            Orientation: HORIZONTAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              CategorySort:
+              - FieldSort:
+                  Direction: DESC
+                  FieldId: FieldId2
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: YTD Count of Wins vs Losses by Region
+            Visibility: VISIBLE
+          VisualId: e2a78ce3-e7da-4a90-8938-396fa7d76535
+      - PieChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DonutOptions:
+              ArcOptions:
+                ArcThickness: WHOLE
+            FieldWells:
+              PieChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Region
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId1
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: COUNT
+                    Column:
+                      ColumnName: Weighted Revenue
+                      DataSetIdentifier: Sales Pipeline
+                    FieldId: FieldId2
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: YTD Revenue realized by Region
+            Visibility: VISIBLE
+          VisualId: b0505f7c-a56a-4f44-99b8-45c0176217b0
+  Name: Sales Pipeline analysis
+  RequestId: a6e7ca1a-1ba1-43d1-a9a5-9623768e23ec
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '11954'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:31 GMT
+      x-amzn-requestid: a6e7ca1a-1ba1-43d1-a9a5-9623768e23ec
+    HTTPStatusCode: '200'
+    RequestId: a6e7ca1a-1ba1-43d1-a9a5-9623768e23ec
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisPermissions:
+  AnalysisArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/723deffa-11a7-479b-a341-9ed458669106
+  AnalysisId: 723deffa-11a7-479b-a341-9ed458669106
+  Permissions:
+  - Actions:
+    - quicksight:RestoreAnalysis
+    - quicksight:UpdateAnalysisPermissions
+    - quicksight:DeleteAnalysis
+    - quicksight:DescribeAnalysisPermissions
+    - quicksight:QueryAnalysis
+    - quicksight:DescribeAnalysis
+    - quicksight:UpdateAnalysis
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: 7d693090-a6f1-4bca-980e-0b528c33c0ba
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '550'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:32 GMT
+      x-amzn-requestid: 7d693090-a6f1-4bca-980e-0b528c33c0ba
+    HTTPStatusCode: '200'
+    RequestId: 7d693090-a6f1-4bca-980e-0b528c33c0ba
+    RetryAttempts: '0'
+  Status: '200'

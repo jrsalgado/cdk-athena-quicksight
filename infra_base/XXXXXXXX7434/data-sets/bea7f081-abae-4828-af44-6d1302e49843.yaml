@@ -1,0 +1,183 @@
+DescribeDataSet:
+  DataSet:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/bea7f081-abae-4828-af44-6d1302e49843
+    ConsumedSpiceCapacityInBytes: '5825324'
+    CreatedTime: 2023-12-26 09:00:18.812000-07:00
+    DataSetId: bea7f081-abae-4828-af44-6d1302e49843
+    DataSetUsageConfiguration:
+      DisableUseAsDirectQuerySource: 'False'
+      DisableUseAsImportedSource: 'False'
+    ImportMode: SPICE
+    LastUpdatedTime: 2023-12-26 09:00:33.038000-07:00
+    LogicalTableMap:
+      s3PhysicalTable:
+        Alias: Group 1
+        DataTransforms:
+        - RenameColumnOperation:
+            ColumnName: ColumnId-2
+            NewColumnName: Salesperson
+        - RenameColumnOperation:
+            ColumnName: ColumnId-3
+            NewColumnName: Lead Name
+        - RenameColumnOperation:
+            ColumnName: ColumnId-1
+            NewColumnName: Date
+        - RenameColumnOperation:
+            ColumnName: ColumnId-12
+            NewColumnName: IsLatest
+        - RenameColumnOperation:
+            ColumnName: ColumnId-6
+            NewColumnName: Target Close
+        - RenameColumnOperation:
+            ColumnName: ColumnId-11
+            NewColumnName: ActiveItem
+        - RenameColumnOperation:
+            ColumnName: ColumnId-7
+            NewColumnName: Forecasted Monthly Revenue
+        - RenameColumnOperation:
+            ColumnName: ColumnId-4
+            NewColumnName: Segment
+        - RenameColumnOperation:
+            ColumnName: ColumnId-5
+            NewColumnName: Region
+        - RenameColumnOperation:
+            ColumnName: ColumnId-10
+            NewColumnName: Is Closed
+        - RenameColumnOperation:
+            ColumnName: ColumnId-8
+            NewColumnName: Opportunity Stage
+        - RenameColumnOperation:
+            ColumnName: ColumnId-9
+            NewColumnName: Weighted Revenue
+        - CastColumnTypeOperation:
+            ColumnName: Weighted Revenue
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Forecasted Monthly Revenue
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Target Close
+            Format: M/d/yyyy
+            NewColumnType: DATETIME
+        - CastColumnTypeOperation:
+            ColumnName: IsLatest
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Date
+            Format: M/d/yyyy
+            NewColumnType: DATETIME
+        - TagColumnOperation:
+            ColumnName: Region
+            Tags:
+            - ColumnGeographicRole: STATE
+        Source:
+          PhysicalTableId: s3PhysicalTable
+    Name: Sales Pipeline
+    OutputColumns:
+    - Name: Date
+      Type: DATETIME
+    - Name: Salesperson
+      Type: STRING
+    - Name: Lead Name
+      Type: STRING
+    - Name: Segment
+      Type: STRING
+    - Name: Region
+      Type: STRING
+    - Name: Target Close
+      Type: DATETIME
+    - Name: Forecasted Monthly Revenue
+      Type: INTEGER
+    - Name: Opportunity Stage
+      Type: STRING
+    - Name: Weighted Revenue
+      Type: INTEGER
+    - Name: Is Closed
+      Type: STRING
+    - Name: ActiveItem
+      Type: STRING
+    - Name: IsLatest
+      Type: INTEGER
+    PhysicalTableMap:
+      s3PhysicalTable:
+        S3Source:
+          DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/f8147bfc-3e26-4f21-93bb-83fc5bca18ea
+          InputColumns:
+          - Name: ColumnId-1
+            Type: STRING
+          - Name: ColumnId-2
+            Type: STRING
+          - Name: ColumnId-3
+            Type: STRING
+          - Name: ColumnId-4
+            Type: STRING
+          - Name: ColumnId-5
+            Type: STRING
+          - Name: ColumnId-6
+            Type: STRING
+          - Name: ColumnId-7
+            Type: STRING
+          - Name: ColumnId-8
+            Type: STRING
+          - Name: ColumnId-9
+            Type: STRING
+          - Name: ColumnId-10
+            Type: STRING
+          - Name: ColumnId-11
+            Type: STRING
+          - Name: ColumnId-12
+            Type: STRING
+          UploadSettings:
+            ContainsHeader: 'True'
+            Delimiter: ','
+            Format: CSV
+            StartFromRow: '1'
+            TextQualifier: DOUBLE_QUOTE
+  RequestId: 341e413c-6793-41be-8187-277ee56580da
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '8076'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:41 GMT
+      x-amzn-requestid: 341e413c-6793-41be-8187-277ee56580da
+    HTTPStatusCode: '200'
+    RequestId: 341e413c-6793-41be-8187-277ee56580da
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSetPermissions:
+  DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/bea7f081-abae-4828-af44-6d1302e49843
+  DataSetId: bea7f081-abae-4828-af44-6d1302e49843
+  Permissions:
+  - Actions:
+    - quicksight:DeleteDataSet
+    - quicksight:UpdateDataSetPermissions
+    - quicksight:PutDataSetRefreshProperties
+    - quicksight:CreateRefreshSchedule
+    - quicksight:CancelIngestion
+    - quicksight:ListRefreshSchedules
+    - quicksight:DeleteRefreshSchedule
+    - quicksight:UpdateRefreshSchedule
+    - quicksight:PassDataSet
+    - quicksight:DescribeDataSetRefreshProperties
+    - quicksight:DescribeDataSet
+    - quicksight:CreateIngestion
+    - quicksight:DescribeRefreshSchedule
+    - quicksight:ListIngestions
+    - quicksight:DescribeDataSetPermissions
+    - quicksight:UpdateDataSet
+    - quicksight:DeleteDataSetRefreshProperties
+    - quicksight:DescribeIngestion
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
+  RequestId: 6f734dc7-7921-429a-b798-62244dd642af
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '973'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:43 GMT
+      x-amzn-requestid: 6f734dc7-7921-429a-b798-62244dd642af
+    HTTPStatusCode: '200'
+    RequestId: 6f734dc7-7921-429a-b798-62244dd642af
+    RetryAttempts: '0'
+  Status: '200'

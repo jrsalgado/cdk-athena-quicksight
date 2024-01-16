@@ -1,0 +1,275 @@
+DescribeDashboard:
+  Dashboard:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/e6390395-4a03-4d80-b862-a4d3506173c7
+    CreatedTime: 2023-12-27 07:42:31.337000-07:00
+    DashboardId: e6390395-4a03-4d80-b862-a4d3506173c7
+    LastPublishedTime: 2023-12-27 07:42:31.337000-07:00
+    LastUpdatedTime: 2023-12-27 08:38:52.405000-07:00
+    LinkEntities:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/e3301c4c-e67b-400c-b36c-12edaacbc558
+    Name: dashboard01
+    Version:
+      CreatedTime: 2023-12-27 08:38:52.405000-07:00
+      DataSetArns:
+      - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/f66f2dea-7000-4d37-8bbb-da6b33329c33
+      Errors: []
+      Sheets:
+      - Name: Sheet 1
+        SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_7aac16ad-0d41-4946-89b4-f51b819aa7c6
+      - Name: Sheet 3
+        SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_3095803b-93db-4561-acd5-48391c0fe48d
+      SourceEntityArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/e3301c4c-e67b-400c-b36c-12edaacbc558
+      Status: CREATION_SUCCESSFUL
+      VersionNumber: '4'
+  RequestId: 8d78b156-d86c-4fbc-b9e1-41917851fff7
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1628'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:02 GMT
+      x-amzn-requestid: 8d78b156-d86c-4fbc-b9e1-41917851fff7
+    HTTPStatusCode: '200'
+    RequestId: 8d78b156-d86c-4fbc-b9e1-41917851fff7
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDashboardDefinition:
+  DashboardId: e6390395-4a03-4d80-b862-a4d3506173c7
+  DashboardPublishOptions:
+    AdHocFilteringOption:
+      AvailabilityStatus: DISABLED
+    DataPointDrillUpDownOption:
+      AvailabilityStatus: ENABLED
+    DataPointMenuLabelOption:
+      AvailabilityStatus: ENABLED
+    DataPointTooltipOption:
+      AvailabilityStatus: ENABLED
+    ExportToCSVOption:
+      AvailabilityStatus: ENABLED
+    ExportWithHiddenFieldsOption:
+      AvailabilityStatus: DISABLED
+    SheetControlsOption:
+      VisibilityState: COLLAPSED
+    SheetLayoutElementMaximizationOption:
+      AvailabilityStatus: ENABLED
+    VisualAxisSortOption:
+      AvailabilityStatus: ENABLED
+    VisualMenuOption:
+      AvailabilityStatus: ENABLED
+  Definition:
+    AnalysisDefaults:
+      DefaultNewSheetConfiguration:
+        InteractiveLayoutConfiguration:
+          Grid:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+        SheetContentType: INTERACTIVE
+    CalculatedFields: []
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/f66f2dea-7000-4d37-8bbb-da6b33329c33
+      Identifier: People
+    FilterGroups: []
+    Options:
+      WeekStart: SUNDAY
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            Elements:
+            - ColumnIndex: '0'
+              ColumnSpan: '20'
+              ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+              ElementType: VISUAL
+              RowIndex: '0'
+              RowSpan: '6'
+            - ColumnSpan: '18'
+              ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 1
+      SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_7aac16ad-0d41-4946-89b4-f51b819aa7c6
+      Visuals:
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DataLabels:
+              Overlap: DISABLE_OVERLAP
+              Visibility: HIDDEN
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: People
+                    FieldId: ColumnId-1.0.1703687945115
+                    HierarchyId: ColumnId-1.0.1703687945115
+                Colors: []
+                Values: []
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: ColumnId-1.0.1703687945115
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+            Type: LINE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: ColumnId-1.0.1703687945115
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_cec271a3-0eb5-404b-970b-c8fb60256cc1
+      - PieChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DataLabels:
+              Overlap: DISABLE_OVERLAP
+              Visibility: VISIBLE
+            DonutOptions:
+              ArcOptions:
+                ArcThickness: WHOLE
+            FieldWells:
+              PieChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Region
+                      DataSetIdentifier: People
+                    FieldId: ColumnId-10.0.1703688413615
+                Values: []
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: ColumnId-10.0.1703688413615
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+            Elements:
+            - ColumnSpan: '18'
+              ElementId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 3
+      SheetId: e6390395-4a03-4d80-b862-a4d3506173c7_3095803b-93db-4561-acd5-48391c0fe48d
+      Visuals:
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DataLabels:
+              Overlap: DISABLE_OVERLAP
+              Visibility: HIDDEN
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Region
+                      DataSetIdentifier: People
+                    FieldId: ColumnId-10.0.1703691407556
+                Colors: []
+                Values: []
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: ColumnId-10.0.1703691407556
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+            Type: STACKED_AREA
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
+  Name: dashboard01
+  RequestId: d209d1af-5583-4dbe-b17e-cdbf926ec7be
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '10135'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:03 GMT
+      x-amzn-requestid: d209d1af-5583-4dbe-b17e-cdbf926ec7be
+    HTTPStatusCode: '200'
+    RequestId: d209d1af-5583-4dbe-b17e-cdbf926ec7be
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDashboardPermissions:
+  DashboardArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/e6390395-4a03-4d80-b862-a4d3506173c7
+  DashboardId: e6390395-4a03-4d80-b862-a4d3506173c7
+  LinkSharingConfiguration:
+    Permissions: []
+  Permissions:
+  - Actions:
+    - quicksight:DescribeDashboard
+    - quicksight:ListDashboardVersions
+    - quicksight:UpdateDashboardPermissions
+    - quicksight:QueryDashboard
+    - quicksight:UpdateDashboard
+    - quicksight:DeleteDashboard
+    - quicksight:DescribeDashboardPermissions
+    - quicksight:UpdateDashboardPublishedVersion
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: aabd1c63-d581-4af3-86f8-28419a52dbd2
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '656'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:04 GMT
+      x-amzn-requestid: aabd1c63-d581-4af3-86f8-28419a52dbd2
+    HTTPStatusCode: '200'
+    RequestId: aabd1c63-d581-4af3-86f8-28419a52dbd2
+    RetryAttempts: '0'
+  Status: '200'

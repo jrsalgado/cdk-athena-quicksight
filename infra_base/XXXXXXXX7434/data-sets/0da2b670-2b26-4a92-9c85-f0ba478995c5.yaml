@@ -1,0 +1,181 @@
+DescribeDataSet:
+  DataSet:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/0da2b670-2b26-4a92-9c85-f0ba478995c5
+    ConsumedSpiceCapacityInBytes: '8212257'
+    CreatedTime: 2023-12-26 08:32:48.665000-07:00
+    DataSetId: 0da2b670-2b26-4a92-9c85-f0ba478995c5
+    DataSetUsageConfiguration:
+      DisableUseAsDirectQuerySource: 'False'
+      DisableUseAsImportedSource: 'False'
+    ImportMode: SPICE
+    LastUpdatedTime: 2023-12-26 08:33:02.779000-07:00
+    LogicalTableMap:
+      s3PhysicalTable:
+        Alias: Group 1
+        DataTransforms:
+        - RenameColumnOperation:
+            ColumnName: ColumnId-2
+            NewColumnName: Customer ID
+        - RenameColumnOperation:
+            ColumnName: ColumnId-3
+            NewColumnName: Customer Name
+        - RenameColumnOperation:
+            ColumnName: ColumnId-1
+            NewColumnName: Date
+        - RenameColumnOperation:
+            ColumnName: ColumnId-6
+            NewColumnName: Service Line
+        - RenameColumnOperation:
+            ColumnName: ColumnId-11
+            NewColumnName: Distinct ID
+        - RenameColumnOperation:
+            ColumnName: ColumnId-7
+            NewColumnName: Revenue Goal
+        - RenameColumnOperation:
+            ColumnName: ColumnId-4
+            NewColumnName: Customer Region
+        - RenameColumnOperation:
+            ColumnName: ColumnId-5
+            NewColumnName: Segment
+        - RenameColumnOperation:
+            ColumnName: ColumnId-10
+            NewColumnName: Channel
+        - RenameColumnOperation:
+            ColumnName: ColumnId-8
+            NewColumnName: Billed Amount
+        - RenameColumnOperation:
+            ColumnName: ColumnId-9
+            NewColumnName: Cost
+        - CastColumnTypeOperation:
+            ColumnName: Cost
+            NewColumnType: DECIMAL
+            SubType: FLOAT
+        - CastColumnTypeOperation:
+            ColumnName: Billed Amount
+            NewColumnType: DECIMAL
+            SubType: FLOAT
+        - CastColumnTypeOperation:
+            ColumnName: Revenue Goal
+            NewColumnType: DECIMAL
+            SubType: FLOAT
+        - CastColumnTypeOperation:
+            ColumnName: Distinct ID
+            NewColumnType: INTEGER
+        - CastColumnTypeOperation:
+            ColumnName: Date
+            Format: M/d/yyyy
+            NewColumnType: DATETIME
+        - TagColumnOperation:
+            ColumnName: Customer Region
+            Tags:
+            - ColumnGeographicRole: STATE
+        Source:
+          PhysicalTableId: s3PhysicalTable
+    Name: Business Review
+    OutputColumns:
+    - Name: Date
+      Type: DATETIME
+    - Name: Customer ID
+      Type: STRING
+    - Name: Customer Name
+      Type: STRING
+    - Name: Customer Region
+      Type: STRING
+    - Name: Segment
+      Type: STRING
+    - Name: Service Line
+      Type: STRING
+    - Name: Revenue Goal
+      SubType: FLOAT
+      Type: DECIMAL
+    - Name: Billed Amount
+      SubType: FLOAT
+      Type: DECIMAL
+    - Name: Cost
+      SubType: FLOAT
+      Type: DECIMAL
+    - Name: Channel
+      Type: STRING
+    - Name: Distinct ID
+      Type: INTEGER
+    PhysicalTableMap:
+      s3PhysicalTable:
+        S3Source:
+          DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/b8cd5dce-827f-4e7e-a25b-7fa22223b15a
+          InputColumns:
+          - Name: ColumnId-1
+            Type: STRING
+          - Name: ColumnId-2
+            Type: STRING
+          - Name: ColumnId-3
+            Type: STRING
+          - Name: ColumnId-4
+            Type: STRING
+          - Name: ColumnId-5
+            Type: STRING
+          - Name: ColumnId-6
+            Type: STRING
+          - Name: ColumnId-7
+            Type: STRING
+          - Name: ColumnId-8
+            Type: STRING
+          - Name: ColumnId-9
+            Type: STRING
+          - Name: ColumnId-10
+            Type: STRING
+          - Name: ColumnId-11
+            Type: STRING
+          UploadSettings:
+            ContainsHeader: 'True'
+            Delimiter: ','
+            Format: CSV
+            StartFromRow: '1'
+            TextQualifier: DOUBLE_QUOTE
+  RequestId: ccd96c50-97ed-4128-a7ec-a8db8cbd7e5a
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '7629'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:19 GMT
+      x-amzn-requestid: ccd96c50-97ed-4128-a7ec-a8db8cbd7e5a
+    HTTPStatusCode: '200'
+    RequestId: ccd96c50-97ed-4128-a7ec-a8db8cbd7e5a
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSetPermissions:
+  DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/0da2b670-2b26-4a92-9c85-f0ba478995c5
+  DataSetId: 0da2b670-2b26-4a92-9c85-f0ba478995c5
+  Permissions:
+  - Actions:
+    - quicksight:DeleteDataSet
+    - quicksight:UpdateDataSetPermissions
+    - quicksight:PutDataSetRefreshProperties
+    - quicksight:CreateRefreshSchedule
+    - quicksight:CancelIngestion
+    - quicksight:PassDataSet
+    - quicksight:UpdateRefreshSchedule
+    - quicksight:DeleteRefreshSchedule
+    - quicksight:ListRefreshSchedules
+    - quicksight:DescribeDataSetRefreshProperties
+    - quicksight:DescribeDataSet
+    - quicksight:CreateIngestion
+    - quicksight:DescribeRefreshSchedule
+    - quicksight:ListIngestions
+    - quicksight:DescribeDataSetPermissions
+    - quicksight:UpdateDataSet
+    - quicksight:DeleteDataSetRefreshProperties
+    - quicksight:DescribeIngestion
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: 112d8f2b-33bf-4c8c-b497-1453b6ab2e22
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '967'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:20 GMT
+      x-amzn-requestid: 112d8f2b-33bf-4c8c-b497-1453b6ab2e22
+    HTTPStatusCode: '200'
+    RequestId: 112d8f2b-33bf-4c8c-b497-1453b6ab2e22
+    RetryAttempts: '0'
+  Status: '200'

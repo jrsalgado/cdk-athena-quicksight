@@ -1,0 +1,50 @@
+DescribeDataSource:
+  DataSource:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/b8cd5dce-827f-4e7e-a25b-7fa22223b15a
+    CreatedTime: 2023-12-26 08:32:47.962000-07:00
+    DataSourceId: b8cd5dce-827f-4e7e-a25b-7fa22223b15a
+    DataSourceParameters:
+      S3Parameters:
+        ManifestFileLocation:
+          Bucket: spaceneedle-samplefiles.prod.us-east-1
+          Key: revenue/manifest.json
+    LastUpdatedTime: 2023-12-26 08:32:48.080000-07:00
+    Name: Business Review
+    Status: UPDATE_SUCCESSFUL
+    Type: S3
+  RequestId: 6b38a337-7ae7-448d-9f78-5dbdabf7e7ef
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1578'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:08 GMT
+      x-amzn-requestid: 6b38a337-7ae7-448d-9f78-5dbdabf7e7ef
+    HTTPStatusCode: '200'
+    RequestId: 6b38a337-7ae7-448d-9f78-5dbdabf7e7ef
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSourcePermissions:
+  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/b8cd5dce-827f-4e7e-a25b-7fa22223b15a
+  DataSourceId: b8cd5dce-827f-4e7e-a25b-7fa22223b15a
+  Permissions:
+  - Actions:
+    - quicksight:PassDataSource
+    - quicksight:DescribeDataSourcePermissions
+    - quicksight:UpdateDataSource
+    - quicksight:UpdateDataSourcePermissions
+    - quicksight:DescribeDataSource
+    - quicksight:DeleteDataSource
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: 70b276f1-56f2-4a9a-8030-d1a7e600c158
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '538'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:09 GMT
+      x-amzn-requestid: 70b276f1-56f2-4a9a-8030-d1a7e600c158
+    HTTPStatusCode: '200'
+    RequestId: 70b276f1-56f2-4a9a-8030-d1a7e600c158
+    RetryAttempts: '0'
+  Status: '200'

@@ -1,0 +1,109 @@
+DataSetSummaries:
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/0da2b670-2b26-4a92-9c85-f0ba478995c5
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 08:32:48.665000-07:00
+  DataSetId: 0da2b670-2b26-4a92-9c85-f0ba478995c5
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 08:33:02.779000-07:00
+  Name: Business Review
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/180e00b8-a755-427c-a1c7-0951780cdf70
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 08:32:48.718000-07:00
+  DataSetId: 180e00b8-a755-427c-a1c7-0951780cdf70
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 08:33:03.356000-07:00
+  Name: Web and Social Media Analytics
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/1b5e0ce9-1c45-4617-8c62-936e47084640
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 09:00:19.006000-07:00
+  DataSetId: 1b5e0ce9-1c45-4617-8c62-936e47084640
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 09:00:33.020000-07:00
+  Name: People Overview
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2384dd87-5baa-4308-b2e4-1ec602bba012
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2024-01-04 19:32:59.578000-07:00
+  DataSetId: 2384dd87-5baa-4308-b2e4-1ec602bba012
+  ImportMode: SPICE
+  LastUpdatedTime: 2024-01-09 09:32:44.845000-07:00
+  Name: athenatesttable
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2adf1225-b13e-4b4c-a701-ea6ccc5502a1
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2024-01-09 10:05:41.296000-07:00
+  DataSetId: 2adf1225-b13e-4b4c-a701-ea6ccc5502a1
+  ImportMode: SPICE
+  LastUpdatedTime: 2024-01-09 10:08:12.525000-07:00
+  Name: jsaCustomSQL
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/44eca1ec-3c9d-4ffe-8ad9-e31e8f9cca4e
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 08:32:48.757000-07:00
+  DataSetId: 44eca1ec-3c9d-4ffe-8ad9-e31e8f9cca4e
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 08:33:02.712000-07:00
+  Name: People Overview
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/6caf1b57-facc-4d0e-8ee8-7162cec9b3cb
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 09:00:18.704000-07:00
+  DataSetId: 6caf1b57-facc-4d0e-8ee8-7162cec9b3cb
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 09:00:32.843000-07:00
+  Name: Business Review
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/92b5a28d-6baa-4a23-8503-ccd9fc6004a0
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 09:00:18.983000-07:00
+  DataSetId: 92b5a28d-6baa-4a23-8503-ccd9fc6004a0
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 09:00:33.239000-07:00
+  Name: Web and Social Media Analytics
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/a4aeea4c-2d90-466f-a4ec-758679ece587
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 08:32:48.682000-07:00
+  DataSetId: a4aeea4c-2d90-466f-a4ec-758679ece587
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 08:33:02.859000-07:00
+  Name: Sales Pipeline
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/bea7f081-abae-4828-af44-6d1302e49843
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 09:00:18.812000-07:00
+  DataSetId: bea7f081-abae-4828-af44-6d1302e49843
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 09:00:33.038000-07:00
+  Name: Sales Pipeline
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/d989ff00-d02d-4a01-84d9-0a03ae27ccee
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2024-01-12 08:56:13.062000-07:00
+  DataSetId: d989ff00-d02d-4a01-84d9-0a03ae27ccee
+  ImportMode: SPICE
+  LastUpdatedTime: 2024-01-12 08:57:58.146000-07:00
+  Name: athenatesttable
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/f66f2dea-7000-4d37-8bbb-da6b33329c33
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2023-12-26 11:24:05.014000-07:00
+  DataSetId: f66f2dea-7000-4d37-8bbb-da6b33329c33
+  ImportMode: SPICE
+  LastUpdatedTime: 2023-12-26 11:24:19.280000-07:00
+  Name: People
+  RowLevelPermissionTagConfigurationApplied: 'False'
+RequestId: 0e65ec59-84cc-48d9-b84d-d9cb1afed550
+ResponseMetadata:
+  HTTPHeaders:
+    connection: keep-alive
+    content-length: '4952'
+    content-type: application/json
+    date: Tue, 16 Jan 2024 01:59:17 GMT
+    x-amzn-requestid: 0e65ec59-84cc-48d9-b84d-d9cb1afed550
+  HTTPStatusCode: '200'
+  RequestId: 0e65ec59-84cc-48d9-b84d-d9cb1afed550
+  RetryAttempts: '0'
+Status: '200'

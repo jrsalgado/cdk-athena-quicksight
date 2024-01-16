@@ -1,0 +1,480 @@
+DescribeAnalysis:
+  Analysis:
+    AnalysisId: b8b76b7c-0004-4db7-8fed-491bc6d8a513
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/b8b76b7c-0004-4db7-8fed-491bc6d8a513
+    CreatedTime: 2023-12-26 08:32:49.306000-07:00
+    DataSetArns:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/0da2b670-2b26-4a92-9c85-f0ba478995c5
+    LastUpdatedTime: 2023-12-26 08:32:49.306000-07:00
+    Name: Business Review analysis
+    Sheets:
+    - Name: Sheet 1
+      SheetId: 10e2f043-02f9-4833-97c2-cf42efb63ef6
+    Status: CREATION_SUCCESSFUL
+  RequestId: d0cd1446-db30-41f3-a3d5-6586d50be8d3
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '865'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:34 GMT
+      x-amzn-requestid: d0cd1446-db30-41f3-a3d5-6586d50be8d3
+    HTTPStatusCode: '200'
+    RequestId: d0cd1446-db30-41f3-a3d5-6586d50be8d3
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisDefinition:
+  AnalysisId: b8b76b7c-0004-4db7-8fed-491bc6d8a513
+  Definition:
+    CalculatedFields: []
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/0da2b670-2b26-4a92-9c85-f0ba478995c5
+      Identifier: Business Review
+    FilterGroups: []
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            Elements:
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: 80d247ea-74c3-49b0-886e-abc3b8fbb703
+              ElementType: VISUAL
+              RowIndex: '0'
+              RowSpan: '3'
+            - ColumnIndex: '6'
+              ColumnSpan: '6'
+              ElementId: 742490a1-9f5d-41f5-9ab6-e84bec3da877
+              ElementType: VISUAL
+              RowIndex: '0'
+              RowSpan: '3'
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: ac4134d2-86f0-4699-89fd-5c021a5487dc
+              ElementType: VISUAL
+              RowIndex: '3'
+              RowSpan: '4'
+            - ColumnIndex: '6'
+              ColumnSpan: '6'
+              ElementId: 9158aa7e-66f7-410a-b2cd-444f2730e506
+              ElementType: VISUAL
+              RowIndex: '3'
+              RowSpan: '4'
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: 01486f74-c56d-491f-8efb-24c1994090bb
+              ElementType: VISUAL
+              RowIndex: '7'
+              RowSpan: '4'
+            - ColumnIndex: '6'
+              ColumnSpan: '6'
+              ElementId: 99c08e81-0198-44ad-aa6a-8c671c0c2919
+              ElementType: VISUAL
+              RowIndex: '7'
+              RowSpan: '4'
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: 18dad3d2-b265-4413-b443-6fb9d46f7c20
+              ElementType: VISUAL
+              RowIndex: '11'
+              RowSpan: '4'
+            - ColumnIndex: '6'
+              ColumnSpan: '6'
+              ElementId: 8652442e-059d-4846-801f-7d4476456b0b
+              ElementType: VISUAL
+              RowIndex: '11'
+              RowSpan: '4'
+      Name: Sheet 1
+      SheetId: 10e2f043-02f9-4833-97c2-cf42efb63ef6
+      Visuals:
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Business Review
+                    DateGranularity: YEAR
+                    FieldId: FieldId1
+                    HierarchyId: FieldId1
+                Colors: []
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Billed Amount
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId2
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Revenue Goal
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId3
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Type: LINE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId1
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Revenues vs Goals
+            Visibility: VISIBLE
+          VisualId: 80d247ea-74c3-49b0-886e-abc3b8fbb703
+      - PivotTableVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldOptions:
+              SelectedFieldOptions:
+              - FieldId: FieldId2
+                Visibility: VISIBLE
+              - FieldId: FieldId1
+                Visibility: VISIBLE
+              - FieldId: FieldId3
+                Visibility: VISIBLE
+            FieldWells:
+              PivotTableAggregatedFieldWells:
+                Columns: []
+                Rows:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Service Line
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId2
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Billed Amount
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId1
+                - CategoricalMeasureField:
+                    AggregationFunction: COUNT
+                    Column:
+                      ColumnName: Customer ID
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId3
+            SortConfiguration:
+              FieldSortOptions: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: YTD Revenues by Service Line and Segment
+            Visibility: VISIBLE
+          VisualId: 742490a1-9f5d-41f5-9ab6-e84bec3da877
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: CLUSTERED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId2
+                    HierarchyId: FieldId2
+                Colors:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Segment
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId3
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Billed Amount
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId1
+            Orientation: VERTICAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId2
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Revenues by Customer Segment
+            Visibility: VISIBLE
+          VisualId: ac4134d2-86f0-4699-89fd-5c021a5487dc
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: STACKED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId2
+                    HierarchyId: FieldId2
+                Colors:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Customer Region
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId3
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Billed Amount
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId1
+            Orientation: VERTICAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId2
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Revenues by Region
+            Visibility: VISIBLE
+          VisualId: 9158aa7e-66f7-410a-b2cd-444f2730e506
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Business Review
+                    DateGranularity: YEAR
+                    FieldId: FieldId2
+                    HierarchyId: FieldId2
+                Colors:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Channel
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId3
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Billed Amount
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId1
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Type: AREA
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId2
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Channel adoption across Time
+            Visibility: VISIBLE
+          VisualId: 01486f74-c56d-491f-8efb-24c1994090bb
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: CLUSTERED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Segment
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId1
+                Colors: []
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: AVERAGE
+                    Column:
+                      ColumnName: Cost
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId2
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: AVERAGE
+                    Column:
+                      ColumnName: Billed Amount
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId3
+            Orientation: HORIZONTAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              CategorySort:
+              - FieldSort:
+                  Direction: DESC
+                  FieldId: FieldId1
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Average Revenues vs Costs by Segment
+            Visibility: VISIBLE
+          VisualId: 99c08e81-0198-44ad-aa6a-8c671c0c2919
+      - PieChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DonutOptions:
+              ArcOptions:
+                ArcThickness: WHOLE
+            FieldWells:
+              PieChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Segment
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId1
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Billed Amount
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId2
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Revenues by segment
+            Visibility: VISIBLE
+          VisualId: 18dad3d2-b265-4413-b443-6fb9d46f7c20
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: CLUSTERED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Segment
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId1
+                Colors:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Service Line
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId3
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Billed Amount
+                      DataSetIdentifier: Business Review
+                    FieldId: FieldId2
+            Orientation: HORIZONTAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: YTD Revenue by Service Category and Segment
+            Visibility: VISIBLE
+          VisualId: 8652442e-059d-4846-801f-7d4476456b0b
+  Name: Business Review analysis
+  RequestId: 7112291c-bd06-47bb-9fe3-19ab115e823d
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '21033'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:35 GMT
+      x-amzn-requestid: 7112291c-bd06-47bb-9fe3-19ab115e823d
+    HTTPStatusCode: '200'
+    RequestId: 7112291c-bd06-47bb-9fe3-19ab115e823d
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisPermissions:
+  AnalysisArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/b8b76b7c-0004-4db7-8fed-491bc6d8a513
+  AnalysisId: b8b76b7c-0004-4db7-8fed-491bc6d8a513
+  Permissions:
+  - Actions:
+    - quicksight:RestoreAnalysis
+    - quicksight:UpdateAnalysisPermissions
+    - quicksight:DeleteAnalysis
+    - quicksight:DescribeAnalysisPermissions
+    - quicksight:QueryAnalysis
+    - quicksight:DescribeAnalysis
+    - quicksight:UpdateAnalysis
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: a21dd1c5-dcde-4d24-bc7a-c41472f0e0b7
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '550'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:36 GMT
+      x-amzn-requestid: a21dd1c5-dcde-4d24-bc7a-c41472f0e0b7
+    HTTPStatusCode: '200'
+    RequestId: a21dd1c5-dcde-4d24-bc7a-c41472f0e0b7
+    RetryAttempts: '0'
+  Status: '200'

@@ -1,0 +1,48 @@
+DashboardSummaryList:
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/1b4883d0-3eee-438e-b65f-7d2210969c5b
+  CreatedTime: 2024-01-12 09:11:41.565000-07:00
+  DashboardId: 1b4883d0-3eee-438e-b65f-7d2210969c5b
+  LastPublishedTime: 2024-01-12 09:11:41.565000-07:00
+  LastUpdatedTime: 2024-01-15 11:49:32.008000-07:00
+  Name: FullDashboard
+  PublishedVersionNumber: '2'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd
+  CreatedTime: 2024-01-09 13:45:59.162000-07:00
+  DashboardId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd
+  LastPublishedTime: 2024-01-09 13:45:59.162000-07:00
+  LastUpdatedTime: 2024-01-11 18:08:07.204000-07:00
+  Name: Athena Dashboard
+  PublishedVersionNumber: '2'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/e6390395-4a03-4d80-b862-a4d3506173c7
+  CreatedTime: 2023-12-27 07:42:31.337000-07:00
+  DashboardId: e6390395-4a03-4d80-b862-a4d3506173c7
+  LastPublishedTime: 2023-12-27 07:42:31.337000-07:00
+  LastUpdatedTime: 2023-12-27 08:38:52.405000-07:00
+  Name: dashboard01
+  PublishedVersionNumber: '4'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/e6390395-4a03-4d80-b862-a4d3506173c8
+  CreatedTime: 2023-12-27 12:04:38.632000-07:00
+  DashboardId: e6390395-4a03-4d80-b862-a4d3506173c8
+  LastPublishedTime: 2023-12-27 12:04:38.632000-07:00
+  LastUpdatedTime: 2023-12-27 12:04:39.016000-07:00
+  Name: dashboard02
+  PublishedVersionNumber: '1'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/f2a44e4f-d352-4be3-a28c-b7aa9215ac18
+  CreatedTime: 2024-01-15 13:33:37.272000-07:00
+  DashboardId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18
+  LastPublishedTime: 2024-01-15 13:33:37.272000-07:00
+  LastUpdatedTime: 2024-01-15 13:33:37.265000-07:00
+  Name: FullDashboardKPI
+  PublishedVersionNumber: '1'
+RequestId: 63d69979-fc75-402a-8e25-3a8c7121f2c7
+ResponseMetadata:
+  HTTPHeaders:
+    connection: keep-alive
+    content-length: '1621'
+    content-type: application/json
+    date: Tue, 16 Jan 2024 01:59:49 GMT
+    x-amzn-requestid: 63d69979-fc75-402a-8e25-3a8c7121f2c7
+  HTTPStatusCode: '200'
+  RequestId: 63d69979-fc75-402a-8e25-3a8c7121f2c7
+  RetryAttempts: '0'
+Status: '200'

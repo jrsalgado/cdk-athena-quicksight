@@ -1,0 +1,50 @@
+DescribeDataSource:
+  DataSource:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/04d67882-9620-4501-99c9-ce83f25bf1df
+    CreatedTime: 2023-12-26 09:00:18.063000-07:00
+    DataSourceId: 04d67882-9620-4501-99c9-ce83f25bf1df
+    DataSourceParameters:
+      S3Parameters:
+        ManifestFileLocation:
+          Bucket: spaceneedle-samplefiles.prod.us-east-1
+          Key: hr/manifest.json
+    LastUpdatedTime: 2023-12-26 09:00:18.195000-07:00
+    Name: People Overview
+    Status: UPDATE_SUCCESSFUL
+    Type: S3
+  RequestId: 9bc2b527-a328-4dce-be1e-90f4debf5f9e
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1574'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:02 GMT
+      x-amzn-requestid: 9bc2b527-a328-4dce-be1e-90f4debf5f9e
+    HTTPStatusCode: '200'
+    RequestId: 9bc2b527-a328-4dce-be1e-90f4debf5f9e
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSourcePermissions:
+  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/04d67882-9620-4501-99c9-ce83f25bf1df
+  DataSourceId: 04d67882-9620-4501-99c9-ce83f25bf1df
+  Permissions:
+  - Actions:
+    - quicksight:PassDataSource
+    - quicksight:DescribeDataSourcePermissions
+    - quicksight:UpdateDataSource
+    - quicksight:UpdateDataSourcePermissions
+    - quicksight:DescribeDataSource
+    - quicksight:DeleteDataSource
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
+  RequestId: b552628b-2f0a-4af5-b7dd-45c2a8c5e795
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '544'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:04 GMT
+      x-amzn-requestid: b552628b-2f0a-4af5-b7dd-45c2a8c5e795
+    HTTPStatusCode: '200'
+    RequestId: b552628b-2f0a-4af5-b7dd-45c2a8c5e795
+    RetryAttempts: '0'
+  Status: '200'

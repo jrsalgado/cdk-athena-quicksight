@@ -1,0 +1,50 @@
+DescribeDataSource:
+  DataSource:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/40388f5f-e8e2-4a72-974e-741efb555cb0
+    CreatedTime: 2024-01-09 08:58:54.350000-07:00
+    DataSourceId: 40388f5f-e8e2-4a72-974e-741efb555cb0
+    DataSourceParameters:
+      AthenaParameters:
+        WorkGroup: primary
+    LastUpdatedTime: 2024-01-09 08:58:54.350000-07:00
+    Name: dropthis
+    SslProperties:
+      DisableSsl: 'False'
+    Status: CREATION_SUCCESSFUL
+    Type: ATHENA
+  RequestId: 3810d577-ee84-4f09-a4bf-9a59298ab368
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1512'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:58:46 GMT
+      x-amzn-requestid: 3810d577-ee84-4f09-a4bf-9a59298ab368
+    HTTPStatusCode: '200'
+    RequestId: 3810d577-ee84-4f09-a4bf-9a59298ab368
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSourcePermissions:
+  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/40388f5f-e8e2-4a72-974e-741efb555cb0
+  DataSourceId: 40388f5f-e8e2-4a72-974e-741efb555cb0
+  Permissions:
+  - Actions:
+    - quicksight:PassDataSource
+    - quicksight:DescribeDataSourcePermissions
+    - quicksight:UpdateDataSource
+    - quicksight:UpdateDataSourcePermissions
+    - quicksight:DescribeDataSource
+    - quicksight:DeleteDataSource
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: 8dd92369-e0f3-4306-94fb-01023fbf2b68
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '538'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:58:47 GMT
+      x-amzn-requestid: 8dd92369-e0f3-4306-94fb-01023fbf2b68
+    HTTPStatusCode: '200'
+    RequestId: 8dd92369-e0f3-4306-94fb-01023fbf2b68
+    RetryAttempts: '0'
+  Status: '200'

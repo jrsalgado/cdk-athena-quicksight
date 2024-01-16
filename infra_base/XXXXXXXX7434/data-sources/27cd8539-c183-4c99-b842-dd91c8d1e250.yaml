@@ -1,0 +1,50 @@
+DescribeDataSource:
+  DataSource:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/27cd8539-c183-4c99-b842-dd91c8d1e250
+    CreatedTime: 2023-12-26 08:32:47.965000-07:00
+    DataSourceId: 27cd8539-c183-4c99-b842-dd91c8d1e250
+    DataSourceParameters:
+      S3Parameters:
+        ManifestFileLocation:
+          Bucket: spaceneedle-samplefiles.prod.us-east-1
+          Key: sales/manifest.json
+    LastUpdatedTime: 2023-12-26 08:32:48.077000-07:00
+    Name: Sales Pipeline
+    Status: UPDATE_SUCCESSFUL
+    Type: S3
+  RequestId: 48e718dc-b71b-48f4-b306-fad0ebf03a15
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1576'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:05 GMT
+      x-amzn-requestid: 48e718dc-b71b-48f4-b306-fad0ebf03a15
+    HTTPStatusCode: '200'
+    RequestId: 48e718dc-b71b-48f4-b306-fad0ebf03a15
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSourcePermissions:
+  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/27cd8539-c183-4c99-b842-dd91c8d1e250
+  DataSourceId: 27cd8539-c183-4c99-b842-dd91c8d1e250
+  Permissions:
+  - Actions:
+    - quicksight:PassDataSource
+    - quicksight:DescribeDataSourcePermissions
+    - quicksight:UpdateDataSource
+    - quicksight:UpdateDataSourcePermissions
+    - quicksight:DescribeDataSource
+    - quicksight:DeleteDataSource
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: 47e5dd8c-781d-4b3b-92c9-59405436d820
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '538'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 01:59:06 GMT
+      x-amzn-requestid: 47e5dd8c-781d-4b3b-92c9-59405436d820
+    HTTPStatusCode: '200'
+    RequestId: 47e5dd8c-781d-4b3b-92c9-59405436d820
+    RetryAttempts: '0'
+  Status: '200'

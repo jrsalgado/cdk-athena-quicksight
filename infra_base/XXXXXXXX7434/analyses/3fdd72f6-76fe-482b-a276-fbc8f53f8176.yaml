@@ -1,0 +1,407 @@
+DescribeAnalysis:
+  Analysis:
+    AnalysisId: 3fdd72f6-76fe-482b-a276-fbc8f53f8176
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/3fdd72f6-76fe-482b-a276-fbc8f53f8176
+    CreatedTime: 2023-12-26 09:00:19.669000-07:00
+    DataSetArns:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/92b5a28d-6baa-4a23-8503-ccd9fc6004a0
+    LastUpdatedTime: 2023-12-26 09:00:19.669000-07:00
+    Name: Web and Social Media Analytics analysis
+    Sheets:
+    - Name: Sheet 1
+      SheetId: d7966159-c4a9-447f-806a-92d22a987fd8
+    Status: CREATION_SUCCESSFUL
+  RequestId: c3c897db-9d3e-48de-8aa9-62ad5c8b84b3
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '880'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:23 GMT
+      x-amzn-requestid: c3c897db-9d3e-48de-8aa9-62ad5c8b84b3
+    HTTPStatusCode: '200'
+    RequestId: c3c897db-9d3e-48de-8aa9-62ad5c8b84b3
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisDefinition:
+  AnalysisId: 3fdd72f6-76fe-482b-a276-fbc8f53f8176
+  Definition:
+    CalculatedFields: []
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/92b5a28d-6baa-4a23-8503-ccd9fc6004a0
+      Identifier: Web and Social Media Analytics
+    FilterGroups: []
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            Elements:
+            - ColumnIndex: '0'
+              ColumnSpan: '12'
+              ElementId: b9803a80-17f5-4e90-a5ec-898f2f84c0c8
+              ElementType: VISUAL
+              RowIndex: '0'
+              RowSpan: '3'
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: 5a1d58ee-03d9-47cf-b00a-b91652684eb3
+              ElementType: VISUAL
+              RowIndex: '3'
+              RowSpan: '3'
+            - ColumnIndex: '6'
+              ColumnSpan: '6'
+              ElementId: a5d35d25-955e-4c7b-994b-7b587fcc1cc9
+              ElementType: VISUAL
+              RowIndex: '3'
+              RowSpan: '3'
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: 0790ec72-908b-4d4e-9b0c-8451d041e303
+              ElementType: VISUAL
+              RowIndex: '6'
+              RowSpan: '3'
+            - ColumnIndex: '6'
+              ColumnSpan: '6'
+              ElementId: 0833b43d-671c-41d7-aefc-29d0dc491156
+              ElementType: VISUAL
+              RowIndex: '6'
+              RowSpan: '3'
+            - ColumnIndex: '0'
+              ColumnSpan: '6'
+              ElementId: b5ca0308-65f7-43ad-89fd-fe6d9bed065a
+              ElementType: VISUAL
+              RowIndex: '9'
+              RowSpan: '3'
+      Name: Sheet 1
+      SheetId: d7966159-c4a9-447f-806a-92d22a987fd8
+      Visuals:
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Web and Social Media Analytics
+                    DateGranularity: MONTH
+                    FieldId: FieldId1
+                    HierarchyId: FieldId1
+                Colors: []
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Website Visits
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId2
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Website Pageviews
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId3
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Type: LINE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId1
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Website pageviews and visits
+            Visibility: VISIBLE
+          VisualId: b9803a80-17f5-4e90-a5ec-898f2f84c0c8
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Web and Social Media Analytics
+                    DateGranularity: MONTH
+                    FieldId: FieldId1
+                    HierarchyId: FieldId1
+                Colors: []
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Desktop uniques
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId2
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Tablet uniques
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId3
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Mobile uniques
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId4
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Type: LINE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId1
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Unique visits by device type
+            Visibility: VISIBLE
+          VisualId: 5a1d58ee-03d9-47cf-b00a-b91652684eb3
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: CLUSTERED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Web and Social Media Analytics
+                    DateGranularity: YEAR
+                    FieldId: FieldId1
+                    HierarchyId: FieldId1
+                Colors: []
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: 'Mailing list adds '
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId2
+            Orientation: VERTICAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId1
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Mailing List Subscription
+            Visibility: VISIBLE
+          VisualId: a5d35d25-955e-4c7b-994b-7b587fcc1cc9
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId1
+                    HierarchyId: FieldId1
+                Colors: []
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: New visitors CPC
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId2
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: New visitors Social Media
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId3
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: New visitors SEO
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId4
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Type: LINE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId1
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: New visits by attribution (SEO/CPC/Social Media)
+            Visibility: VISIBLE
+          VisualId: 0790ec72-908b-4d4e-9b0c-8451d041e303
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: STACKED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId1
+                    HierarchyId: FieldId1
+                Colors: []
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Free sign up
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId2
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Paid conversion
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId3
+            Orientation: VERTICAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId1
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Free and Paid Signups
+            Visibility: VISIBLE
+          VisualId: 0833b43d-671c-41d7-aefc-29d0dc491156
+      - BarChartVisual:
+          Actions: []
+          ChartConfiguration:
+            BarsArrangement: CLUSTERED
+            FieldWells:
+              BarChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId1
+                    HierarchyId: FieldId1
+                Colors: []
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Twitter mentions
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId2
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: Twitter followers adds
+                      DataSetIdentifier: Web and Social Media Analytics
+                    FieldId: FieldId3
+            Orientation: HORIZONTAL
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              ColorItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: FieldId1
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            FormatText:
+              PlainText: Twitter mentions and followers
+            Visibility: VISIBLE
+          VisualId: b5ca0308-65f7-43ad-89fd-fe6d9bed065a
+  Name: Web and Social Media Analytics analysis
+  RequestId: 5818cec0-4946-462e-8f07-1d6bea1d1cde
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '18180'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:24 GMT
+      x-amzn-requestid: 5818cec0-4946-462e-8f07-1d6bea1d1cde
+    HTTPStatusCode: '200'
+    RequestId: 5818cec0-4946-462e-8f07-1d6bea1d1cde
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisPermissions:
+  AnalysisArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/3fdd72f6-76fe-482b-a276-fbc8f53f8176
+  AnalysisId: 3fdd72f6-76fe-482b-a276-fbc8f53f8176
+  Permissions:
+  - Actions:
+    - quicksight:RestoreAnalysis
+    - quicksight:UpdateAnalysisPermissions
+    - quicksight:DeleteAnalysis
+    - quicksight:DescribeAnalysisPermissions
+    - quicksight:QueryAnalysis
+    - quicksight:DescribeAnalysis
+    - quicksight:UpdateAnalysis
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
+  RequestId: 5dec6d25-5954-4fe8-8e2e-f361f231d6bf
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '556'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:27 GMT
+      x-amzn-requestid: 5dec6d25-5954-4fe8-8e2e-f361f231d6bf
+    HTTPStatusCode: '200'
+    RequestId: 5dec6d25-5954-4fe8-8e2e-f361f231d6bf
+    RetryAttempts: '0'
+  Status: '200'

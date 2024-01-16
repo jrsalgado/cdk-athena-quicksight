@@ -1,7 +1,7 @@
 import os
 import shutil
 import yaml
-from qs.utils import mask_account_ids
+from qs.utils import mask_aws_account_id, mask_account_ids
 
 
 def fetchQSAllResources(quicksight_client, qs_aws_account_id):
@@ -26,8 +26,10 @@ def fetchQSAllResources(quicksight_client, qs_aws_account_id):
 # DataSources
 
 def fetchQSDataSourcesResources(quicksight_client, qs_aws_account_id: str) -> dict:
-    parent_dir = f'./infra_base/{qs_aws_account_id}'
-    child_dir = f'./infra_base/{qs_aws_account_id}/data-sources'
+    masked_origin_aws_account_id = mask_aws_account_id(qs_aws_account_id)
+    print(masked_origin_aws_account_id)
+    parent_dir = f'./infra_base/{masked_origin_aws_account_id}'
+    child_dir = f'./infra_base/{masked_origin_aws_account_id}/data-sources'
 
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir, mode=0o777)
@@ -38,7 +40,7 @@ def fetchQSDataSourcesResources(quicksight_client, qs_aws_account_id: str) -> di
     dataSources, file_path = listQsResource(
         qs_aws_account_id,
         quicksight_client.list_data_sources,
-        f'./infra_base/{qs_aws_account_id}/data-sources/list-data-sources.yaml'
+        f'./infra_base/{masked_origin_aws_account_id}/data-sources/list-data-sources.yaml'
     )
 
     qsDataSourceResources = {
@@ -57,6 +59,7 @@ def fetchQSDataSourcesResources(quicksight_client, qs_aws_account_id: str) -> di
 
 def createDataSourceDescriptionYaml(quicksight_client, dataSourceId: str, qs_aws_account_id: str):
     descriptionAggr = {}
+    masked_origin_aws_account_id = mask_aws_account_id(qs_aws_account_id)
 
     data_source_res = quicksight_client.describe_data_source(
         AwsAccountId=qs_aws_account_id,
@@ -78,7 +81,7 @@ def createDataSourceDescriptionYaml(quicksight_client, dataSourceId: str, qs_aws
         data_source_permissions_res
     )
 
-    file_path = f'./infra_base/{qs_aws_account_id}/data-sources/{dataSourceId}.yaml'
+    file_path = f'./infra_base/{masked_origin_aws_account_id}/data-sources/{dataSourceId}.yaml'
     writeYaml(descriptionAggr, file_path)
     return file_path
 
@@ -86,8 +89,9 @@ def createDataSourceDescriptionYaml(quicksight_client, dataSourceId: str, qs_aws
 
 
 def fetchQSDataSetsResources(quicksight_client, qs_aws_account_id: str) -> dict:
-    parent_dir = f'./infra_base/{qs_aws_account_id}'
-    child_dir = f'./infra_base/{qs_aws_account_id}/data-sets'
+    masked_origin_aws_account_id = mask_aws_account_id(qs_aws_account_id)
+    parent_dir = f'./infra_base/{masked_origin_aws_account_id}'
+    child_dir = f'./infra_base/{masked_origin_aws_account_id}/data-sets'
 
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir, mode=0o777)
@@ -99,7 +103,7 @@ def fetchQSDataSetsResources(quicksight_client, qs_aws_account_id: str) -> dict:
     dataSets, file_path = listQsResource(
         qs_aws_account_id,
         quicksight_client.list_data_sets,
-        f'./infra_base/{qs_aws_account_id}/data-sets/list-data-sets.yaml'
+        f'./infra_base/{masked_origin_aws_account_id}/data-sets/list-data-sets.yaml'
     )
 
     qsDataSetResources = {
@@ -117,7 +121,7 @@ def fetchQSDataSetsResources(quicksight_client, qs_aws_account_id: str) -> dict:
 
 def createDataSetDescriptionYaml(quicksight_client, dataSetId: str, qs_aws_account_id: str):
     descriptionAggr = {}
-
+    masked_origin_aws_account_id = mask_aws_account_id(qs_aws_account_id)
     data_set_res = quicksight_client.describe_data_set(
         AwsAccountId=qs_aws_account_id,
         DataSetId=dataSetId
@@ -136,7 +140,7 @@ def createDataSetDescriptionYaml(quicksight_client, dataSetId: str, qs_aws_accou
         'DescribeDataSetPermissions',
         data_set_permissions_res)
 
-    file_path = f'./infra_base/{qs_aws_account_id}/data-sets/{dataSetId}.yaml'
+    file_path = f'./infra_base/{masked_origin_aws_account_id}/data-sets/{dataSetId}.yaml'
     writeYaml(descriptionAggr, file_path)
     return file_path
 
@@ -144,8 +148,9 @@ def createDataSetDescriptionYaml(quicksight_client, dataSetId: str, qs_aws_accou
 
 
 def fetchQSDashboardsResources(quicksight_client, qs_aws_account_id: str) -> dict:
-    parent_dir = f'./infra_base/{qs_aws_account_id}'
-    child_dir = f'./infra_base/{qs_aws_account_id}/dashboards'
+    masked_origin_aws_account_id = mask_aws_account_id(qs_aws_account_id)
+    parent_dir = f'./infra_base/{masked_origin_aws_account_id}'
+    child_dir = f'./infra_base/{masked_origin_aws_account_id}/dashboards'
 
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir, mode=0o777)
@@ -156,7 +161,7 @@ def fetchQSDashboardsResources(quicksight_client, qs_aws_account_id: str) -> dic
     dashboards, file_path = listQsResource(
         qs_aws_account_id,
         quicksight_client.list_dashboards,
-        f'./infra_base/{qs_aws_account_id}/dashboards/list-dashboards.yaml'
+        f'./infra_base/{masked_origin_aws_account_id}/dashboards/list-dashboards.yaml'
     )
 
     qsDashboardResources = {
@@ -174,7 +179,7 @@ def fetchQSDashboardsResources(quicksight_client, qs_aws_account_id: str) -> dic
 
 def createDashboardDescriptionYaml(quicksight_client, dashboardId: str, qs_aws_account_id: str):
     descriptionAggr = {}
-
+    masked_origin_aws_account_id = mask_aws_account_id(qs_aws_account_id)
     dashboard_res = quicksight_client.describe_dashboard(
         AwsAccountId=qs_aws_account_id,
         DashboardId=dashboardId
@@ -202,7 +207,7 @@ def createDashboardDescriptionYaml(quicksight_client, dashboardId: str, qs_aws_a
         'DescribeDashboardPermissions',
         dashboard_permissions_res)
 
-    file_path = f'./infra_base/{qs_aws_account_id}/dashboards/{dashboardId}.yaml'
+    file_path = f'./infra_base/{masked_origin_aws_account_id}/dashboards/{dashboardId}.yaml'
     writeYaml(descriptionAggr, file_path)
     return file_path
 
@@ -210,8 +215,9 @@ def createDashboardDescriptionYaml(quicksight_client, dashboardId: str, qs_aws_a
 
 
 def fetchQSAnalysesResources(quicksight_client, qs_aws_account_id: str) -> dict:
-    parent_dir = f'./infra_base/{qs_aws_account_id}'
-    child_dir = f'./infra_base/{qs_aws_account_id}/analyses'
+    masked_origin_aws_account_id = mask_aws_account_id(qs_aws_account_id)
+    parent_dir = f'./infra_base/{masked_origin_aws_account_id}'
+    child_dir = f'./infra_base/{masked_origin_aws_account_id}/analyses'
 
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir, mode=0o777)
@@ -222,7 +228,7 @@ def fetchQSAnalysesResources(quicksight_client, qs_aws_account_id: str) -> dict:
     list_analysis, file_path = listQsResource(
         qs_aws_account_id,
         quicksight_client.list_analyses,
-        f'./infra_base/{qs_aws_account_id}/analyses/list-analysis.yaml'
+        f'./infra_base/{masked_origin_aws_account_id}/analyses/list-analysis.yaml'
     )
 
     qsAnalysisResources = {
@@ -240,7 +246,7 @@ def fetchQSAnalysesResources(quicksight_client, qs_aws_account_id: str) -> dict:
 
 def createAnalysisDescriptionYaml(quicksight_client, analysisId: str, qs_aws_account_id: str):
     descriptionAggr = {}
-
+    masked_origin_aws_account_id = mask_aws_account_id(qs_aws_account_id)
     analysis_res = quicksight_client.describe_analysis(
         AwsAccountId=qs_aws_account_id,
         AnalysisId=analysisId
@@ -268,7 +274,7 @@ def createAnalysisDescriptionYaml(quicksight_client, analysisId: str, qs_aws_acc
         'DescribeAnalysisPermissions',
         analysis_permissions_res)
 
-    file_path = f'./infra_base/{qs_aws_account_id}/analyses/{analysisId}.yaml'
+    file_path = f'./infra_base/{masked_origin_aws_account_id}/analyses/{analysisId}.yaml'
     writeYaml(descriptionAggr, file_path)
     return file_path
 

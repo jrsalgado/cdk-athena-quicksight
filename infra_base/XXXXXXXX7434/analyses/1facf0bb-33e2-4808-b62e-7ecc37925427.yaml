@@ -1,0 +1,105 @@
+DescribeAnalysis:
+  Analysis:
+    AnalysisId: 1facf0bb-33e2-4808-b62e-7ecc37925427
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/1facf0bb-33e2-4808-b62e-7ecc37925427
+    CreatedTime: 2024-01-04 19:33:00.603000-07:00
+    DataSetArns:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2384dd87-5baa-4308-b2e4-1ec602bba012
+    LastUpdatedTime: 2024-01-04 19:33:08.626000-07:00
+    Name: athenatesttable analysis
+    Sheets:
+    - Name: Sheet 1
+      SheetId: b12f095e-dfcc-463a-a30c-731cbc79f6ee
+    Status: CREATION_SUCCESSFUL
+  RequestId: c07f3296-6ece-494a-8ee4-f70245463871
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '865'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:20 GMT
+      x-amzn-requestid: c07f3296-6ece-494a-8ee4-f70245463871
+    HTTPStatusCode: '200'
+    RequestId: c07f3296-6ece-494a-8ee4-f70245463871
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisDefinition:
+  AnalysisId: 1facf0bb-33e2-4808-b62e-7ecc37925427
+  Definition:
+    AnalysisDefaults:
+      DefaultNewSheetConfiguration:
+        InteractiveLayoutConfiguration:
+          Grid:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+        SheetContentType: INTERACTIVE
+    CalculatedFields: []
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2384dd87-5baa-4308-b2e4-1ec602bba012
+      Identifier: athenatesttable
+    FilterGroups: []
+    Options:
+      WeekStart: SUNDAY
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+            Elements:
+            - ColumnSpan: '18'
+              ElementId: e8c0e960-1527-4734-b836-2466c189fd9c
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 1
+      SheetId: b12f095e-dfcc-463a-a30c-731cbc79f6ee
+      Visuals:
+      - EmptyVisual:
+          Actions: []
+          DataSetIdentifier: athenatesttable
+          VisualId: e8c0e960-1527-4734-b836-2466c189fd9c
+  Name: athenatesttable analysis
+  RequestId: 22dae869-188b-4a41-b2ee-1d4910aa0eea
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '2072'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:21 GMT
+      x-amzn-requestid: 22dae869-188b-4a41-b2ee-1d4910aa0eea
+    HTTPStatusCode: '200'
+    RequestId: 22dae869-188b-4a41-b2ee-1d4910aa0eea
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisPermissions:
+  AnalysisArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/1facf0bb-33e2-4808-b62e-7ecc37925427
+  AnalysisId: 1facf0bb-33e2-4808-b62e-7ecc37925427
+  Permissions:
+  - Actions:
+    - quicksight:RestoreAnalysis
+    - quicksight:UpdateAnalysisPermissions
+    - quicksight:DeleteAnalysis
+    - quicksight:DescribeAnalysisPermissions
+    - quicksight:QueryAnalysis
+    - quicksight:DescribeAnalysis
+    - quicksight:UpdateAnalysis
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: 70dc06aa-1370-4539-b685-cd1e4102f603
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '550'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:22 GMT
+      x-amzn-requestid: 70dc06aa-1370-4539-b685-cd1e4102f603
+    HTTPStatusCode: '200'
+    RequestId: 70dc06aa-1370-4539-b685-cd1e4102f603
+    RetryAttempts: '0'
+  Status: '200'

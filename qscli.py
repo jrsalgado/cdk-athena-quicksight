@@ -3,7 +3,7 @@ import click
 import subprocess
 import os
 import boto3
-from qs.utils import readFromOriginResourceFile
+from qs.utils import readFromOriginResourceFile, mask_aws_account_id
 from infra_base.qs_fetch import fetchQSAllResources
 
 @click.group()
@@ -12,9 +12,11 @@ def cli():
 
 @cli.command()
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The origin account id')
-def fetchAllQuicksightResources(account_id):
+@click.option('--profile', default="default", help='AWS CLI Profile')
+def fetchAllQuicksightResources(account_id, profile):
+    os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     click.echo(f'Fetch all resources from AWS Account = {account_id} ...')
-    session = boto3.Session(profile_name="black-arrow-boss")
+    session = boto3.Session(profile_name=profile)
     quicksight_client = session.client(
         'quicksight',
         region_name='us-east-1'
@@ -25,6 +27,7 @@ def fetchAllQuicksightResources(account_id):
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The origin account id')
 @click.argument('dashboardid')
 def cloneFromDashboardId(account_id, dashboardid):
+    os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     click.echo(f'Cloning from AWS AccountId = {account_id} ...')
     click.echo(f'Creating template from DashboardId= {dashboardid} ...')
     cdk_synth(account_id, dashboardid)
@@ -32,9 +35,10 @@ def cloneFromDashboardId(account_id, dashboardid):
 @cli.command()
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The origin account id')
 def cloneAllDashboards(account_id):
+    os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     click.echo(f'Cloning from AWS AccountId = {account_id} ...')
     # for each dashboard on the --list-dashboard file
-    camelOriginalResource, _ = readFromOriginResourceFile('dashboards', 'list-dashboards', account_id)
+    camelOriginalResource, _ = readFromOriginResourceFile('dashboards', 'list-dashboards', mask_aws_account_id(account_id))
     for dashboard in camelOriginalResource['dashboardSummaryList']:
         cdk_synth(account_id, dashboard['dashboardId'])
 
@@ -42,7 +46,6 @@ def cloneAllDashboards(account_id):
 ### TODO: move to own library
 def cdk_synth(originAccountId:str , dashboardId: str):
     # Define the CDK command to deploy your stack
-    os.environ['ORIGIN_AWS_ACCOUNT_ID']= originAccountId
     os.environ['ORIGIN_DASHBOARD_ID']= dashboardId
     os.environ['ORIGIN_IDS_RESOLVE']= "True"
 
@@ -58,8 +61,9 @@ def cdk_synth(originAccountId:str , dashboardId: str):
         "--context",
         "dashboard_params=parameters/just-dashboard.yaml",
     ]
-    template_dir= f"./CFTemplates/{originAccountId}/dashboards"
-    template_path= f"./CFTemplates/{originAccountId}/dashboards/{dashboardId}.yaml"
+    masked_origin_aws_account_id = mask_aws_account_id(originAccountId)
+    template_dir= f"./CFTemplates/{masked_origin_aws_account_id}/dashboards"
+    template_path= f"./CFTemplates/{masked_origin_aws_account_id}/dashboards/{dashboardId}.yaml"
     try:
         subprocess.run([
                 'mkdir',

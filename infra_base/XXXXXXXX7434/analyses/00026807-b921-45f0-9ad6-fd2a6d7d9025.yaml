@@ -1,0 +1,70 @@
+DescribeAnalysis:
+  Analysis:
+    AnalysisId: 00026807-b921-45f0-9ad6-fd2a6d7d9025
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/00026807-b921-45f0-9ad6-fd2a6d7d9025
+    CreatedTime: 2024-01-09 10:05:42.210000-07:00
+    DataSetArns:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2adf1225-b13e-4b4c-a701-ea6ccc5502a1
+    LastUpdatedTime: 2024-01-09 10:06:04.653000-07:00
+    Name: jsaCustomSQL analysis
+    Sheets:
+    - Name: Sheet 1
+      SheetId: df3ba474-1acf-4d16-b7b4-bc15dfac010b
+    Status: DELETED
+  RequestId: b18c9e74-a453-4fcb-8a75-b11f60fa2f0c
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '849'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:15 GMT
+      x-amzn-requestid: b18c9e74-a453-4fcb-8a75-b11f60fa2f0c
+    HTTPStatusCode: '200'
+    RequestId: b18c9e74-a453-4fcb-8a75-b11f60fa2f0c
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisDefinition:
+  AnalysisId: 00026807-b921-45f0-9ad6-fd2a6d7d9025
+  Definition:
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2adf1225-b13e-4b4c-a701-ea6ccc5502a1
+      Identifier: jsaCustomSQL
+  Name: jsaCustomSQL analysis
+  RequestId: ab6d2bce-14c4-4f7c-947f-409f90dc3a39
+  ResourceStatus: DELETED
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '527'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:16 GMT
+      x-amzn-requestid: ab6d2bce-14c4-4f7c-947f-409f90dc3a39
+    HTTPStatusCode: '200'
+    RequestId: ab6d2bce-14c4-4f7c-947f-409f90dc3a39
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisPermissions:
+  AnalysisArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/00026807-b921-45f0-9ad6-fd2a6d7d9025
+  AnalysisId: 00026807-b921-45f0-9ad6-fd2a6d7d9025
+  Permissions:
+  - Actions:
+    - quicksight:RestoreAnalysis
+    - quicksight:UpdateAnalysisPermissions
+    - quicksight:DeleteAnalysis
+    - quicksight:DescribeAnalysisPermissions
+    - quicksight:QueryAnalysis
+    - quicksight:DescribeAnalysis
+    - quicksight:UpdateAnalysis
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: da0223d0-661b-4256-9833-b0c0d02130dd
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '550'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:16 GMT
+      x-amzn-requestid: da0223d0-661b-4256-9833-b0c0d02130dd
+    HTTPStatusCode: '200'
+    RequestId: da0223d0-661b-4256-9833-b0c0d02130dd
+    RetryAttempts: '0'
+  Status: '200'

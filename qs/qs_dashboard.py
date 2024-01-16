@@ -3,14 +3,15 @@ from yaml.loader import SafeLoader
 from aws_cdk import aws_quicksight as quicksight
 from aws_cdk import Fn, Aws
 from os import getenv
-from qs.utils import generate_id
+from qs.utils import convert_element_values_to_int
 from qs.utils import convert_keys_to_camel_case
+from qs.utils import mask_aws_account_id
 
 def readFromOriginResourceFile():
     # Copy from original resources
     originDashboardtId= getenv('ORIGIN_DASHBOARD_ID')
     originAWSAccounttId= getenv('ORIGIN_AWS_ACCOUNT_ID')
-    originalResourcePath=f"infra_base/{originAWSAccounttId}/dashboards/{originDashboardtId}.yaml"
+    originalResourcePath=f"infra_base/{mask_aws_account_id(originAWSAccounttId)}/dashboards/{originDashboardtId}.yaml"
 
     with open(originalResourcePath) as f:
         originalResource = yaml.load(f, Loader=SafeLoader)
@@ -65,9 +66,13 @@ def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
 
     for i in range(len(raw_definition_mod)):
         raw_definition_mod[i].pop('visuals', None)
+        raw_definition_mod[i].pop('layouts', None)
+
         camel_visuals = camel_raw_definition_mod[i]['visuals']
+        camel_layouts_config = convert_element_values_to_int(camel_raw_definition_mod[i]['layouts'])
         sheets.append(quicksight.CfnDashboard.SheetDefinitionProperty(
             visuals= camel_visuals,
+            layouts= camel_layouts_config,
             **raw_definition_mod[i])
         )
 

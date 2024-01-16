@@ -7,7 +7,7 @@ from aws_cdk import (
 )
 from os import getenv
 from qs.utils import extract_id_from_arn, readFromOriginResourceFile
-from qs.utils import find_all_values_iterative
+from qs.utils import find_all_values_iterative, mask_aws_account_id
 ###########################################################
 from qs.qs_datasource import createDataSource
 from qs.qs_dataset import createDataSet
@@ -27,15 +27,16 @@ class QsStack(Stack):
         data_source_id= getenv('ORIGIN_DATASOURCE_ID', None)
         data_set_id = getenv('ORIGIN_DATASET_ID', None)
         dashboard_id = getenv('ORIGIN_DASHBOARD_ID', None)
-        
+        masked_origin_aws_account_id = mask_aws_account_id(getenv('ORIGIN_AWS_ACCOUNT_ID'))
+
         if getenv('ORIGIN_IDS_RESOLVE'):
             # From original resource Dashboard file resolve the datasSetId
-            camelOriginalResource = readFromOriginResourceFile('dashboards',dashboard_id , getenv('ORIGIN_AWS_ACCOUNT_ID'))[0]
+            camelOriginalResource = readFromOriginResourceFile('dashboards',dashboard_id , masked_origin_aws_account_id)[0]
             data_set_arn = camelOriginalResource['describeDashboard']['dashboard']['version']['dataSetArns'][0]
             data_set_id = extract_id_from_arn(data_set_arn)
 
             # From datasSetId get the original resource DataSete file and resolve its DataSourceId
-            camDataSetOriginalResource = readFromOriginResourceFile('data-sets', data_set_id, getenv('ORIGIN_AWS_ACCOUNT_ID'))[0]
+            camDataSetOriginalResource = readFromOriginResourceFile('data-sets', data_set_id, masked_origin_aws_account_id)[0]
             data_source_arns = find_all_values_iterative(camDataSetOriginalResource['describeDataSet'], 'dataSourceArn')
             data_source_id = extract_id_from_arn(data_source_arns[0])
         

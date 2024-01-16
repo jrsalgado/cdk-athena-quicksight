@@ -3,9 +3,15 @@ import string
 import re
 import yaml
 from yaml.loader import SafeLoader
+import os
 
 def pascal_to_camel(key):
-    return key[0].lower() + key[1:]
+    if key == "KPIVisual":
+        return "kpiVisual"
+    elif key == "KPIOptions":
+        return "kpiOptions"
+    else:
+        return key[0].lower() + key[1:]
 
 def convert_keys_to_camel_case(d):
     if isinstance(d, dict):
@@ -85,11 +91,12 @@ def find_all_values_iterative(obj, keySearch):
 
 def mask_account_ids(obj):
     aws_account_id_pattern = re.compile(r'\b\d{12}\b')
+    mask_value= mask_aws_account_id(os.environ['ORIGIN_AWS_ACCOUNT_ID']) if os.environ['ORIGIN_AWS_ACCOUNT_ID'] else 'MASKED_ACCOUNT_ID'
     if isinstance(obj, dict):
         for key, value in obj.items():
             if isinstance(value, (str, int)):
                 # Replace AWS account IDs in strings and integers
-                obj[key] = aws_account_id_pattern.sub('MASKED_ACCOUNT_ID', str(value))
+                obj[key] = aws_account_id_pattern.sub(mask_value, str(value))
             elif isinstance(value, (dict, list)):
                 # Recursively mask AWS account IDs in nested structures
                 mask_account_ids(value)
@@ -97,9 +104,42 @@ def mask_account_ids(obj):
         for i, item in enumerate(obj):
             if isinstance(item, (str, int)):
                 # Replace AWS account IDs in strings and integers
-                obj[i] = aws_account_id_pattern.sub('MASKED_ACCOUNT_ID', str(item))
+                obj[i] = aws_account_id_pattern.sub(mask_value, str(item))
             elif isinstance(item, (dict, list)):
                 # Recursively mask AWS account IDs in nested structures
                 mask_account_ids(item)
     return obj
 
+def convert_element_values_to_int(layout_data):
+    for layout_config in layout_data:
+        configuration = layout_config.get('configuration', {})
+
+        for layout_type, layout_details in configuration.items():
+            elements = layout_details.get('elements', [])
+            for element in elements:
+                if 'columnIndex' in element:
+                    element['columnIndex'] = int(element.get('columnIndex', 0))
+                if 'columnSpan' in element:
+                    element['columnSpan'] = int(element.get('columnSpan', 0))
+                if 'rowIndex' in element:
+                    element['rowIndex'] = int(element.get('rowIndex', 0))
+                if 'rowSpan' in element:
+                    element['rowSpan'] = int(element.get('rowSpan', 0))
+
+    return layout_data
+
+def mask_aws_account_id(account_id):
+    """
+    Replace the first 8 characters of an AWS account ID with "Xs".
+
+    Parameters:
+    - account_id (str): The AWS account ID.
+
+    Returns:
+    - str: The masked AWS account ID.
+    """
+    if len(account_id) >= 8:
+        return "X" * 8 + account_id[8:]
+    else:
+        # Handle the case where the account ID is less than 8 characters
+        return account_id

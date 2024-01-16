@@ -1,0 +1,91 @@
+AnalysisSummaryList:
+- AnalysisId: 00026807-b921-45f0-9ad6-fd2a6d7d9025
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/00026807-b921-45f0-9ad6-fd2a6d7d9025
+  CreatedTime: 2024-01-09 10:05:42.210000-07:00
+  LastUpdatedTime: 2024-01-09 10:06:04.653000-07:00
+  Name: jsaCustomSQL analysis
+  Status: DELETED
+- AnalysisId: 0a19feda-8b7c-464d-b1ea-111fa53ebdbc
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/0a19feda-8b7c-464d-b1ea-111fa53ebdbc
+  CreatedTime: 2023-12-26 09:00:19.624000-07:00
+  LastUpdatedTime: 2023-12-27 08:34:46.600000-07:00
+  Name: People Overview analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: 1facf0bb-33e2-4808-b62e-7ecc37925427
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/1facf0bb-33e2-4808-b62e-7ecc37925427
+  CreatedTime: 2024-01-04 19:33:00.603000-07:00
+  LastUpdatedTime: 2024-01-04 19:33:08.626000-07:00
+  Name: athenatesttable analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: 3fdd72f6-76fe-482b-a276-fbc8f53f8176
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/3fdd72f6-76fe-482b-a276-fbc8f53f8176
+  CreatedTime: 2023-12-26 09:00:19.669000-07:00
+  LastUpdatedTime: 2023-12-26 09:00:19.669000-07:00
+  Name: Web and Social Media Analytics analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: 5cf45932-3d70-4c8d-8b88-ac910005292c
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/5cf45932-3d70-4c8d-8b88-ac910005292c
+  CreatedTime: 2023-12-26 08:32:49.368000-07:00
+  LastUpdatedTime: 2023-12-26 08:32:49.368000-07:00
+  Name: People Overview analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: 723deffa-11a7-479b-a341-9ed458669106
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/723deffa-11a7-479b-a341-9ed458669106
+  CreatedTime: 2023-12-26 08:32:49.403000-07:00
+  LastUpdatedTime: 2023-12-26 08:32:49.403000-07:00
+  Name: Sales Pipeline analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: 82b21749-c928-4c87-b6c4-fc8231695407
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/82b21749-c928-4c87-b6c4-fc8231695407
+  CreatedTime: 2024-01-09 13:42:34.283000-07:00
+  LastUpdatedTime: 2024-01-11 18:07:19.885000-07:00
+  Name: athenatesttable analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: b8b76b7c-0004-4db7-8fed-491bc6d8a513
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/b8b76b7c-0004-4db7-8fed-491bc6d8a513
+  CreatedTime: 2023-12-26 08:32:49.306000-07:00
+  LastUpdatedTime: 2023-12-26 08:32:49.306000-07:00
+  Name: Business Review analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: d261b686-2447-4542-8d92-0b2227336e8b
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/d261b686-2447-4542-8d92-0b2227336e8b
+  CreatedTime: 2023-12-26 09:00:19.323000-07:00
+  LastUpdatedTime: 2023-12-26 09:00:19.323000-07:00
+  Name: Business Review analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: d2f6065c-b85f-4aa0-8641-42d0250d9b85
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/d2f6065c-b85f-4aa0-8641-42d0250d9b85
+  CreatedTime: 2024-01-12 08:56:13.898000-07:00
+  LastUpdatedTime: 2024-01-15 13:33:14.637000-07:00
+  Name: athenatesttable analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: e3301c4c-e67b-400c-b36c-12edaacbc558
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/e3301c4c-e67b-400c-b36c-12edaacbc558
+  CreatedTime: 2023-12-26 11:25:05.597000-07:00
+  LastUpdatedTime: 2023-12-27 08:37:05.812000-07:00
+  Name: People analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: ef1471da-d860-4823-8ba2-61a61efae863
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/ef1471da-d860-4823-8ba2-61a61efae863
+  CreatedTime: 2023-12-26 09:00:19.417000-07:00
+  LastUpdatedTime: 2023-12-26 09:00:19.417000-07:00
+  Name: Sales Pipeline analysis
+  Status: CREATION_SUCCESSFUL
+- AnalysisId: fc5a12e3-9fe3-4093-9bc2-73bd10834d2a
+  Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/fc5a12e3-9fe3-4093-9bc2-73bd10834d2a
+  CreatedTime: 2023-12-26 08:32:49.373000-07:00
+  LastUpdatedTime: 2023-12-26 08:32:49.373000-07:00
+  Name: Web and Social Media Analytics analysis
+  Status: CREATION_SUCCESSFUL
+RequestId: d07aa077-eb3f-42f6-89cc-8d52829aeeb3
+ResponseMetadata:
+  HTTPHeaders:
+    connection: keep-alive
+    content-length: '3747'
+    content-type: application/json
+    date: Tue, 16 Jan 2024 02:00:14 GMT
+    x-amzn-requestid: d07aa077-eb3f-42f6-89cc-8d52829aeeb3
+  HTTPStatusCode: '200'
+  RequestId: d07aa077-eb3f-42f6-89cc-8d52829aeeb3
+  RetryAttempts: '0'
+Status: '200'

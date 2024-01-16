@@ -1,0 +1,300 @@
+DescribeAnalysis:
+  Analysis:
+    AnalysisId: e3301c4c-e67b-400c-b36c-12edaacbc558
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/e3301c4c-e67b-400c-b36c-12edaacbc558
+    CreatedTime: 2023-12-26 11:25:05.597000-07:00
+    DataSetArns:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/f66f2dea-7000-4d37-8bbb-da6b33329c33
+    LastUpdatedTime: 2023-12-27 08:37:05.812000-07:00
+    Name: People analysis
+    Sheets:
+    - Name: Sheet 1
+      SheetId: 7aac16ad-0d41-4946-89b4-f51b819aa7c6
+    - Name: Sheet 2
+      SheetId: c9e05e60-1dcd-4f36-8a1d-6471fc4bc959
+    - Name: Sheet 3
+      SheetId: 3095803b-93db-4561-acd5-48391c0fe48d
+    Status: CREATION_SUCCESSFUL
+  RequestId: 824ef338-23bd-4307-8aa0-33a8f56f888e
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1282'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:43 GMT
+      x-amzn-requestid: 824ef338-23bd-4307-8aa0-33a8f56f888e
+    HTTPStatusCode: '200'
+    RequestId: 824ef338-23bd-4307-8aa0-33a8f56f888e
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisDefinition:
+  AnalysisId: e3301c4c-e67b-400c-b36c-12edaacbc558
+  Definition:
+    AnalysisDefaults:
+      DefaultNewSheetConfiguration:
+        InteractiveLayoutConfiguration:
+          Grid:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+        SheetContentType: INTERACTIVE
+    CalculatedFields: []
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/f66f2dea-7000-4d37-8bbb-da6b33329c33
+      Identifier: People
+    FilterGroups: []
+    Options:
+      WeekStart: SUNDAY
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            Elements:
+            - ColumnIndex: '0'
+              ColumnSpan: '20'
+              ElementId: cec271a3-0eb5-404b-970b-c8fb60256cc1
+              ElementType: VISUAL
+              RowIndex: '0'
+              RowSpan: '6'
+            - ColumnSpan: '18'
+              ElementId: 326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 1
+      SheetId: 7aac16ad-0d41-4946-89b4-f51b819aa7c6
+      Visuals:
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DataLabels:
+              Overlap: DISABLE_OVERLAP
+              Visibility: HIDDEN
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - DateDimensionField:
+                    Column:
+                      ColumnName: Date
+                      DataSetIdentifier: People
+                    FieldId: ColumnId-1.0.1703687945115
+                    HierarchyId: ColumnId-1.0.1703687945115
+                Colors: []
+                Values: []
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: ColumnId-1.0.1703687945115
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+            Type: LINE
+          ColumnHierarchies:
+          - DateTimeHierarchy:
+              HierarchyId: ColumnId-1.0.1703687945115
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: cec271a3-0eb5-404b-970b-c8fb60256cc1
+      - PieChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DataLabels:
+              Overlap: DISABLE_OVERLAP
+              Visibility: VISIBLE
+            DonutOptions:
+              ArcOptions:
+                ArcThickness: WHOLE
+            FieldWells:
+              PieChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Region
+                      DataSetIdentifier: People
+                    FieldId: ColumnId-10.0.1703688413615
+                Values: []
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: ColumnId-10.0.1703688413615
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: 326755c4-51cd-4e7b-85ce-e7f06bb8ea8e
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+            Elements:
+            - ColumnSpan: '18'
+              ElementId: 808f44fb-8ebb-4880-b9aa-f0eaa18d8f34
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 2
+      SheetId: c9e05e60-1dcd-4f36-8a1d-6471fc4bc959
+      Visuals:
+      - PieChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DataLabels:
+              Overlap: DISABLE_OVERLAP
+              Visibility: VISIBLE
+            DonutOptions:
+              ArcOptions:
+                ArcThickness: MEDIUM
+            FieldWells:
+              PieChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Job Family
+                      DataSetIdentifier: People
+                    FieldId: ColumnId-12.0.1703689828299
+                Values: []
+            SortConfiguration:
+              CategoryItemsLimit:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: ColumnId-12.0.1703689828299
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: 808f44fb-8ebb-4880-b9aa-f0eaa18d8f34
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+            Elements:
+            - ColumnSpan: '18'
+              ElementId: 6e9ac621-a804-4aea-b858-ea0c1c19e300
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 3
+      SheetId: 3095803b-93db-4561-acd5-48391c0fe48d
+      Visuals:
+      - LineChartVisual:
+          Actions: []
+          ChartConfiguration:
+            DataLabels:
+              Overlap: DISABLE_OVERLAP
+              Visibility: HIDDEN
+            FieldWells:
+              LineChartAggregatedFieldWells:
+                Category:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: Region
+                      DataSetIdentifier: People
+                    FieldId: ColumnId-10.0.1703691407556
+                Colors: []
+                Values: []
+            SortConfiguration:
+              CategoryItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              ColorItemsLimitConfiguration:
+                OtherCategories: INCLUDE
+              SmallMultiplesLimitConfiguration:
+                OtherCategories: INCLUDE
+            Tooltip:
+              FieldBasedTooltip:
+                AggregationVisibility: HIDDEN
+                TooltipFields:
+                - FieldTooltipItem:
+                    FieldId: ColumnId-10.0.1703691407556
+                    Visibility: VISIBLE
+                TooltipTitleType: PRIMARY_VALUE
+              SelectedTooltipType: DETAILED
+              TooltipVisibility: VISIBLE
+            Type: STACKED_AREA
+          ColumnHierarchies: []
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: 6e9ac621-a804-4aea-b858-ea0c1c19e300
+  Name: People analysis
+  RequestId: 64fef2d5-f59a-4b4e-a2ab-b420091f7f20
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '11786'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:44 GMT
+      x-amzn-requestid: 64fef2d5-f59a-4b4e-a2ab-b420091f7f20
+    HTTPStatusCode: '200'
+    RequestId: 64fef2d5-f59a-4b4e-a2ab-b420091f7f20
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisPermissions:
+  AnalysisArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/e3301c4c-e67b-400c-b36c-12edaacbc558
+  AnalysisId: e3301c4c-e67b-400c-b36c-12edaacbc558
+  Permissions:
+  - Actions:
+    - quicksight:RestoreAnalysis
+    - quicksight:UpdateAnalysisPermissions
+    - quicksight:DeleteAnalysis
+    - quicksight:DescribeAnalysisPermissions
+    - quicksight:QueryAnalysis
+    - quicksight:DescribeAnalysis
+    - quicksight:UpdateAnalysis
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: c71ad0b3-b9bf-4770-bf16-1ca20bb5b082
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '550'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 02:00:45 GMT
+      x-amzn-requestid: c71ad0b3-b9bf-4770-bf16-1ca20bb5b082
+    HTTPStatusCode: '200'
+    RequestId: c71ad0b3-b9bf-4770-bf16-1ca20bb5b082
+    RetryAttempts: '0'
+  Status: '200'
