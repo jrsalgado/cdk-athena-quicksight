@@ -1,0 +1,173 @@
+DescribeAnalysis:
+  Analysis:
+    AnalysisId: 914d1077-43a2-457c-9de2-2f6c12cf534f
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/914d1077-43a2-457c-9de2-2f6c12cf534f
+    CreatedTime: 2024-01-15 19:49:08.191000-07:00
+    DataSetArns:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
+    LastUpdatedTime: 2024-01-15 19:49:36.566000-07:00
+    Name: athenatesttable analysis
+    Sheets:
+    - Name: Sheet 1
+      SheetId: c8befdca-95c2-473b-86af-0519b1f0af2c
+    Status: CREATION_SUCCESSFUL
+  RequestId: f94f729d-d3fd-4a22-977a-283db9f439f9
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '865'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 16:47:54 GMT
+      x-amzn-requestid: f94f729d-d3fd-4a22-977a-283db9f439f9
+    HTTPStatusCode: '200'
+    RequestId: f94f729d-d3fd-4a22-977a-283db9f439f9
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisDefinition:
+  AnalysisId: 914d1077-43a2-457c-9de2-2f6c12cf534f
+  Definition:
+    AnalysisDefaults:
+      DefaultNewSheetConfiguration:
+        InteractiveLayoutConfiguration:
+          Grid:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+        SheetContentType: INTERACTIVE
+    CalculatedFields: []
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
+      Identifier: athenatesttable
+    FilterGroups: []
+    Options:
+      WeekStart: SUNDAY
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+            Elements:
+            - ColumnSpan: '18'
+              ElementId: 5ddf5aa4-dc64-4e52-b0a7-fc3a7f98ac76
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 1
+      SheetId: c8befdca-95c2-473b-86af-0519b1f0af2c
+      Visuals:
+      - PivotTableVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldOptions:
+              SelectedFieldOptions:
+              - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.name.3.1705373376044
+                Visibility: VISIBLE
+              - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.id.0.1705373376044
+                Visibility: VISIBLE
+              - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.age.1.1705373376044
+                Visibility: VISIBLE
+              - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.score.2.1705373376044
+                Visibility: VISIBLE
+            FieldWells:
+              PivotTableAggregatedFieldWells:
+                Columns:
+                - NumericalDimensionField:
+                    Column:
+                      ColumnName: id
+                      DataSetIdentifier: athenatesttable
+                    FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.id.0.1705373376044
+                Rows:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: name
+                      DataSetIdentifier: athenatesttable
+                    FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.name.3.1705373376044
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: age
+                      DataSetIdentifier: athenatesttable
+                    FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.age.1.1705373376044
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: score
+                      DataSetIdentifier: athenatesttable
+                    FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.score.2.1705373376044
+            SortConfiguration:
+              FieldSortOptions: []
+            TableOptions:
+              CellStyle: {}
+              CollapsedRowDimensionsVisibility: HIDDEN
+              ColumnHeaderStyle: {}
+              RowAlternateColorOptions:
+                Status: DISABLED
+                UsePrimaryBackgroundColor: ENABLED
+              RowsLayout: HIERARCHY
+            TotalOptions:
+              ColumnTotalOptions:
+                Placement: END
+              RowSubtotalOptions:
+                CustomLabel: <<$aws:subtotalDimension>> Subtotal
+                MetricHeaderCellStyle: {}
+                StyleTargets:
+                - CellType: VALUE
+                - CellType: TOTAL
+                - CellType: METRIC_HEADER
+                TotalCellStyle: {}
+                TotalsVisibility: VISIBLE
+                ValueCellStyle: {}
+              RowTotalOptions:
+                Placement: AUTO
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: 5ddf5aa4-dc64-4e52-b0a7-fc3a7f98ac76
+  Name: athenatesttable analysis
+  RequestId: 477f9cae-fb16-42f7-8fca-09f627fde914
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '6225'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 16:47:55 GMT
+      x-amzn-requestid: 477f9cae-fb16-42f7-8fca-09f627fde914
+    HTTPStatusCode: '200'
+    RequestId: 477f9cae-fb16-42f7-8fca-09f627fde914
+    RetryAttempts: '0'
+  Status: '200'
+DescribeAnalysisPermissions:
+  AnalysisArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/914d1077-43a2-457c-9de2-2f6c12cf534f
+  AnalysisId: 914d1077-43a2-457c-9de2-2f6c12cf534f
+  Permissions:
+  - Actions:
+    - quicksight:RestoreAnalysis
+    - quicksight:UpdateAnalysisPermissions
+    - quicksight:DeleteAnalysis
+    - quicksight:DescribeAnalysisPermissions
+    - quicksight:QueryAnalysis
+    - quicksight:DescribeAnalysis
+    - quicksight:UpdateAnalysis
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: f32de37c-5350-4f34-a50b-412b33a28d9c
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '550'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 16:47:55 GMT
+      x-amzn-requestid: f32de37c-5350-4f34-a50b-412b33a28d9c
+    HTTPStatusCode: '200'
+    RequestId: f32de37c-5350-4f34-a50b-412b33a28d9c
+    RetryAttempts: '0'
+  Status: '200'

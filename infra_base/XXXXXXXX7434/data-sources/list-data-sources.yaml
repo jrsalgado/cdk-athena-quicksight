@@ -35,6 +35,18 @@ DataSources:
     DisableSsl: 'False'
   Status: CREATION_SUCCESSFUL
   Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/4b649b07-0ddc-41cf-9d85-d5c82084b1f0
+  CreatedTime: 2024-01-15 19:48:43.065000-07:00
+  DataSourceId: 4b649b07-0ddc-41cf-9d85-d5c82084b1f0
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-15 19:48:43.065000-07:00
+  Name: AthenaNoSpice
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
 - Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/6960ebd5-40b0-42d4-a586-b5ff98e9bd2e
   CreatedTime: 2024-01-09 09:54:19.660000-07:00
   DataSourceId: 6960ebd5-40b0-42d4-a586-b5ff98e9bd2e
@@ -103,6 +115,18 @@ DataSources:
       WorkGroup: primary
   LastUpdatedTime: 2024-01-09 08:57:45.631000-07:00
   Name: dropthis
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/clone-no-spice
+  CreatedTime: 2024-01-16 09:18:07.898000-07:00
+  DataSourceId: clone-no-spice
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-16 09:18:09.102000-07:00
+  Name: clone-athena-no-spice
   SslProperties:
     DisableSsl: 'False'
   Status: CREATION_SUCCESSFUL
@@ -215,15 +239,15 @@ DataSources:
   Name: Web and Social Media Analytics
   Status: UPDATE_SUCCESSFUL
   Type: S3
-RequestId: 1cdb839c-aa22-4132-9547-c8c222718359
+RequestId: 34c0ed12-5e54-45b6-a939-d3fe24db6de4
 ResponseMetadata:
   HTTPHeaders:
     connection: keep-alive
-    content-length: '26746'
+    content-length: '29618'
     content-type: application/json
-    date: Tue, 16 Jan 2024 01:58:39 GMT
-    x-amzn-requestid: 1cdb839c-aa22-4132-9547-c8c222718359
+    date: Tue, 16 Jan 2024 16:46:26 GMT
+    x-amzn-requestid: 34c0ed12-5e54-45b6-a939-d3fe24db6de4
   HTTPStatusCode: '200'
-  RequestId: 1cdb839c-aa22-4132-9547-c8c222718359
+  RequestId: 34c0ed12-5e54-45b6-a939-d3fe24db6de4
   RetryAttempts: '0'
 Status: '200'

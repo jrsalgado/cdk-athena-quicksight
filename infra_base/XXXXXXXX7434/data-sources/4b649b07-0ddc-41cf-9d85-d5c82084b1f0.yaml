@@ -1,32 +1,32 @@
 DescribeDataSource:
   DataSource:
-    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/40388f5f-e8e2-4a72-974e-741efb555cb0
-    CreatedTime: 2024-01-09 08:58:54.350000-07:00
-    DataSourceId: 40388f5f-e8e2-4a72-974e-741efb555cb0
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/4b649b07-0ddc-41cf-9d85-d5c82084b1f0
+    CreatedTime: 2024-01-15 19:48:43.065000-07:00
+    DataSourceId: 4b649b07-0ddc-41cf-9d85-d5c82084b1f0
     DataSourceParameters:
       AthenaParameters:
         WorkGroup: primary
-    LastUpdatedTime: 2024-01-09 08:58:54.350000-07:00
-    Name: dropthis
+    LastUpdatedTime: 2024-01-15 19:48:43.065000-07:00
+    Name: AthenaNoSpice
     SslProperties:
       DisableSsl: 'False'
     Status: CREATION_SUCCESSFUL
     Type: ATHENA
-  RequestId: 66dd6035-2e0e-475d-85ac-7a28d797a0c5
+  RequestId: 8f924568-1507-4163-80bb-43d0b02ec19f
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
-      content-length: '1512'
+      content-length: '1519'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:31 GMT
-      x-amzn-requestid: 66dd6035-2e0e-475d-85ac-7a28d797a0c5
+      date: Tue, 16 Jan 2024 16:46:32 GMT
+      x-amzn-requestid: 8f924568-1507-4163-80bb-43d0b02ec19f
     HTTPStatusCode: '200'
-    RequestId: 66dd6035-2e0e-475d-85ac-7a28d797a0c5
+    RequestId: 8f924568-1507-4163-80bb-43d0b02ec19f
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSourcePermissions:
-  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/40388f5f-e8e2-4a72-974e-741efb555cb0
-  DataSourceId: 40388f5f-e8e2-4a72-974e-741efb555cb0
+  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/4b649b07-0ddc-41cf-9d85-d5c82084b1f0
+  DataSourceId: 4b649b07-0ddc-41cf-9d85-d5c82084b1f0
   Permissions:
   - Actions:
     - quicksight:PassDataSource
@@ -36,15 +36,15 @@ DescribeDataSourcePermissions:
     - quicksight:DescribeDataSource
     - quicksight:DeleteDataSource
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: de09876e-0613-4e5a-8087-0a987cde3553
+  RequestId: bf64d66e-f022-4892-88cd-6c757ac81102
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '538'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:31 GMT
-      x-amzn-requestid: de09876e-0613-4e5a-8087-0a987cde3553
+      date: Tue, 16 Jan 2024 16:46:33 GMT
+      x-amzn-requestid: bf64d66e-f022-4892-88cd-6c757ac81102
     HTTPStatusCode: '200'
-    RequestId: de09876e-0613-4e5a-8087-0a987cde3553
+    RequestId: bf64d66e-f022-4892-88cd-6c757ac81102
     RetryAttempts: '0'
   Status: '200'

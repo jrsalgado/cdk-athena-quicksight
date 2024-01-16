@@ -133,16 +133,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: fe436408-6b78-4b76-95de-dacc3d23829d
+  RequestId: c48ffc47-7653-4795-bb02-f642423ba624
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '8076'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:39 GMT
-      x-amzn-requestid: fe436408-6b78-4b76-95de-dacc3d23829d
+      date: Tue, 16 Jan 2024 16:47:15 GMT
+      x-amzn-requestid: c48ffc47-7653-4795-bb02-f642423ba624
     HTTPStatusCode: '200'
-    RequestId: fe436408-6b78-4b76-95de-dacc3d23829d
+    RequestId: c48ffc47-7653-4795-bb02-f642423ba624
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -169,15 +169,15 @@ DescribeDataSetPermissions:
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 0a0e8fad-4898-4a3c-b47b-b8efff90390c
+  RequestId: 31ebd7de-0545-45c6-9064-45361465425e
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:40 GMT
-      x-amzn-requestid: 0a0e8fad-4898-4a3c-b47b-b8efff90390c
+      date: Tue, 16 Jan 2024 16:47:16 GMT
+      x-amzn-requestid: 31ebd7de-0545-45c6-9064-45361465425e
     HTTPStatusCode: '200'
-    RequestId: 0a0e8fad-4898-4a3c-b47b-b8efff90390c
+    RequestId: 31ebd7de-0545-45c6-9064-45361465425e
     RetryAttempts: '0'
   Status: '200'

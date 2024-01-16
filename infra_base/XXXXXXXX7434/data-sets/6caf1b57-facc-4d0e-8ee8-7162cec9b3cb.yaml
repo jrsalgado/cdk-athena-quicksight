@@ -131,16 +131,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: a256148c-d5e1-4ac0-9138-5b91b6c3ac4b
+  RequestId: 33527548-32da-4585-b914-3e5ac04ed2a9
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '7629'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:33 GMT
-      x-amzn-requestid: a256148c-d5e1-4ac0-9138-5b91b6c3ac4b
+      date: Tue, 16 Jan 2024 16:47:12 GMT
+      x-amzn-requestid: 33527548-32da-4585-b914-3e5ac04ed2a9
     HTTPStatusCode: '200'
-    RequestId: a256148c-d5e1-4ac0-9138-5b91b6c3ac4b
+    RequestId: 33527548-32da-4585-b914-3e5ac04ed2a9
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -153,10 +153,10 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:UpdateRefreshSchedule
     - quicksight:PassDataSet
-    - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
+    - quicksight:UpdateRefreshSchedule
+    - quicksight:DeleteRefreshSchedule
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
@@ -167,15 +167,15 @@ DescribeDataSetPermissions:
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 11069750-8f75-451b-80a3-c2ff241f75c8
+  RequestId: 5e446984-a8a2-405b-b99d-449f88ece64b
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '973'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:35 GMT
-      x-amzn-requestid: 11069750-8f75-451b-80a3-c2ff241f75c8
+      date: Tue, 16 Jan 2024 16:47:12 GMT
+      x-amzn-requestid: 5e446984-a8a2-405b-b99d-449f88ece64b
     HTTPStatusCode: '200'
-    RequestId: 11069750-8f75-451b-80a3-c2ff241f75c8
+    RequestId: 5e446984-a8a2-405b-b99d-449f88ece64b
     RetryAttempts: '0'
   Status: '200'

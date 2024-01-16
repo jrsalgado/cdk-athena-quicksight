@@ -12,16 +12,16 @@ DescribeDataSource:
       DisableSsl: 'False'
     Status: CREATION_SUCCESSFUL
     Type: ATHENA
-  RequestId: 9f510902-f555-4612-9725-0f5008be1e0e
+  RequestId: d45f9d1a-1a8f-4027-b005-f7d72f79aad8
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1522'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:00 GMT
-      x-amzn-requestid: 9f510902-f555-4612-9725-0f5008be1e0e
+      date: Tue, 16 Jan 2024 16:46:46 GMT
+      x-amzn-requestid: d45f9d1a-1a8f-4027-b005-f7d72f79aad8
     HTTPStatusCode: '200'
-    RequestId: 9f510902-f555-4612-9725-0f5008be1e0e
+    RequestId: d45f9d1a-1a8f-4027-b005-f7d72f79aad8
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSourcePermissions:
@@ -36,15 +36,15 @@ DescribeDataSourcePermissions:
     - quicksight:DescribeDataSource
     - quicksight:DeleteDataSource
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: ea740489-c4bb-4424-8ac4-8987d9c4402e
+  RequestId: 380ac70c-479d-45a1-9756-dc3698fc24c4
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '544'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:01 GMT
-      x-amzn-requestid: ea740489-c4bb-4424-8ac4-8987d9c4402e
+      date: Tue, 16 Jan 2024 16:46:47 GMT
+      x-amzn-requestid: 380ac70c-479d-45a1-9756-dc3698fc24c4
     HTTPStatusCode: '200'
-    RequestId: ea740489-c4bb-4424-8ac4-8987d9c4402e
+    RequestId: 380ac70c-479d-45a1-9756-dc3698fc24c4
     RetryAttempts: '0'
   Status: '200'

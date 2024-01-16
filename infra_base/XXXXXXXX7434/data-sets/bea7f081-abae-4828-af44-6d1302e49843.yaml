@@ -133,16 +133,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: 341e413c-6793-41be-8187-277ee56580da
+  RequestId: 196fe38a-058f-4cda-9151-2f378ddb0ea0
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '8076'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:41 GMT
-      x-amzn-requestid: 341e413c-6793-41be-8187-277ee56580da
+      date: Tue, 16 Jan 2024 16:47:18 GMT
+      x-amzn-requestid: 196fe38a-058f-4cda-9151-2f378ddb0ea0
     HTTPStatusCode: '200'
-    RequestId: 341e413c-6793-41be-8187-277ee56580da
+    RequestId: 196fe38a-058f-4cda-9151-2f378ddb0ea0
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -155,8 +155,8 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:ListRefreshSchedules
     - quicksight:DeleteRefreshSchedule
+    - quicksight:ListRefreshSchedules
     - quicksight:UpdateRefreshSchedule
     - quicksight:PassDataSet
     - quicksight:DescribeDataSetRefreshProperties
@@ -164,20 +164,20 @@ DescribeDataSetPermissions:
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:DescribeDataSetPermissions
     - quicksight:UpdateDataSet
+    - quicksight:DescribeDataSetPermissions
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 6f734dc7-7921-429a-b798-62244dd642af
+  RequestId: 86bec178-7d2a-4f9a-8ba5-c7337ec0ccd7
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '973'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:43 GMT
-      x-amzn-requestid: 6f734dc7-7921-429a-b798-62244dd642af
+      date: Tue, 16 Jan 2024 16:47:19 GMT
+      x-amzn-requestid: 86bec178-7d2a-4f9a-8ba5-c7337ec0ccd7
     HTTPStatusCode: '200'
-    RequestId: 6f734dc7-7921-429a-b798-62244dd642af
+    RequestId: 86bec178-7d2a-4f9a-8ba5-c7337ec0ccd7
     RetryAttempts: '0'
   Status: '200'

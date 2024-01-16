@@ -1,0 +1,205 @@
+DescribeDashboard:
+  Dashboard:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/2ed4d134-af38-461d-ab2e-6853684a92b4
+    CreatedTime: 2024-01-15 19:50:01.238000-07:00
+    DashboardId: 2ed4d134-af38-461d-ab2e-6853684a92b4
+    LastPublishedTime: 2024-01-15 19:50:01.238000-07:00
+    LastUpdatedTime: 2024-01-15 19:50:01.232000-07:00
+    LinkEntities:
+    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/914d1077-43a2-457c-9de2-2f6c12cf534f
+    Name: AthenaNoSpice
+    Version:
+      CreatedTime: 2024-01-15 19:50:01.232000-07:00
+      DataSetArns:
+      - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
+      Errors: []
+      Sheets:
+      - Name: Sheet 1
+        SheetId: 2ed4d134-af38-461d-ab2e-6853684a92b4_c8befdca-95c2-473b-86af-0519b1f0af2c
+      SourceEntityArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/914d1077-43a2-457c-9de2-2f6c12cf534f
+      Status: CREATION_SUCCESSFUL
+      VersionNumber: '1'
+  RequestId: 4af0912b-6280-4185-8032-d5c30e047cc6
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1389'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 16:47:26 GMT
+      x-amzn-requestid: 4af0912b-6280-4185-8032-d5c30e047cc6
+    HTTPStatusCode: '200'
+    RequestId: 4af0912b-6280-4185-8032-d5c30e047cc6
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDashboardDefinition:
+  DashboardId: 2ed4d134-af38-461d-ab2e-6853684a92b4
+  DashboardPublishOptions:
+    AdHocFilteringOption:
+      AvailabilityStatus: DISABLED
+    DataPointDrillUpDownOption:
+      AvailabilityStatus: ENABLED
+    DataPointMenuLabelOption:
+      AvailabilityStatus: ENABLED
+    DataPointTooltipOption:
+      AvailabilityStatus: ENABLED
+    ExportToCSVOption:
+      AvailabilityStatus: ENABLED
+    ExportWithHiddenFieldsOption:
+      AvailabilityStatus: DISABLED
+    SheetControlsOption:
+      VisibilityState: COLLAPSED
+    SheetLayoutElementMaximizationOption:
+      AvailabilityStatus: ENABLED
+    VisualAxisSortOption:
+      AvailabilityStatus: ENABLED
+    VisualMenuOption:
+      AvailabilityStatus: ENABLED
+  Definition:
+    AnalysisDefaults:
+      DefaultNewSheetConfiguration:
+        InteractiveLayoutConfiguration:
+          Grid:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+        SheetContentType: INTERACTIVE
+    CalculatedFields: []
+    DataSetIdentifierDeclarations:
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
+      Identifier: athenatesttable
+    FilterGroups: []
+    Options:
+      WeekStart: SUNDAY
+    ParameterDeclarations: []
+    Sheets:
+    - ContentType: INTERACTIVE
+      Layouts:
+      - Configuration:
+          GridLayout:
+            CanvasSizeOptions:
+              ScreenCanvasSizeOptions:
+                OptimizedViewPortWidth: 1600px
+                ResizeOption: FIXED
+            Elements:
+            - ColumnSpan: '18'
+              ElementId: 2ed4d134-af38-461d-ab2e-6853684a92b4_5ddf5aa4-dc64-4e52-b0a7-fc3a7f98ac76
+              ElementType: VISUAL
+              RowSpan: '12'
+      Name: Sheet 1
+      SheetId: 2ed4d134-af38-461d-ab2e-6853684a92b4_c8befdca-95c2-473b-86af-0519b1f0af2c
+      Visuals:
+      - PivotTableVisual:
+          Actions: []
+          ChartConfiguration:
+            FieldOptions:
+              SelectedFieldOptions:
+              - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.name.3.1705373376044
+                Visibility: VISIBLE
+              - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.id.0.1705373376044
+                Visibility: VISIBLE
+              - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.age.1.1705373376044
+                Visibility: VISIBLE
+              - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.score.2.1705373376044
+                Visibility: VISIBLE
+            FieldWells:
+              PivotTableAggregatedFieldWells:
+                Columns:
+                - NumericalDimensionField:
+                    Column:
+                      ColumnName: id
+                      DataSetIdentifier: athenatesttable
+                    FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.id.0.1705373376044
+                Rows:
+                - CategoricalDimensionField:
+                    Column:
+                      ColumnName: name
+                      DataSetIdentifier: athenatesttable
+                    FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.name.3.1705373376044
+                Values:
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: age
+                      DataSetIdentifier: athenatesttable
+                    FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.age.1.1705373376044
+                - NumericalMeasureField:
+                    AggregationFunction:
+                      SimpleNumericalAggregation: SUM
+                    Column:
+                      ColumnName: score
+                      DataSetIdentifier: athenatesttable
+                    FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.score.2.1705373376044
+            SortConfiguration:
+              FieldSortOptions: []
+            TableOptions:
+              CellStyle: {}
+              CollapsedRowDimensionsVisibility: HIDDEN
+              ColumnHeaderStyle: {}
+              RowAlternateColorOptions:
+                Status: DISABLED
+                UsePrimaryBackgroundColor: ENABLED
+              RowsLayout: HIERARCHY
+            TotalOptions:
+              ColumnTotalOptions:
+                Placement: END
+              RowSubtotalOptions:
+                CustomLabel: <<$aws:subtotalDimension>> Subtotal
+                MetricHeaderCellStyle: {}
+                StyleTargets:
+                - CellType: VALUE
+                - CellType: TOTAL
+                - CellType: METRIC_HEADER
+                TotalCellStyle: {}
+                TotalsVisibility: VISIBLE
+                ValueCellStyle: {}
+              RowTotalOptions:
+                Placement: AUTO
+          Subtitle:
+            Visibility: VISIBLE
+          Title:
+            Visibility: VISIBLE
+          VisualId: 2ed4d134-af38-461d-ab2e-6853684a92b4_5ddf5aa4-dc64-4e52-b0a7-fc3a7f98ac76
+  Name: AthenaNoSpice
+  RequestId: 21b006c7-3edd-4945-a550-ca52c56c4e4d
+  ResourceStatus: CREATION_SUCCESSFUL
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '7061'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 16:47:26 GMT
+      x-amzn-requestid: 21b006c7-3edd-4945-a550-ca52c56c4e4d
+    HTTPStatusCode: '200'
+    RequestId: 21b006c7-3edd-4945-a550-ca52c56c4e4d
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDashboardPermissions:
+  DashboardArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/2ed4d134-af38-461d-ab2e-6853684a92b4
+  DashboardId: 2ed4d134-af38-461d-ab2e-6853684a92b4
+  LinkSharingConfiguration:
+    Permissions: []
+  Permissions:
+  - Actions:
+    - quicksight:DescribeDashboard
+    - quicksight:ListDashboardVersions
+    - quicksight:UpdateDashboardPermissions
+    - quicksight:QueryDashboard
+    - quicksight:UpdateDashboard
+    - quicksight:DeleteDashboard
+    - quicksight:DescribeDashboardPermissions
+    - quicksight:UpdateDashboardPublishedVersion
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
+  RequestId: 27c35795-c62e-4a84-9305-648bfe46d9cc
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '656'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 16:47:27 GMT
+      x-amzn-requestid: 27c35795-c62e-4a84-9305-648bfe46d9cc
+    HTTPStatusCode: '200'
+    RequestId: 27c35795-c62e-4a84-9305-648bfe46d9cc
+    RetryAttempts: '0'
+  Status: '200'

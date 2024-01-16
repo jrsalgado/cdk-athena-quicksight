@@ -7,14 +7,6 @@ DataSetSummaries:
   LastUpdatedTime: 2023-12-26 08:33:02.779000-07:00
   Name: Business Review
   RowLevelPermissionTagConfigurationApplied: 'False'
-- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/180e00b8-a755-427c-a1c7-0951780cdf70
-  ColumnLevelPermissionRulesApplied: 'False'
-  CreatedTime: 2023-12-26 08:32:48.718000-07:00
-  DataSetId: 180e00b8-a755-427c-a1c7-0951780cdf70
-  ImportMode: SPICE
-  LastUpdatedTime: 2023-12-26 08:33:03.356000-07:00
-  Name: Web and Social Media Analytics
-  RowLevelPermissionTagConfigurationApplied: 'False'
 - Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/1b5e0ce9-1c45-4617-8c62-936e47084640
   ColumnLevelPermissionRulesApplied: 'False'
   CreatedTime: 2023-12-26 09:00:19.006000-07:00
@@ -47,6 +39,14 @@ DataSetSummaries:
   LastUpdatedTime: 2023-12-26 08:33:02.712000-07:00
   Name: People Overview
   RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2024-01-15 19:49:07.869000-07:00
+  DataSetId: 5664749b-76d6-46b8-a18d-700c91d08bf7
+  ImportMode: DIRECT_QUERY
+  LastUpdatedTime: 2024-01-15 19:49:07.869000-07:00
+  Name: athenatesttable
+  RowLevelPermissionTagConfigurationApplied: 'False'
 - Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/6caf1b57-facc-4d0e-8ee8-7162cec9b3cb
   ColumnLevelPermissionRulesApplied: 'False'
   CreatedTime: 2023-12-26 09:00:18.704000-07:00
@@ -70,6 +70,14 @@ DataSetSummaries:
   ImportMode: SPICE
   LastUpdatedTime: 2023-12-26 08:33:02.859000-07:00
   Name: Sales Pipeline
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/clone-athena-no-spice-01
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2024-01-16 09:18:40.573000-07:00
+  DataSetId: clone-athena-no-spice-01
+  ImportMode: SPICE
+  LastUpdatedTime: 2024-01-16 09:19:26.200000-07:00
+  Name: clone-athena-no-spice01
   RowLevelPermissionTagConfigurationApplied: 'False'
 - Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/bea7f081-abae-4828-af44-6d1302e49843
   ColumnLevelPermissionRulesApplied: 'False'
@@ -95,15 +103,15 @@ DataSetSummaries:
   LastUpdatedTime: 2023-12-26 11:24:19.280000-07:00
   Name: People
   RowLevelPermissionTagConfigurationApplied: 'False'
-RequestId: 0e65ec59-84cc-48d9-b84d-d9cb1afed550
+RequestId: 8993fbbf-0913-41d1-bc21-514a81f3e716
 ResponseMetadata:
   HTTPHeaders:
     connection: keep-alive
-    content-length: '4952'
+    content-length: '5330'
     content-type: application/json
-    date: Tue, 16 Jan 2024 01:59:17 GMT
-    x-amzn-requestid: 0e65ec59-84cc-48d9-b84d-d9cb1afed550
+    date: Tue, 16 Jan 2024 16:47:01 GMT
+    x-amzn-requestid: 8993fbbf-0913-41d1-bc21-514a81f3e716
   HTTPStatusCode: '200'
-  RequestId: 0e65ec59-84cc-48d9-b84d-d9cb1afed550
+  RequestId: 8993fbbf-0913-41d1-bc21-514a81f3e716
   RetryAttempts: '0'
 Status: '200'

@@ -216,16 +216,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: 04906311-9863-40f7-973c-947920a40d5f
+  RequestId: 9dd9a2c1-4fcc-4069-84bb-cea6bd7389b9
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '15044'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:36 GMT
-      x-amzn-requestid: 04906311-9863-40f7-973c-947920a40d5f
+      date: Tue, 16 Jan 2024 16:47:13 GMT
+      x-amzn-requestid: 9dd9a2c1-4fcc-4069-84bb-cea6bd7389b9
     HTTPStatusCode: '200'
-    RequestId: 04906311-9863-40f7-973c-947920a40d5f
+    RequestId: 9dd9a2c1-4fcc-4069-84bb-cea6bd7389b9
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -238,10 +238,10 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
+    - quicksight:PassDataSet
+    - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
     - quicksight:UpdateRefreshSchedule
-    - quicksight:DeleteRefreshSchedule
-    - quicksight:PassDataSet
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
@@ -252,15 +252,15 @@ DescribeDataSetPermissions:
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: fea09d0a-8aa9-4ced-afab-23ad9b04030e
+  RequestId: 7e7d8ebf-2de4-4a13-a3d2-d5936d12e242
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '973'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:37 GMT
-      x-amzn-requestid: fea09d0a-8aa9-4ced-afab-23ad9b04030e
+      date: Tue, 16 Jan 2024 16:47:14 GMT
+      x-amzn-requestid: 7e7d8ebf-2de4-4a13-a3d2-d5936d12e242
     HTTPStatusCode: '200'
-    RequestId: fea09d0a-8aa9-4ced-afab-23ad9b04030e
+    RequestId: 7e7d8ebf-2de4-4a13-a3d2-d5936d12e242
     RetryAttempts: '0'
   Status: '200'

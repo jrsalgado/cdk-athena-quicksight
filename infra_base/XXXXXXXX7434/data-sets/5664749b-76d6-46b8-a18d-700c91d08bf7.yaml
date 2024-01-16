@@ -1,19 +1,19 @@
 DescribeDataSet:
   DataSet:
-    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2384dd87-5baa-4308-b2e4-1ec602bba012
-    ConsumedSpiceCapacityInBytes: '680064'
-    CreatedTime: 2024-01-04 19:32:59.578000-07:00
-    DataSetId: 2384dd87-5baa-4308-b2e4-1ec602bba012
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
+    ConsumedSpiceCapacityInBytes: '0'
+    CreatedTime: 2024-01-15 19:49:07.869000-07:00
+    DataSetId: 5664749b-76d6-46b8-a18d-700c91d08bf7
     DataSetUsageConfiguration:
       DisableUseAsDirectQuerySource: 'False'
       DisableUseAsImportedSource: 'False'
-    ImportMode: SPICE
-    LastUpdatedTime: 2024-01-09 09:32:44.845000-07:00
+    ImportMode: DIRECT_QUERY
+    LastUpdatedTime: 2024-01-15 19:49:07.869000-07:00
     LogicalTableMap:
-      e9d41384-e32a-4138-bead-d7321227170a:
+      491e3d47-ac11-4d5b-ac15-a543486ac7d9:
         Alias: athenatesttable
         Source:
-          PhysicalTableId: d18ab860-4845-4deb-ac1a-44756fa5d575
+          PhysicalTableId: 2bdc47b0-8132-42bb-8eb7-8686f6ef53ff
     Name: athenatesttable
     OutputColumns:
     - Name: id
@@ -23,13 +23,12 @@ DescribeDataSet:
     - Name: age
       Type: INTEGER
     - Name: score
-      SubType: FLOAT
       Type: DECIMAL
     PhysicalTableMap:
-      d18ab860-4845-4deb-ac1a-44756fa5d575:
+      2bdc47b0-8132-42bb-8eb7-8686f6ef53ff:
         RelationalTable:
           Catalog: AwsDataCatalog
-          DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/11e7f1b6-a92f-477e-95d9-dc36931443b2
+          DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/4b649b07-0ddc-41cf-9d85-d5c82084b1f0
           InputColumns:
           - Name: id
             Type: INTEGER
@@ -38,25 +37,24 @@ DescribeDataSet:
           - Name: age
             Type: INTEGER
           - Name: score
-            SubType: FLOAT
             Type: DECIMAL
           Name: athenatesttable
           Schema: athenatestdatabase
-  RequestId: da67a5e3-cfff-4870-bc9e-3f7a45c6ea73
+  RequestId: ab51b012-a0e3-483a-b356-3beb4c21343b
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
-      content-length: '1687'
+      content-length: '1683'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:05 GMT
-      x-amzn-requestid: da67a5e3-cfff-4870-bc9e-3f7a45c6ea73
+      date: Tue, 16 Jan 2024 16:47:10 GMT
+      x-amzn-requestid: ab51b012-a0e3-483a-b356-3beb4c21343b
     HTTPStatusCode: '200'
-    RequestId: da67a5e3-cfff-4870-bc9e-3f7a45c6ea73
+    RequestId: ab51b012-a0e3-483a-b356-3beb4c21343b
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
-  DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2384dd87-5baa-4308-b2e4-1ec602bba012
-  DataSetId: 2384dd87-5baa-4308-b2e4-1ec602bba012
+  DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
+  DataSetId: 5664749b-76d6-46b8-a18d-700c91d08bf7
   Permissions:
   - Actions:
     - quicksight:DeleteDataSet
@@ -64,29 +62,29 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:PassDataSet
+    - quicksight:UpdateRefreshSchedule
     - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
-    - quicksight:UpdateRefreshSchedule
+    - quicksight:PassDataSet
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:DescribeDataSetPermissions
     - quicksight:UpdateDataSet
+    - quicksight:DescribeDataSetPermissions
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 24ab926f-cb8c-41df-8da8-093f9e5cd0cb
+  RequestId: b2f07a5c-0be2-4bd5-9c6a-d8761080a03a
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:06 GMT
-      x-amzn-requestid: 24ab926f-cb8c-41df-8da8-093f9e5cd0cb
+      date: Tue, 16 Jan 2024 16:47:11 GMT
+      x-amzn-requestid: b2f07a5c-0be2-4bd5-9c6a-d8761080a03a
     HTTPStatusCode: '200'
-    RequestId: 24ab926f-cb8c-41df-8da8-093f9e5cd0cb
+    RequestId: b2f07a5c-0be2-4bd5-9c6a-d8761080a03a
     RetryAttempts: '0'
   Status: '200'

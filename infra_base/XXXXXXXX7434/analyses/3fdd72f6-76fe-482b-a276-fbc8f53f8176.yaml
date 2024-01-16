@@ -11,16 +11,16 @@ DescribeAnalysis:
     - Name: Sheet 1
       SheetId: d7966159-c4a9-447f-806a-92d22a987fd8
     Status: CREATION_SUCCESSFUL
-  RequestId: c3c897db-9d3e-48de-8aa9-62ad5c8b84b3
+  RequestId: 5a82e7ba-c9f3-477d-a46b-9e15546b7812
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '880'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:23 GMT
-      x-amzn-requestid: c3c897db-9d3e-48de-8aa9-62ad5c8b84b3
+      date: Tue, 16 Jan 2024 16:47:48 GMT
+      x-amzn-requestid: 5a82e7ba-c9f3-477d-a46b-9e15546b7812
     HTTPStatusCode: '200'
-    RequestId: c3c897db-9d3e-48de-8aa9-62ad5c8b84b3
+    RequestId: 5a82e7ba-c9f3-477d-a46b-9e15546b7812
     RetryAttempts: '0'
   Status: '200'
 DescribeAnalysisDefinition:
@@ -367,17 +367,17 @@ DescribeAnalysisDefinition:
             Visibility: VISIBLE
           VisualId: b5ca0308-65f7-43ad-89fd-fe6d9bed065a
   Name: Web and Social Media Analytics analysis
-  RequestId: 5818cec0-4946-462e-8f07-1d6bea1d1cde
+  RequestId: 6a6969a6-2966-4a8e-b3fc-3583a4ee2d9d
   ResourceStatus: CREATION_SUCCESSFUL
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '18180'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:24 GMT
-      x-amzn-requestid: 5818cec0-4946-462e-8f07-1d6bea1d1cde
+      date: Tue, 16 Jan 2024 16:47:48 GMT
+      x-amzn-requestid: 6a6969a6-2966-4a8e-b3fc-3583a4ee2d9d
     HTTPStatusCode: '200'
-    RequestId: 5818cec0-4946-462e-8f07-1d6bea1d1cde
+    RequestId: 6a6969a6-2966-4a8e-b3fc-3583a4ee2d9d
     RetryAttempts: '0'
   Status: '200'
 DescribeAnalysisPermissions:
@@ -393,15 +393,15 @@ DescribeAnalysisPermissions:
     - quicksight:DescribeAnalysis
     - quicksight:UpdateAnalysis
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 5dec6d25-5954-4fe8-8e2e-f361f231d6bf
+  RequestId: f5bbb67f-dcfc-4aa4-91cc-1a7f9a4a1bed
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '556'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:27 GMT
-      x-amzn-requestid: 5dec6d25-5954-4fe8-8e2e-f361f231d6bf
+      date: Tue, 16 Jan 2024 16:47:49 GMT
+      x-amzn-requestid: f5bbb67f-dcfc-4aa4-91cc-1a7f9a4a1bed
     HTTPStatusCode: '200'
-    RequestId: 5dec6d25-5954-4fe8-8e2e-f361f231d6bf
+    RequestId: f5bbb67f-dcfc-4aa4-91cc-1a7f9a4a1bed
     RetryAttempts: '0'
   Status: '200'

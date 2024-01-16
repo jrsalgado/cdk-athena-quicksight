@@ -59,11 +59,11 @@ Resources:
         DisableUseAsImportedSource: false
       ImportMode: SPICE
       LogicalTableMap:
-        e9d41384-e32a-4138-bead-d7321227170a:
+        491e3d47-ac11-4d5b-ac15-a543486ac7d9:
           Alias:
             Ref: DataSetAthenaTableName01
           Source:
-            PhysicalTableId: d18ab860-4845-4deb-ac1a-44756fa5d575
+            PhysicalTableId: 2bdc47b0-8132-42bb-8eb7-8686f6ef53ff
       Name:
         Ref: DataSetAthenaName01
       Permissions:
@@ -100,7 +100,7 @@ Resources:
             username:
               Ref: QuickSightUsername
       PhysicalTableMap:
-        d18ab860-4845-4deb-ac1a-44756fa5d575:
+        2bdc47b0-8132-42bb-8eb7-8686f6ef53ff:
           RelationalTable:
             Catalog: AwsDataCatalog
             DataSourceArn:
@@ -178,10 +178,7 @@ Resources:
                     OptimizedViewPortWidth: 1600px
                     ResizeOption: FIXED
             SheetContentType: INTERACTIVE
-        CalculatedFields:
-        - DataSetIdentifier: athenatesttable
-          Expression: avg(age)
-          Name: avgAge
+        CalculatedFields: []
         DataSetIdentifierDeclarations:
         - DataSetArn:
             Fn::GetAtt:
@@ -196,161 +193,48 @@ Resources:
           Layouts:
           - Configuration:
               GridLayout:
-                Elements:
-                - ColumnIndex: 3
-                  ColumnSpan: 18
-                  ElementId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_f6b8ca8f-3fd4-448c-8fc4-e1908a32402e
-                  ElementType: VISUAL
-                  RowIndex: 0
-                  RowSpan: 12
-                - ColumnIndex: 0
-                  ColumnSpan: 18
-                  ElementId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_a72d8f88-7700-4808-93bd-0ca03e571149
-                  ElementType: VISUAL
-                  RowIndex: 12
-                  RowSpan: 12
-          Name: Sheet 1
-          SheetId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_36a812ca-940b-46a0-8eda-8c514fa7fdd0
-          Visuals:
-          - PieChartVisual:
-              Actions: []
-              ChartConfiguration:
-                DataLabels:
-                  Overlap: DISABLE_OVERLAP
-                  Visibility: VISIBLE
-                DonutOptions:
-                  ArcOptions:
-                    ArcThickness: WHOLE
-                FieldWells:
-                  PieChartAggregatedFieldWells:
-                    Category:
-                    - NumericalDimensionField:
-                        Column:
-                          ColumnName: id
-                          DataSetIdentifier:
-                            Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.0.1704833126439
-                    Values:
-                    - NumericalMeasureField:
-                        AggregationFunction:
-                          SimpleNumericalAggregation: SUM
-                        Column:
-                          ColumnName: age
-                          DataSetIdentifier:
-                            Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1704833127261
-                SortConfiguration:
-                  CategoryItemsLimit:
-                    OtherCategories: INCLUDE
-                  CategorySort:
-                  - FieldSort:
-                      Direction: DESC
-                      FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1704833127261
-                  SmallMultiplesLimitConfiguration:
-                    OtherCategories: INCLUDE
-                Tooltip:
-                  FieldBasedTooltip:
-                    AggregationVisibility: HIDDEN
-                    TooltipFields:
-                    - FieldTooltipItem:
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.0.1704833126439
-                        Visibility: VISIBLE
-                    - FieldTooltipItem:
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1704833127261
-                        Visibility: VISIBLE
-                    TooltipTitleType: PRIMARY_VALUE
-                  SelectedTooltipType: DETAILED
-                  TooltipVisibility: VISIBLE
-              ColumnHierarchies: []
-              Subtitle:
-                Visibility: VISIBLE
-              Title:
-                Visibility: VISIBLE
-              VisualId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_a72d8f88-7700-4808-93bd-0ca03e571149
-          - TableVisual:
-              Actions: []
-              ChartConfiguration:
-                FieldWells:
-                  TableAggregatedFieldWells:
-                    GroupBy:
-                    - NumericalDimensionField:
-                        Column:
-                          ColumnName: id
-                          DataSetIdentifier:
-                            Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.1.1705021500107
-                    - CategoricalDimensionField:
-                        Column:
-                          ColumnName: name
-                          DataSetIdentifier:
-                            Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.name.2.1705021501966
-                    Values:
-                    - NumericalMeasureField:
-                        AggregationFunction:
-                          SimpleNumericalAggregation: SUM
-                        Column:
-                          ColumnName: age
-                          DataSetIdentifier:
-                            Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.0.1705021495726
-                    - NumericalMeasureField:
-                        AggregationFunction:
-                          SimpleNumericalAggregation: SUM
-                        Column:
-                          ColumnName: score
-                          DataSetIdentifier:
-                            Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.score.3.1705021502866
-                SortConfiguration: {}
-              Subtitle:
-                Visibility: VISIBLE
-              Title:
-                Visibility: VISIBLE
-              VisualId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_f6b8ca8f-3fd4-448c-8fc4-e1908a32402e
-        - ContentType: INTERACTIVE
-          Layouts:
-          - Configuration:
-              GridLayout:
                 CanvasSizeOptions:
                   ScreenCanvasSizeOptions:
-                    OptimizedViewPortWidth: 1024px
+                    OptimizedViewPortWidth: 1600px
                     ResizeOption: FIXED
                 Elements:
                 - ColumnSpan: 18
-                  ElementId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_7964363d-9714-4584-a202-67d19dd3e33a
+                  ElementId: 2ed4d134-af38-461d-ab2e-6853684a92b4_5ddf5aa4-dc64-4e52-b0a7-fc3a7f98ac76
                   ElementType: VISUAL
                   RowSpan: 12
-          Name: Sheet 2
-          SheetId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_dd57ff13-afa5-4b9f-9d3f-402b6327efb8
+          Name: Sheet 1
+          SheetId: 2ed4d134-af38-461d-ab2e-6853684a92b4_c8befdca-95c2-473b-86af-0519b1f0af2c
           Visuals:
-          - ScatterPlotVisual:
+          - PivotTableVisual:
               Actions: []
               ChartConfiguration:
+                FieldOptions:
+                  SelectedFieldOptions:
+                  - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.name.3.1705373376044
+                    Visibility: VISIBLE
+                  - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.id.0.1705373376044
+                    Visibility: VISIBLE
+                  - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.age.1.1705373376044
+                    Visibility: VISIBLE
+                  - FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.score.2.1705373376044
+                    Visibility: VISIBLE
                 FieldWells:
-                  ScatterPlotCategoricallyAggregatedFieldWells:
-                    Category:
+                  PivotTableAggregatedFieldWells:
+                    Columns:
                     - NumericalDimensionField:
                         Column:
                           ColumnName: id
                           DataSetIdentifier:
                             Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.2.1705021637355
-                    Label:
+                        FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.id.0.1705373376044
+                    Rows:
                     - CategoricalDimensionField:
                         Column:
                           ColumnName: name
                           DataSetIdentifier:
                             Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.name.3.1705021638014
-                    Size:
-                    - NumericalMeasureField:
-                        Column:
-                          ColumnName: avgAge
-                          DataSetIdentifier:
-                            Ref: DashboardDataSetIdentifier01
-                        FieldId: b222babd-162c-43b7-b366-9ade4a611968.0.1705021630831
-                    XAxis:
+                        FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.name.3.1705373376044
+                    Values:
                     - NumericalMeasureField:
                         AggregationFunction:
                           SimpleNumericalAggregation: SUM
@@ -358,8 +242,7 @@ Resources:
                           ColumnName: age
                           DataSetIdentifier:
                             Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1705021634142
-                    YAxis:
+                        FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.age.1.1705373376044
                     - NumericalMeasureField:
                         AggregationFunction:
                           SimpleNumericalAggregation: SUM
@@ -367,35 +250,39 @@ Resources:
                           ColumnName: score
                           DataSetIdentifier:
                             Ref: DashboardDataSetIdentifier01
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.score.4.1705021638866
-                Tooltip:
-                  FieldBasedTooltip:
-                    AggregationVisibility: HIDDEN
-                    TooltipFields:
-                    - FieldTooltipItem:
-                        FieldId: b222babd-162c-43b7-b366-9ade4a611968.0.1705021630831
-                        Visibility: VISIBLE
-                    - FieldTooltipItem:
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.age.1.1705021634142
-                        Visibility: VISIBLE
-                    - FieldTooltipItem:
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.id.2.1705021637355
-                        Visibility: VISIBLE
-                    - FieldTooltipItem:
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.name.3.1705021638014
-                        Visibility: VISIBLE
-                    - FieldTooltipItem:
-                        FieldId: e9d41384-e32a-4138-bead-d7321227170a.score.4.1705021638866
-                        Visibility: VISIBLE
-                    TooltipTitleType: PRIMARY_VALUE
-                  SelectedTooltipType: DETAILED
-                  TooltipVisibility: VISIBLE
-              ColumnHierarchies: []
+                        FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.score.2.1705373376044
+                SortConfiguration:
+                  FieldSortOptions: []
+                TableOptions:
+                  CellStyle:
+                    TextWrap: WRAP
+                  CollapsedRowDimensionsVisibility: HIDDEN
+                  ColumnHeaderStyle:
+                    TextWrap: WRAP
+                  RowAlternateColorOptions:
+                    Status: DISABLED
+                    UsePrimaryBackgroundColor: ENABLED
+                  RowsLayout: HIERARCHY
+                TotalOptions:
+                  ColumnTotalOptions:
+                    Placement: END
+                  RowSubtotalOptions:
+                    CustomLabel: <<$aws:subtotalDimension>> Subtotal
+                    MetricHeaderCellStyle: {}
+                    StyleTargets:
+                    - CellType: VALUE
+                    - CellType: TOTAL
+                    - CellType: METRIC_HEADER
+                    TotalCellStyle: {}
+                    TotalsVisibility: VISIBLE
+                    ValueCellStyle: {}
+                  RowTotalOptions:
+                    Placement: AUTO
               Subtitle:
                 Visibility: VISIBLE
               Title:
                 Visibility: VISIBLE
-              VisualId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_7964363d-9714-4584-a202-67d19dd3e33a
+              VisualId: 2ed4d134-af38-461d-ab2e-6853684a92b4_5ddf5aa4-dc64-4e52-b0a7-fc3a7f98ac76
       Name:
         Ref: DashboardName01
       Permissions:

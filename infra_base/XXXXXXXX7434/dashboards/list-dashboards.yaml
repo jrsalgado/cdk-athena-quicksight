@@ -6,6 +6,13 @@ DashboardSummaryList:
   LastUpdatedTime: 2024-01-15 11:49:32.008000-07:00
   Name: FullDashboard
   PublishedVersionNumber: '2'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/2ed4d134-af38-461d-ab2e-6853684a92b4
+  CreatedTime: 2024-01-15 19:50:01.238000-07:00
+  DashboardId: 2ed4d134-af38-461d-ab2e-6853684a92b4
+  LastPublishedTime: 2024-01-15 19:50:01.238000-07:00
+  LastUpdatedTime: 2024-01-15 19:50:01.232000-07:00
+  Name: AthenaNoSpice
+  PublishedVersionNumber: '1'
 - Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd
   CreatedTime: 2024-01-09 13:45:59.162000-07:00
   DashboardId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd
@@ -13,6 +20,13 @@ DashboardSummaryList:
   LastUpdatedTime: 2024-01-11 18:08:07.204000-07:00
   Name: Athena Dashboard
   PublishedVersionNumber: '2'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/clone-athena-no-spice-01
+  CreatedTime: 2024-01-16 09:20:21.039000-07:00
+  DashboardId: clone-athena-no-spice-01
+  LastPublishedTime: 2024-01-16 09:20:21.039000-07:00
+  LastUpdatedTime: 2024-01-16 09:20:21.428000-07:00
+  Name: clone-athena-no-spice
+  PublishedVersionNumber: '1'
 - Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/e6390395-4a03-4d80-b862-a4d3506173c7
   CreatedTime: 2023-12-27 07:42:31.337000-07:00
   DashboardId: e6390395-4a03-4d80-b862-a4d3506173c7
@@ -34,15 +48,15 @@ DashboardSummaryList:
   LastUpdatedTime: 2024-01-15 13:33:37.265000-07:00
   Name: FullDashboardKPI
   PublishedVersionNumber: '1'
-RequestId: 63d69979-fc75-402a-8e25-3a8c7121f2c7
+RequestId: dfc30f4b-751e-4bf1-a0b9-253712c95190
 ResponseMetadata:
   HTTPHeaders:
     connection: keep-alive
-    content-length: '1621'
+    content-length: '2215'
     content-type: application/json
-    date: Tue, 16 Jan 2024 01:59:49 GMT
-    x-amzn-requestid: 63d69979-fc75-402a-8e25-3a8c7121f2c7
+    date: Tue, 16 Jan 2024 16:47:23 GMT
+    x-amzn-requestid: dfc30f4b-751e-4bf1-a0b9-253712c95190
   HTTPStatusCode: '200'
-  RequestId: 63d69979-fc75-402a-8e25-3a8c7121f2c7
+  RequestId: dfc30f4b-751e-4bf1-a0b9-253712c95190
   RetryAttempts: '0'
 Status: '200'

@@ -11,16 +11,16 @@ DescribeAnalysis:
     - Name: Initial Sheet
       SheetId: ccde7fb5-26ce-456f-ab70-c0419c693943
     Status: CREATION_SUCCESSFUL
-  RequestId: 7e6a58c0-319a-4bd2-bd77-0c1d174f4f66
+  RequestId: e0a1650b-a16c-4088-9c47-808f8538c8bd
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '871'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:40 GMT
-      x-amzn-requestid: 7e6a58c0-319a-4bd2-bd77-0c1d174f4f66
+      date: Tue, 16 Jan 2024 16:48:00 GMT
+      x-amzn-requestid: e0a1650b-a16c-4088-9c47-808f8538c8bd
     HTTPStatusCode: '200'
-    RequestId: 7e6a58c0-319a-4bd2-bd77-0c1d174f4f66
+    RequestId: e0a1650b-a16c-4088-9c47-808f8538c8bd
     RetryAttempts: '0'
   Status: '200'
 DescribeAnalysisDefinition:
@@ -401,17 +401,17 @@ DescribeAnalysisDefinition:
             Visibility: VISIBLE
           VisualId: dc41a295-6566-4527-b633-008aa256b027
   Name: athenatesttable analysis
-  RequestId: e293a6eb-4c99-491f-adbc-85483c7a5b02
+  RequestId: 9382a277-079e-46a7-b6f9-84f84e1a3331
   ResourceStatus: CREATION_SUCCESSFUL
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '17731'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:40 GMT
-      x-amzn-requestid: e293a6eb-4c99-491f-adbc-85483c7a5b02
+      date: Tue, 16 Jan 2024 16:48:00 GMT
+      x-amzn-requestid: 9382a277-079e-46a7-b6f9-84f84e1a3331
     HTTPStatusCode: '200'
-    RequestId: e293a6eb-4c99-491f-adbc-85483c7a5b02
+    RequestId: 9382a277-079e-46a7-b6f9-84f84e1a3331
     RetryAttempts: '0'
   Status: '200'
 DescribeAnalysisPermissions:
@@ -427,15 +427,15 @@ DescribeAnalysisPermissions:
     - quicksight:DescribeAnalysis
     - quicksight:UpdateAnalysis
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 8563a28f-fae4-4741-b90a-765f8ee2bb3c
+  RequestId: 8489632b-eca5-4cbf-9fd7-9dd1cb0ea83d
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '556'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:42 GMT
-      x-amzn-requestid: 8563a28f-fae4-4741-b90a-765f8ee2bb3c
+      date: Tue, 16 Jan 2024 16:48:01 GMT
+      x-amzn-requestid: 8489632b-eca5-4cbf-9fd7-9dd1cb0ea83d
     HTTPStatusCode: '200'
-    RequestId: 8563a28f-fae4-4741-b90a-765f8ee2bb3c
+    RequestId: 8489632b-eca5-4cbf-9fd7-9dd1cb0ea83d
     RetryAttempts: '0'
   Status: '200'

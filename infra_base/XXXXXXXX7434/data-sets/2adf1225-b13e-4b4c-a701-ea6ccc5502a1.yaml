@@ -40,16 +40,16 @@ DescribeDataSet:
           Name: jsaCustomSQL
           SqlQuery: select name, age from athenatestdatabase.athenatesttable where
             age > 50
-  RequestId: e5826068-39c9-4489-b743-3296783ef4bc
+  RequestId: d7516b03-b7ef-40db-a11c-4dfafc5b8ad4
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '2008'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:29 GMT
-      x-amzn-requestid: e5826068-39c9-4489-b743-3296783ef4bc
+      date: Tue, 16 Jan 2024 16:47:07 GMT
+      x-amzn-requestid: d7516b03-b7ef-40db-a11c-4dfafc5b8ad4
     HTTPStatusCode: '200'
-    RequestId: e5826068-39c9-4489-b743-3296783ef4bc
+    RequestId: d7516b03-b7ef-40db-a11c-4dfafc5b8ad4
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -71,20 +71,20 @@ DescribeDataSetPermissions:
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:UpdateDataSet
     - quicksight:DescribeDataSetPermissions
+    - quicksight:UpdateDataSet
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 9aa6d4f6-5d92-4758-913f-acb20f1031d9
+  RequestId: 6596aaae-2a60-4fed-9f18-c100b1e6a5c3
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:30 GMT
-      x-amzn-requestid: 9aa6d4f6-5d92-4758-913f-acb20f1031d9
+      date: Tue, 16 Jan 2024 16:47:08 GMT
+      x-amzn-requestid: 6596aaae-2a60-4fed-9f18-c100b1e6a5c3
     HTTPStatusCode: '200'
-    RequestId: 9aa6d4f6-5d92-4758-913f-acb20f1031d9
+    RequestId: 6596aaae-2a60-4fed-9f18-c100b1e6a5c3
     RetryAttempts: '0'
   Status: '200'

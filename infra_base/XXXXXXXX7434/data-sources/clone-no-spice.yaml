@@ -1,0 +1,50 @@
+DescribeDataSource:
+  DataSource:
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/clone-no-spice
+    CreatedTime: 2024-01-16 09:18:07.898000-07:00
+    DataSourceId: clone-no-spice
+    DataSourceParameters:
+      AthenaParameters:
+        WorkGroup: primary
+    LastUpdatedTime: 2024-01-16 09:18:09.102000-07:00
+    Name: clone-athena-no-spice
+    SslProperties:
+      DisableSsl: 'False'
+    Status: CREATION_SUCCESSFUL
+    Type: ATHENA
+  RequestId: dbc1e650-f7ab-4adc-aa3a-d1ac0db5f58c
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '1483'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 16:46:44 GMT
+      x-amzn-requestid: dbc1e650-f7ab-4adc-aa3a-d1ac0db5f58c
+    HTTPStatusCode: '200'
+    RequestId: dbc1e650-f7ab-4adc-aa3a-d1ac0db5f58c
+    RetryAttempts: '0'
+  Status: '200'
+DescribeDataSourcePermissions:
+  DataSourceArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/clone-no-spice
+  DataSourceId: clone-no-spice
+  Permissions:
+  - Actions:
+    - quicksight:PassDataSource
+    - quicksight:DescribeDataSourcePermissions
+    - quicksight:UpdateDataSource
+    - quicksight:UpdateDataSourcePermissions
+    - quicksight:DescribeDataSource
+    - quicksight:DeleteDataSource
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:group/default/devops
+  RequestId: 18fa431a-6f4a-47bf-b250-8642bcefadf4
+  ResponseMetadata:
+    HTTPHeaders:
+      connection: keep-alive
+      content-length: '497'
+      content-type: application/json
+      date: Tue, 16 Jan 2024 16:46:45 GMT
+      x-amzn-requestid: 18fa431a-6f4a-47bf-b250-8642bcefadf4
+    HTTPStatusCode: '200'
+    RequestId: 18fa431a-6f4a-47bf-b250-8642bcefadf4
+    RetryAttempts: '0'
+  Status: '200'

@@ -153,16 +153,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: 390ab13a-40b3-4202-876a-99ed2590601e
+  RequestId: a03652a7-d665-4ce3-8515-ed79b5597d85
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '8963'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:31 GMT
-      x-amzn-requestid: 390ab13a-40b3-4202-876a-99ed2590601e
+      date: Tue, 16 Jan 2024 16:47:08 GMT
+      x-amzn-requestid: a03652a7-d665-4ce3-8515-ed79b5597d85
     HTTPStatusCode: '200'
-    RequestId: 390ab13a-40b3-4202-876a-99ed2590601e
+    RequestId: a03652a7-d665-4ce3-8515-ed79b5597d85
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -175,29 +175,29 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:PassDataSet
     - quicksight:UpdateRefreshSchedule
     - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
+    - quicksight:PassDataSet
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:DescribeDataSetPermissions
     - quicksight:UpdateDataSet
+    - quicksight:DescribeDataSetPermissions
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: b7855a5a-65a8-4bab-a2b2-8911c1f1d840
+  RequestId: e23465be-4523-421a-bb89-0b1edb7479f6
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:32 GMT
-      x-amzn-requestid: b7855a5a-65a8-4bab-a2b2-8911c1f1d840
+      date: Tue, 16 Jan 2024 16:47:09 GMT
+      x-amzn-requestid: e23465be-4523-421a-bb89-0b1edb7479f6
     HTTPStatusCode: '200'
-    RequestId: b7855a5a-65a8-4bab-a2b2-8911c1f1d840
+    RequestId: e23465be-4523-421a-bb89-0b1edb7479f6
     RetryAttempts: '0'
   Status: '200'

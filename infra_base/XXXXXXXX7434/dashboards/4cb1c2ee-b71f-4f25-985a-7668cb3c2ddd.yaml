@@ -21,16 +21,16 @@ DescribeDashboard:
       SourceEntityArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/82b21749-c928-4c87-b6c4-fc8231695407
       Status: CREATION_SUCCESSFUL
       VersionNumber: '2'
-  RequestId: 47d0598c-4a8e-475c-94b6-861f316ec0cc
+  RequestId: 83de377a-618d-47a7-988b-8db13d815306
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1642'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:00 GMT
-      x-amzn-requestid: 47d0598c-4a8e-475c-94b6-861f316ec0cc
+      date: Tue, 16 Jan 2024 16:47:27 GMT
+      x-amzn-requestid: 83de377a-618d-47a7-988b-8db13d815306
     HTTPStatusCode: '200'
-    RequestId: 47d0598c-4a8e-475c-94b6-861f316ec0cc
+    RequestId: 83de377a-618d-47a7-988b-8db13d815306
     RetryAttempts: '0'
   Status: '200'
 DescribeDashboardDefinition:
@@ -276,17 +276,17 @@ DescribeDashboardDefinition:
             Visibility: VISIBLE
           VisualId: 4cb1c2ee-b71f-4f25-985a-7668cb3c2ddd_7964363d-9714-4584-a202-67d19dd3e33a
   Name: Athena Dashboard
-  RequestId: db47f23c-6081-4d9f-bf51-8f3542b277ff
+  RequestId: ca1b2e3b-568f-4eaf-b96d-fa23f8b412ed
   ResourceStatus: CREATION_SUCCESSFUL
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '11965'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:00 GMT
-      x-amzn-requestid: db47f23c-6081-4d9f-bf51-8f3542b277ff
+      date: Tue, 16 Jan 2024 16:47:28 GMT
+      x-amzn-requestid: ca1b2e3b-568f-4eaf-b96d-fa23f8b412ed
     HTTPStatusCode: '200'
-    RequestId: db47f23c-6081-4d9f-bf51-8f3542b277ff
+    RequestId: ca1b2e3b-568f-4eaf-b96d-fa23f8b412ed
     RetryAttempts: '0'
   Status: '200'
 DescribeDashboardPermissions:
@@ -305,15 +305,15 @@ DescribeDashboardPermissions:
     - quicksight:DescribeDashboardPermissions
     - quicksight:UpdateDashboardPublishedVersion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 4d5cff90-b242-4d0d-981b-0dd5fe71852c
+  RequestId: af2391e8-ed6c-40cf-887f-4ab561fbffc0
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '656'
       content-type: application/json
-      date: Tue, 16 Jan 2024 02:00:01 GMT
-      x-amzn-requestid: 4d5cff90-b242-4d0d-981b-0dd5fe71852c
+      date: Tue, 16 Jan 2024 16:47:29 GMT
+      x-amzn-requestid: af2391e8-ed6c-40cf-887f-4ab561fbffc0
     HTTPStatusCode: '200'
-    RequestId: 4d5cff90-b242-4d0d-981b-0dd5fe71852c
+    RequestId: af2391e8-ed6c-40cf-887f-4ab561fbffc0
     RetryAttempts: '0'
   Status: '200'

@@ -87,9 +87,9 @@ def cdk_synth(originAccountId:str , dashboardId: str):
         # Run the CDK deploy command
         with open(template_path, "w") as output_file:
             subprocess.run(cdk_command, env= os.environ , check=True, stdout=output_file)
+            updateTemplateAfterSynth(template_path)
     except subprocess.CalledProcessError as e:
         print(f"Error running CDK deploy: {e}")
-    updateTemplateAfterSynth(template_path)
 
     pass
 

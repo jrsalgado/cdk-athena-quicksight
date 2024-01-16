@@ -12,16 +12,16 @@ DescribeDataSource:
     Name: Sales Pipeline
     Status: UPDATE_SUCCESSFUL
     Type: S3
-  RequestId: 48e718dc-b71b-48f4-b306-fad0ebf03a15
+  RequestId: 6a30105f-7dc3-429b-9553-8dedcbfe6bb4
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1576'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:05 GMT
-      x-amzn-requestid: 48e718dc-b71b-48f4-b306-fad0ebf03a15
+      date: Tue, 16 Jan 2024 16:46:49 GMT
+      x-amzn-requestid: 6a30105f-7dc3-429b-9553-8dedcbfe6bb4
     HTTPStatusCode: '200'
-    RequestId: 48e718dc-b71b-48f4-b306-fad0ebf03a15
+    RequestId: 6a30105f-7dc3-429b-9553-8dedcbfe6bb4
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSourcePermissions:
@@ -36,15 +36,15 @@ DescribeDataSourcePermissions:
     - quicksight:DescribeDataSource
     - quicksight:DeleteDataSource
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 47e5dd8c-781d-4b3b-92c9-59405436d820
+  RequestId: be0c3bc4-ead3-4289-8736-9f18f173f433
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '538'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:06 GMT
-      x-amzn-requestid: 47e5dd8c-781d-4b3b-92c9-59405436d820
+      date: Tue, 16 Jan 2024 16:46:51 GMT
+      x-amzn-requestid: be0c3bc4-ead3-4289-8736-9f18f173f433
     HTTPStatusCode: '200'
-    RequestId: 47e5dd8c-781d-4b3b-92c9-59405436d820
+    RequestId: be0c3bc4-ead3-4289-8736-9f18f173f433
     RetryAttempts: '0'
   Status: '200'

@@ -42,16 +42,16 @@ DescribeDataSet:
             Type: DECIMAL
           Name: athenatesttable
           Schema: athenatestdatabase
-  RequestId: 70877991-0998-4423-8bfb-1ac3b4f411c1
+  RequestId: 9dbd443a-6b6f-42ad-8eaf-f0d949852a85
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1687'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:44 GMT
-      x-amzn-requestid: 70877991-0998-4423-8bfb-1ac3b4f411c1
+      date: Tue, 16 Jan 2024 16:47:20 GMT
+      x-amzn-requestid: 9dbd443a-6b6f-42ad-8eaf-f0d949852a85
     HTTPStatusCode: '200'
-    RequestId: 70877991-0998-4423-8bfb-1ac3b4f411c1
+    RequestId: 9dbd443a-6b6f-42ad-8eaf-f0d949852a85
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -64,29 +64,29 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:UpdateRefreshSchedule
+    - quicksight:PassDataSet
     - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
-    - quicksight:PassDataSet
+    - quicksight:UpdateRefreshSchedule
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:UpdateDataSet
     - quicksight:DescribeDataSetPermissions
+    - quicksight:UpdateDataSet
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 70b02ed3-24d5-486a-8b3e-48a09adbd8c0
+  RequestId: c5a8618e-c666-4499-9548-3ddb51dfb41b
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '973'
       content-type: application/json
-      date: Tue, 16 Jan 2024 01:59:46 GMT
-      x-amzn-requestid: 70b02ed3-24d5-486a-8b3e-48a09adbd8c0
+      date: Tue, 16 Jan 2024 16:47:20 GMT
+      x-amzn-requestid: c5a8618e-c666-4499-9548-3ddb51dfb41b
     HTTPStatusCode: '200'
-    RequestId: 70b02ed3-24d5-486a-8b3e-48a09adbd8c0
+    RequestId: c5a8618e-c666-4499-9548-3ddb51dfb41b
     RetryAttempts: '0'
   Status: '200'
