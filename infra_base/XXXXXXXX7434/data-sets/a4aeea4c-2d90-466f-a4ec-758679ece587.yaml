@@ -133,16 +133,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: c48ffc47-7653-4795-bb02-f642423ba624
+  RequestId: 86f6328d-f63b-47b0-bbc6-8b354c7d960c
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '8076'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:15 GMT
-      x-amzn-requestid: c48ffc47-7653-4795-bb02-f642423ba624
+      date: Wed, 17 Jan 2024 01:07:35 GMT
+      x-amzn-requestid: 86f6328d-f63b-47b0-bbc6-8b354c7d960c
     HTTPStatusCode: '200'
-    RequestId: c48ffc47-7653-4795-bb02-f642423ba624
+    RequestId: 86f6328d-f63b-47b0-bbc6-8b354c7d960c
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -155,10 +155,10 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:UpdateRefreshSchedule
-    - quicksight:DeleteRefreshSchedule
-    - quicksight:PassDataSet
     - quicksight:ListRefreshSchedules
+    - quicksight:DeleteRefreshSchedule
+    - quicksight:UpdateRefreshSchedule
+    - quicksight:PassDataSet
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
@@ -169,15 +169,15 @@ DescribeDataSetPermissions:
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 31ebd7de-0545-45c6-9064-45361465425e
+  RequestId: dd58b092-ae84-46fb-8470-2a39364ad0f8
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:16 GMT
-      x-amzn-requestid: 31ebd7de-0545-45c6-9064-45361465425e
+      date: Wed, 17 Jan 2024 01:07:35 GMT
+      x-amzn-requestid: dd58b092-ae84-46fb-8470-2a39364ad0f8
     HTTPStatusCode: '200'
-    RequestId: 31ebd7de-0545-45c6-9064-45361465425e
+    RequestId: dd58b092-ae84-46fb-8470-2a39364ad0f8
     RetryAttempts: '0'
   Status: '200'

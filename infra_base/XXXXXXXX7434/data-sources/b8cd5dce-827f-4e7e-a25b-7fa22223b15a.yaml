@@ -12,16 +12,16 @@ DescribeDataSource:
     Name: Business Review
     Status: UPDATE_SUCCESSFUL
     Type: S3
-  RequestId: 56353e84-504e-40cd-86df-3501a9438685
+  RequestId: c1130c2c-254f-42d1-876d-06ac47d4abcc
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1578'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:52 GMT
-      x-amzn-requestid: 56353e84-504e-40cd-86df-3501a9438685
+      date: Wed, 17 Jan 2024 01:07:11 GMT
+      x-amzn-requestid: c1130c2c-254f-42d1-876d-06ac47d4abcc
     HTTPStatusCode: '200'
-    RequestId: 56353e84-504e-40cd-86df-3501a9438685
+    RequestId: c1130c2c-254f-42d1-876d-06ac47d4abcc
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSourcePermissions:
@@ -36,15 +36,15 @@ DescribeDataSourcePermissions:
     - quicksight:DescribeDataSource
     - quicksight:DeleteDataSource
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 2ee4da9c-1cfc-4616-892e-94e7bc5ce11b
+  RequestId: 8c32d35a-bfef-4294-bc5b-406d88f7d9a8
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '538'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:53 GMT
-      x-amzn-requestid: 2ee4da9c-1cfc-4616-892e-94e7bc5ce11b
+      date: Wed, 17 Jan 2024 01:07:11 GMT
+      x-amzn-requestid: 8c32d35a-bfef-4294-bc5b-406d88f7d9a8
     HTTPStatusCode: '200'
-    RequestId: 2ee4da9c-1cfc-4616-892e-94e7bc5ce11b
+    RequestId: 8c32d35a-bfef-4294-bc5b-406d88f7d9a8
     RetryAttempts: '0'
   Status: '200'

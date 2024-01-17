@@ -57,7 +57,7 @@ Resources:
       DataSetUsageConfiguration:
         DisableUseAsDirectQuerySource: false
         DisableUseAsImportedSource: false
-      ImportMode: SPICE
+      ImportMode: DIRECT_QUERY
       LogicalTableMap:
         491e3d47-ac11-4d5b-ac15-a543486ac7d9:
           Alias:

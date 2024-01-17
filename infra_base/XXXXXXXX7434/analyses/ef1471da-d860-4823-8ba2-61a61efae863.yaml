@@ -11,16 +11,16 @@ DescribeAnalysis:
     - Name: Sheet 1
       SheetId: ff829f06-0d0b-4731-93fe-46fdfa5f51ff
     Status: CREATION_SUCCESSFUL
-  RequestId: a81e4c40-e139-4416-964e-f2decf27f87e
+  RequestId: 0ff47b75-08a6-4112-b550-43ed4aed5937
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '864'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:48:03 GMT
-      x-amzn-requestid: a81e4c40-e139-4416-964e-f2decf27f87e
+      date: Wed, 17 Jan 2024 01:08:18 GMT
+      x-amzn-requestid: 0ff47b75-08a6-4112-b550-43ed4aed5937
     HTTPStatusCode: '200'
-    RequestId: a81e4c40-e139-4416-964e-f2decf27f87e
+    RequestId: 0ff47b75-08a6-4112-b550-43ed4aed5937
     RetryAttempts: '0'
   Status: '200'
 DescribeAnalysisDefinition:
@@ -261,17 +261,17 @@ DescribeAnalysisDefinition:
             Visibility: VISIBLE
           VisualId: 30106b1b-daa0-4bbb-82f2-d317c21ebf05
   Name: Sales Pipeline analysis
-  RequestId: fad062bd-f376-47eb-b7aa-fa7b3a2e71e7
+  RequestId: 470bae4a-070d-4e51-88d2-dc78677144c5
   ResourceStatus: CREATION_SUCCESSFUL
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '11954'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:48:04 GMT
-      x-amzn-requestid: fad062bd-f376-47eb-b7aa-fa7b3a2e71e7
+      date: Wed, 17 Jan 2024 01:08:19 GMT
+      x-amzn-requestid: 470bae4a-070d-4e51-88d2-dc78677144c5
     HTTPStatusCode: '200'
-    RequestId: fad062bd-f376-47eb-b7aa-fa7b3a2e71e7
+    RequestId: 470bae4a-070d-4e51-88d2-dc78677144c5
     RetryAttempts: '0'
   Status: '200'
 DescribeAnalysisPermissions:
@@ -287,15 +287,15 @@ DescribeAnalysisPermissions:
     - quicksight:DescribeAnalysis
     - quicksight:UpdateAnalysis
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 3bc3e7d3-af67-4d5b-96f6-70e9500ebac0
+  RequestId: c6bf8a0c-70fe-4473-ba50-2749fc85f22f
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '556'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:48:04 GMT
-      x-amzn-requestid: 3bc3e7d3-af67-4d5b-96f6-70e9500ebac0
+      date: Wed, 17 Jan 2024 01:08:19 GMT
+      x-amzn-requestid: c6bf8a0c-70fe-4473-ba50-2749fc85f22f
     HTTPStatusCode: '200'
-    RequestId: 3bc3e7d3-af67-4d5b-96f6-70e9500ebac0
+    RequestId: c6bf8a0c-70fe-4473-ba50-2749fc85f22f
     RetryAttempts: '0'
   Status: '200'

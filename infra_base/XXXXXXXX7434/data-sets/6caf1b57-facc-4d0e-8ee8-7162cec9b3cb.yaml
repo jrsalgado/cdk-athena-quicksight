@@ -131,16 +131,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: 33527548-32da-4585-b914-3e5ac04ed2a9
+  RequestId: 32033013-329e-4e9b-a02f-a64c39283385
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '7629'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:12 GMT
-      x-amzn-requestid: 33527548-32da-4585-b914-3e5ac04ed2a9
+      date: Wed, 17 Jan 2024 01:07:32 GMT
+      x-amzn-requestid: 32033013-329e-4e9b-a02f-a64c39283385
     HTTPStatusCode: '200'
-    RequestId: 33527548-32da-4585-b914-3e5ac04ed2a9
+    RequestId: 32033013-329e-4e9b-a02f-a64c39283385
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -153,8 +153,8 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:PassDataSet
     - quicksight:ListRefreshSchedules
+    - quicksight:PassDataSet
     - quicksight:UpdateRefreshSchedule
     - quicksight:DeleteRefreshSchedule
     - quicksight:DescribeDataSetRefreshProperties
@@ -162,20 +162,20 @@ DescribeDataSetPermissions:
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:DescribeDataSetPermissions
     - quicksight:UpdateDataSet
+    - quicksight:DescribeDataSetPermissions
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 5e446984-a8a2-405b-b99d-449f88ece64b
+  RequestId: bdb22e69-05f0-424d-a172-7cb86221d43b
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '973'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:12 GMT
-      x-amzn-requestid: 5e446984-a8a2-405b-b99d-449f88ece64b
+      date: Wed, 17 Jan 2024 01:07:33 GMT
+      x-amzn-requestid: bdb22e69-05f0-424d-a172-7cb86221d43b
     HTTPStatusCode: '200'
-    RequestId: 5e446984-a8a2-405b-b99d-449f88ece64b
+    RequestId: bdb22e69-05f0-424d-a172-7cb86221d43b
     RetryAttempts: '0'
   Status: '200'

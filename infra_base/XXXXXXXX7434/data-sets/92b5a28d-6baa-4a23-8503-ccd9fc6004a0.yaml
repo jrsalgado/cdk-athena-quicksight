@@ -216,16 +216,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: 9dd9a2c1-4fcc-4069-84bb-cea6bd7389b9
+  RequestId: c65d07d5-f7ed-4818-9bf4-9d981d4cac3c
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '15044'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:13 GMT
-      x-amzn-requestid: 9dd9a2c1-4fcc-4069-84bb-cea6bd7389b9
+      date: Wed, 17 Jan 2024 01:07:34 GMT
+      x-amzn-requestid: c65d07d5-f7ed-4818-9bf4-9d981d4cac3c
     HTTPStatusCode: '200'
-    RequestId: 9dd9a2c1-4fcc-4069-84bb-cea6bd7389b9
+    RequestId: c65d07d5-f7ed-4818-9bf4-9d981d4cac3c
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -239,9 +239,9 @@ DescribeDataSetPermissions:
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
     - quicksight:PassDataSet
+    - quicksight:UpdateRefreshSchedule
     - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
-    - quicksight:UpdateRefreshSchedule
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
@@ -252,15 +252,15 @@ DescribeDataSetPermissions:
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 7e7d8ebf-2de4-4a13-a3d2-d5936d12e242
+  RequestId: 84b4b265-9abe-4601-a89a-5ff0f6a4919f
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '973'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:14 GMT
-      x-amzn-requestid: 7e7d8ebf-2de4-4a13-a3d2-d5936d12e242
+      date: Wed, 17 Jan 2024 01:07:34 GMT
+      x-amzn-requestid: 84b4b265-9abe-4601-a89a-5ff0f6a4919f
     HTTPStatusCode: '200'
-    RequestId: 7e7d8ebf-2de4-4a13-a3d2-d5936d12e242
+    RequestId: 84b4b265-9abe-4601-a89a-5ff0f6a4919f
     RetryAttempts: '0'
   Status: '200'

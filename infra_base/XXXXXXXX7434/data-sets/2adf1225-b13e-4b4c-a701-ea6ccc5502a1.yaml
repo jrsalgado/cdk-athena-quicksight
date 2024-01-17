@@ -40,16 +40,16 @@ DescribeDataSet:
           Name: jsaCustomSQL
           SqlQuery: select name, age from athenatestdatabase.athenatesttable where
             age > 50
-  RequestId: d7516b03-b7ef-40db-a11c-4dfafc5b8ad4
+  RequestId: 5394a1db-4118-494b-ac3c-a426f5c0c87f
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '2008'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:07 GMT
-      x-amzn-requestid: d7516b03-b7ef-40db-a11c-4dfafc5b8ad4
+      date: Wed, 17 Jan 2024 01:07:26 GMT
+      x-amzn-requestid: 5394a1db-4118-494b-ac3c-a426f5c0c87f
     HTTPStatusCode: '200'
-    RequestId: d7516b03-b7ef-40db-a11c-4dfafc5b8ad4
+    RequestId: 5394a1db-4118-494b-ac3c-a426f5c0c87f
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -62,8 +62,8 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:UpdateRefreshSchedule
     - quicksight:PassDataSet
+    - quicksight:UpdateRefreshSchedule
     - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
     - quicksight:DescribeDataSetRefreshProperties
@@ -71,20 +71,20 @@ DescribeDataSetPermissions:
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:DescribeDataSetPermissions
     - quicksight:UpdateDataSet
+    - quicksight:DescribeDataSetPermissions
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 6596aaae-2a60-4fed-9f18-c100b1e6a5c3
+  RequestId: 0d235a89-71cc-4246-ab99-c51049acc00b
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:08 GMT
-      x-amzn-requestid: 6596aaae-2a60-4fed-9f18-c100b1e6a5c3
+      date: Wed, 17 Jan 2024 01:07:27 GMT
+      x-amzn-requestid: 0d235a89-71cc-4246-ab99-c51049acc00b
     HTTPStatusCode: '200'
-    RequestId: 6596aaae-2a60-4fed-9f18-c100b1e6a5c3
+    RequestId: 0d235a89-71cc-4246-ab99-c51049acc00b
     RetryAttempts: '0'
   Status: '200'

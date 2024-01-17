@@ -153,16 +153,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: 21371186-2db4-483a-9469-8bb05a1aa8fa
+  RequestId: 3af941bf-e4ef-4d28-94ed-4ee8ebb4c36a
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '8962'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:04 GMT
-      x-amzn-requestid: 21371186-2db4-483a-9469-8bb05a1aa8fa
+      date: Wed, 17 Jan 2024 01:07:20 GMT
+      x-amzn-requestid: 3af941bf-e4ef-4d28-94ed-4ee8ebb4c36a
     HTTPStatusCode: '200'
-    RequestId: 21371186-2db4-483a-9469-8bb05a1aa8fa
+    RequestId: 3af941bf-e4ef-4d28-94ed-4ee8ebb4c36a
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -175,10 +175,10 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:UpdateRefreshSchedule
-    - quicksight:DeleteRefreshSchedule
     - quicksight:PassDataSet
+    - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
+    - quicksight:UpdateRefreshSchedule
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
@@ -189,15 +189,15 @@ DescribeDataSetPermissions:
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: bb1edbe9-592c-4fec-9d14-74c4fdeb47fe
+  RequestId: 75de9fdd-10bb-4ccc-b5fc-b94b5f0f7d03
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '973'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:05 GMT
-      x-amzn-requestid: bb1edbe9-592c-4fec-9d14-74c4fdeb47fe
+      date: Wed, 17 Jan 2024 01:07:21 GMT
+      x-amzn-requestid: 75de9fdd-10bb-4ccc-b5fc-b94b5f0f7d03
     HTTPStatusCode: '200'
-    RequestId: bb1edbe9-592c-4fec-9d14-74c4fdeb47fe
+    RequestId: 75de9fdd-10bb-4ccc-b5fc-b94b5f0f7d03
     RetryAttempts: '0'
   Status: '200'

@@ -12,16 +12,16 @@ DescribeDataSource:
     Name: People Overview
     Status: UPDATE_SUCCESSFUL
     Type: S3
-  RequestId: 32ca94c7-f61a-4aaf-b9c1-33a847633ea9
+  RequestId: 99379a81-1f15-4c39-b3a6-8a20beb90968
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1574'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:47 GMT
-      x-amzn-requestid: 32ca94c7-f61a-4aaf-b9c1-33a847633ea9
+      date: Wed, 17 Jan 2024 01:07:08 GMT
+      x-amzn-requestid: 99379a81-1f15-4c39-b3a6-8a20beb90968
     HTTPStatusCode: '200'
-    RequestId: 32ca94c7-f61a-4aaf-b9c1-33a847633ea9
+    RequestId: 99379a81-1f15-4c39-b3a6-8a20beb90968
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSourcePermissions:
@@ -36,15 +36,15 @@ DescribeDataSourcePermissions:
     - quicksight:DescribeDataSource
     - quicksight:DeleteDataSource
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: d61aedd0-f3c3-4272-9297-af757f1adc81
+  RequestId: 4e64f502-e087-4c62-978d-b9c604b54861
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '544'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:48 GMT
-      x-amzn-requestid: d61aedd0-f3c3-4272-9297-af757f1adc81
+      date: Wed, 17 Jan 2024 01:07:09 GMT
+      x-amzn-requestid: 4e64f502-e087-4c62-978d-b9c604b54861
     HTTPStatusCode: '200'
-    RequestId: d61aedd0-f3c3-4272-9297-af757f1adc81
+    RequestId: 4e64f502-e087-4c62-978d-b9c604b54861
     RetryAttempts: '0'
   Status: '200'

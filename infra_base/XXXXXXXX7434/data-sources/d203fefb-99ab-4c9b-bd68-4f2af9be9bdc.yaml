@@ -12,16 +12,16 @@ DescribeDataSource:
     Name: Business Review
     Status: UPDATE_SUCCESSFUL
     Type: S3
-  RequestId: 0bbf566d-edd8-4b61-8632-e4ae4c759ce3
+  RequestId: 200c2de1-e5e1-4084-8789-22d8ca15ee5f
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1579'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:55 GMT
-      x-amzn-requestid: 0bbf566d-edd8-4b61-8632-e4ae4c759ce3
+      date: Wed, 17 Jan 2024 01:07:13 GMT
+      x-amzn-requestid: 200c2de1-e5e1-4084-8789-22d8ca15ee5f
     HTTPStatusCode: '200'
-    RequestId: 0bbf566d-edd8-4b61-8632-e4ae4c759ce3
+    RequestId: 200c2de1-e5e1-4084-8789-22d8ca15ee5f
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSourcePermissions:
@@ -36,15 +36,15 @@ DescribeDataSourcePermissions:
     - quicksight:DescribeDataSource
     - quicksight:DeleteDataSource
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: c80f0d8a-d668-4c77-9509-6f255ad9ad84
+  RequestId: 292e75f3-fdfb-4c69-9a87-77fb2f4256ad
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '544'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:56 GMT
-      x-amzn-requestid: c80f0d8a-d668-4c77-9509-6f255ad9ad84
+      date: Wed, 17 Jan 2024 01:07:14 GMT
+      x-amzn-requestid: 292e75f3-fdfb-4c69-9a87-77fb2f4256ad
     HTTPStatusCode: '200'
-    RequestId: c80f0d8a-d668-4c77-9509-6f255ad9ad84
+    RequestId: 292e75f3-fdfb-4c69-9a87-77fb2f4256ad
     RetryAttempts: '0'
   Status: '200'

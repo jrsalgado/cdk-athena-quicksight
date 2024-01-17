@@ -11,10 +11,27 @@ from infra_base.qs_fetch import fetchQSAllResources
 def cli():
     pass
 
-@cli.command()
+@cli.group()
+def fetch():
+    """Fetch various entities."""
+    pass
+
+@cli.group()
+def build():
+    """Build various entities."""
+    pass
+
+@cli.group()
+def deploy():
+    """Deploy various entities."""
+    pass
+
+
+#./qscli.py fetch all --account-id xxxxx 
+@fetch.command()
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The origin account id')
 @click.option('--profile', default=None, help='AWS CLI Profile')
-def fetchAllQuicksightResources(account_id, profile):
+def all(account_id, profile):
     os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     click.echo(f'Fetch all resources from AWS Account = {account_id} ...')
     session = boto3.Session(profile_name=profile)
@@ -24,18 +41,20 @@ def fetchAllQuicksightResources(account_id, profile):
     )
     fetchQSAllResources(quicksight_client, account_id)
 
-@cli.command()
+#./qscli.py build dashboard --account-id xxxxx {dashboard-id}
+@build.command()
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The origin account id')
 @click.argument('dashboardid')
-def cloneFromDashboardId(account_id, dashboardid):
+def dashboard(account_id, dashboardid):
     os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     click.echo(f'Cloning from AWS AccountId = {account_id} ...')
     click.echo(f'Creating template from DashboardId= {dashboardid} ...')
     cdk_synth(account_id, dashboardid)
 
-@cli.command()
+#./qscli.py build dashboards --account-id xxxxx
+@build.command()
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The origin account id')
-def cloneAllDashboards(account_id):
+def dashboards(account_id):
     os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     click.echo(f'Cloning from AWS AccountId = {account_id} ...')
     # for each dashboard on the --list-dashboard file
@@ -44,7 +63,8 @@ def cloneAllDashboards(account_id):
         cdk_synth(account_id, dashboard['dashboardId'])
 
 
-@cli.command()
+#./qscli.py deploy dashboard --account-id xxxxx --parameters-path file://some_template.yaml
+@deploy.command(name='dashboard')
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The AWS Account ID to deploy the dasboard clone')
 @click.option('--region', default="us-east-1", help='AWS Region')
 @click.option('--profile', default=None, help='AWS Profile')

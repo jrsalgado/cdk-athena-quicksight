@@ -12,16 +12,16 @@ DescribeDataSource:
     Name: Web and Social Media Analytics
     Status: UPDATE_SUCCESSFUL
     Type: S3
-  RequestId: fa293cf2-889e-42f9-a815-8391b290ceba
+  RequestId: f6549df4-1168-4382-856e-3dc35d9185e6
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1596'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:53 GMT
-      x-amzn-requestid: fa293cf2-889e-42f9-a815-8391b290ceba
+      date: Wed, 17 Jan 2024 01:07:12 GMT
+      x-amzn-requestid: f6549df4-1168-4382-856e-3dc35d9185e6
     HTTPStatusCode: '200'
-    RequestId: fa293cf2-889e-42f9-a815-8391b290ceba
+    RequestId: f6549df4-1168-4382-856e-3dc35d9185e6
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSourcePermissions:
@@ -36,15 +36,15 @@ DescribeDataSourcePermissions:
     - quicksight:DescribeDataSource
     - quicksight:DeleteDataSource
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: efd1d160-3198-4b75-8e6b-dda6d401335d
+  RequestId: 47c0355f-c34e-4a3d-911f-aa559215419d
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '538'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:46:54 GMT
-      x-amzn-requestid: efd1d160-3198-4b75-8e6b-dda6d401335d
+      date: Wed, 17 Jan 2024 01:07:13 GMT
+      x-amzn-requestid: 47c0355f-c34e-4a3d-911f-aa559215419d
     HTTPStatusCode: '200'
-    RequestId: efd1d160-3198-4b75-8e6b-dda6d401335d
+    RequestId: 47c0355f-c34e-4a3d-911f-aa559215419d
     RetryAttempts: '0'
   Status: '200'

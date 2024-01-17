@@ -71,13 +71,21 @@ DataSetSummaries:
   LastUpdatedTime: 2023-12-26 08:33:02.859000-07:00
   Name: Sales Pipeline
   RowLevelPermissionTagConfigurationApplied: 'False'
-- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/clone-athena-no-spice-01
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/DATASET003-ASDFASDFASDF-ASDF
   ColumnLevelPermissionRulesApplied: 'False'
-  CreatedTime: 2024-01-16 09:18:40.573000-07:00
-  DataSetId: clone-athena-no-spice-01
-  ImportMode: SPICE
-  LastUpdatedTime: 2024-01-16 09:19:26.200000-07:00
-  Name: clone-athena-no-spice01
+  CreatedTime: 2024-01-16 12:58:26.354000-07:00
+  DataSetId: DATASET003-ASDFASDFASDF-ASDF
+  ImportMode: DIRECT_QUERY
+  LastUpdatedTime: 2024-01-16 12:58:26.354000-07:00
+  Name: DATASET003
+  RowLevelPermissionTagConfigurationApplied: 'False'
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/DATASET004-ASDFASDFASDF-ASDF
+  ColumnLevelPermissionRulesApplied: 'False'
+  CreatedTime: 2024-01-16 13:13:16.714000-07:00
+  DataSetId: DATASET004-ASDFASDFASDF-ASDF
+  ImportMode: DIRECT_QUERY
+  LastUpdatedTime: 2024-01-16 13:13:16.714000-07:00
+  Name: DATASET004
   RowLevelPermissionTagConfigurationApplied: 'False'
 - Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/bea7f081-abae-4828-af44-6d1302e49843
   ColumnLevelPermissionRulesApplied: 'False'
@@ -103,15 +111,15 @@ DataSetSummaries:
   LastUpdatedTime: 2023-12-26 11:24:19.280000-07:00
   Name: People
   RowLevelPermissionTagConfigurationApplied: 'False'
-RequestId: 8993fbbf-0913-41d1-bc21-514a81f3e716
+RequestId: 53f4adb3-601d-470b-8fa0-7d6100eb5271
 ResponseMetadata:
   HTTPHeaders:
     connection: keep-alive
-    content-length: '5330'
+    content-length: '5724'
     content-type: application/json
-    date: Tue, 16 Jan 2024 16:47:01 GMT
-    x-amzn-requestid: 8993fbbf-0913-41d1-bc21-514a81f3e716
+    date: Wed, 17 Jan 2024 01:07:18 GMT
+    x-amzn-requestid: 53f4adb3-601d-470b-8fa0-7d6100eb5271
   HTTPStatusCode: '200'
-  RequestId: 8993fbbf-0913-41d1-bc21-514a81f3e716
+  RequestId: 53f4adb3-601d-470b-8fa0-7d6100eb5271
   RetryAttempts: '0'
 Status: '200'

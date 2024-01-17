@@ -42,16 +42,16 @@ DescribeDataSet:
             Type: DECIMAL
           Name: athenatesttable
           Schema: athenatestdatabase
-  RequestId: da67a5e3-cfff-4870-bc9e-3f7a45c6ea73
+  RequestId: 3a13f9b4-1e38-49e5-83fe-4c69a78b00b5
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1687'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:05 GMT
-      x-amzn-requestid: da67a5e3-cfff-4870-bc9e-3f7a45c6ea73
+      date: Wed, 17 Jan 2024 01:07:25 GMT
+      x-amzn-requestid: 3a13f9b4-1e38-49e5-83fe-4c69a78b00b5
     HTTPStatusCode: '200'
-    RequestId: da67a5e3-cfff-4870-bc9e-3f7a45c6ea73
+    RequestId: 3a13f9b4-1e38-49e5-83fe-4c69a78b00b5
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -66,8 +66,8 @@ DescribeDataSetPermissions:
     - quicksight:CancelIngestion
     - quicksight:PassDataSet
     - quicksight:DeleteRefreshSchedule
-    - quicksight:ListRefreshSchedules
     - quicksight:UpdateRefreshSchedule
+    - quicksight:ListRefreshSchedules
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
@@ -78,15 +78,15 @@ DescribeDataSetPermissions:
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 24ab926f-cb8c-41df-8da8-093f9e5cd0cb
+  RequestId: 3885ff4a-0eb8-466f-9468-355a7efdc6b9
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:06 GMT
-      x-amzn-requestid: 24ab926f-cb8c-41df-8da8-093f9e5cd0cb
+      date: Wed, 17 Jan 2024 01:07:25 GMT
+      x-amzn-requestid: 3885ff4a-0eb8-466f-9468-355a7efdc6b9
     HTTPStatusCode: '200'
-    RequestId: 24ab926f-cb8c-41df-8da8-093f9e5cd0cb
+    RequestId: 3885ff4a-0eb8-466f-9468-355a7efdc6b9
     RetryAttempts: '0'
   Status: '200'

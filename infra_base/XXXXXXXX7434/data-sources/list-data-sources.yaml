@@ -95,6 +95,30 @@ DataSources:
     DisableSsl: 'False'
   Status: CREATION_SUCCESSFUL
   Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/DATASOURCE003-ASDFASDFASDF-ASDF
+  CreatedTime: 2024-01-16 12:57:22.818000-07:00
+  DataSourceId: DATASOURCE003-ASDFASDFASDF-ASDF
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-16 12:58:00.003000-07:00
+  Name: DATASOURCE003
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
+- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/DATASOURCE004-ASDFASDFASDF-ASDF
+  CreatedTime: 2024-01-16 13:12:48.582000-07:00
+  DataSourceId: DATASOURCE004-ASDFASDFASDF-ASDF
+  DataSourceParameters:
+    AthenaParameters:
+      WorkGroup: primary
+  LastUpdatedTime: 2024-01-16 13:12:50.964000-07:00
+  Name: DATASOURCE004
+  SslProperties:
+    DisableSsl: 'False'
+  Status: CREATION_SUCCESSFUL
+  Type: ATHENA
 - Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/bc95e88b-9cd6-4e12-ac6c-390aca6a07d8
   CreatedTime: 2024-01-09 10:01:40.424000-07:00
   DataSourceId: bc95e88b-9cd6-4e12-ac6c-390aca6a07d8
@@ -115,18 +139,6 @@ DataSources:
       WorkGroup: primary
   LastUpdatedTime: 2024-01-09 08:57:45.631000-07:00
   Name: dropthis
-  SslProperties:
-    DisableSsl: 'False'
-  Status: CREATION_SUCCESSFUL
-  Type: ATHENA
-- Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:datasource/clone-no-spice
-  CreatedTime: 2024-01-16 09:18:07.898000-07:00
-  DataSourceId: clone-no-spice
-  DataSourceParameters:
-    AthenaParameters:
-      WorkGroup: primary
-  LastUpdatedTime: 2024-01-16 09:18:09.102000-07:00
-  Name: clone-athena-no-spice
   SslProperties:
     DisableSsl: 'False'
   Status: CREATION_SUCCESSFUL
@@ -239,15 +251,15 @@ DataSources:
   Name: Web and Social Media Analytics
   Status: UPDATE_SUCCESSFUL
   Type: S3
-RequestId: 34c0ed12-5e54-45b6-a939-d3fe24db6de4
+RequestId: 0339a9b0-d61e-4b17-b2e8-af99e78a0e45
 ResponseMetadata:
   HTTPHeaders:
     connection: keep-alive
-    content-length: '29618'
+    content-length: '31088'
     content-type: application/json
-    date: Tue, 16 Jan 2024 16:46:26 GMT
-    x-amzn-requestid: 34c0ed12-5e54-45b6-a939-d3fe24db6de4
+    date: Wed, 17 Jan 2024 01:06:47 GMT
+    x-amzn-requestid: 0339a9b0-d61e-4b17-b2e8-af99e78a0e45
   HTTPStatusCode: '200'
-  RequestId: 34c0ed12-5e54-45b6-a939-d3fe24db6de4
+  RequestId: 0339a9b0-d61e-4b17-b2e8-af99e78a0e45
   RetryAttempts: '0'
 Status: '200'

@@ -21,16 +21,16 @@ DescribeDashboard:
       SourceEntityArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/e3301c4c-e67b-400c-b36c-12edaacbc558
       Status: CREATION_SUCCESSFUL
       VersionNumber: '4'
-  RequestId: 3abf83f7-4530-4cf2-bba5-def31875d594
+  RequestId: 5a593dca-fdcc-43e8-8f41-a24b7e5d9034
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '1628'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:35 GMT
-      x-amzn-requestid: 3abf83f7-4530-4cf2-bba5-def31875d594
+      date: Wed, 17 Jan 2024 01:07:53 GMT
+      x-amzn-requestid: 5a593dca-fdcc-43e8-8f41-a24b7e5d9034
     HTTPStatusCode: '200'
-    RequestId: 3abf83f7-4530-4cf2-bba5-def31875d594
+    RequestId: 5a593dca-fdcc-43e8-8f41-a24b7e5d9034
     RetryAttempts: '0'
   Status: '200'
 DescribeDashboardDefinition:
@@ -232,17 +232,17 @@ DescribeDashboardDefinition:
             Visibility: VISIBLE
           VisualId: e6390395-4a03-4d80-b862-a4d3506173c7_6e9ac621-a804-4aea-b858-ea0c1c19e300
   Name: dashboard01
-  RequestId: 773a0610-ce66-4bb6-9b70-c8ee2d4e1193
+  RequestId: 5b5ba3a6-fec0-41be-a3fd-f64403243b81
   ResourceStatus: CREATION_SUCCESSFUL
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '10135'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:36 GMT
-      x-amzn-requestid: 773a0610-ce66-4bb6-9b70-c8ee2d4e1193
+      date: Wed, 17 Jan 2024 01:07:53 GMT
+      x-amzn-requestid: 5b5ba3a6-fec0-41be-a3fd-f64403243b81
     HTTPStatusCode: '200'
-    RequestId: 773a0610-ce66-4bb6-9b70-c8ee2d4e1193
+    RequestId: 5b5ba3a6-fec0-41be-a3fd-f64403243b81
     RetryAttempts: '0'
   Status: '200'
 DescribeDashboardPermissions:
@@ -261,15 +261,15 @@ DescribeDashboardPermissions:
     - quicksight:DescribeDashboardPermissions
     - quicksight:UpdateDashboardPublishedVersion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: bd36f1c6-1973-4bba-b581-574ecc262db8
+  RequestId: d6426447-dc2a-483f-9b52-f9cf332da0e9
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '656'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:37 GMT
-      x-amzn-requestid: bd36f1c6-1973-4bba-b581-574ecc262db8
+      date: Wed, 17 Jan 2024 01:07:54 GMT
+      x-amzn-requestid: d6426447-dc2a-483f-9b52-f9cf332da0e9
     HTTPStatusCode: '200'
-    RequestId: bd36f1c6-1973-4bba-b581-574ecc262db8
+    RequestId: d6426447-dc2a-483f-9b52-f9cf332da0e9
     RetryAttempts: '0'
   Status: '200'

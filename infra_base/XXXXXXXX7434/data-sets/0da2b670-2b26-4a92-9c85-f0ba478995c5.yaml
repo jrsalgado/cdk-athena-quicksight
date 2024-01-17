@@ -131,16 +131,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: e2480644-1e38-4d20-bea1-ae9c180a0a4b
+  RequestId: 43722d8b-5705-462f-9a87-c78127890a10
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '7629'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:02 GMT
-      x-amzn-requestid: e2480644-1e38-4d20-bea1-ae9c180a0a4b
+      date: Wed, 17 Jan 2024 01:07:19 GMT
+      x-amzn-requestid: 43722d8b-5705-462f-9a87-c78127890a10
     HTTPStatusCode: '200'
-    RequestId: e2480644-1e38-4d20-bea1-ae9c180a0a4b
+    RequestId: 43722d8b-5705-462f-9a87-c78127890a10
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -153,9 +153,9 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
+    - quicksight:PassDataSet
     - quicksight:UpdateRefreshSchedule
     - quicksight:DeleteRefreshSchedule
-    - quicksight:PassDataSet
     - quicksight:ListRefreshSchedules
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
@@ -167,15 +167,15 @@ DescribeDataSetPermissions:
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: d5d5f750-12a3-4d46-8aae-30c6e4a4c1b5
+  RequestId: aabeff5a-1c8a-4798-a607-d23e08e4b892
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:03 GMT
-      x-amzn-requestid: d5d5f750-12a3-4d46-8aae-30c6e4a4c1b5
+      date: Wed, 17 Jan 2024 01:07:19 GMT
+      x-amzn-requestid: aabeff5a-1c8a-4798-a607-d23e08e4b892
     HTTPStatusCode: '200'
-    RequestId: d5d5f750-12a3-4d46-8aae-30c6e4a4c1b5
+    RequestId: aabeff5a-1c8a-4798-a607-d23e08e4b892
     RetryAttempts: '0'
   Status: '200'

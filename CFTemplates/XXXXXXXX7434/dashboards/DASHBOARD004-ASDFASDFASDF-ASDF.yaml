@@ -254,9 +254,11 @@ Resources:
                 SortConfiguration:
                   FieldSortOptions: []
                 TableOptions:
-                  CellStyle: {}
+                  CellStyle:
+                    TextWrap: WRAP
                   CollapsedRowDimensionsVisibility: HIDDEN
-                  ColumnHeaderStyle: {}
+                  ColumnHeaderStyle:
+                    TextWrap: WRAP
                   RowAlternateColorOptions:
                     Status: DISABLED
                     UsePrimaryBackgroundColor: ENABLED

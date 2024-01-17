@@ -1,41 +1,38 @@
 DescribeDashboard:
   Dashboard:
-    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/2ed4d134-af38-461d-ab2e-6853684a92b4
-    CreatedTime: 2024-01-15 19:50:01.238000-07:00
-    DashboardId: 2ed4d134-af38-461d-ab2e-6853684a92b4
-    LastPublishedTime: 2024-01-15 19:50:01.238000-07:00
-    LastUpdatedTime: 2024-01-15 19:50:01.232000-07:00
-    LinkEntities:
-    - arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/914d1077-43a2-457c-9de2-2f6c12cf534f
-    Name: AthenaNoSpice
+    Arn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/DASHBOARD003-ASDFASDFASDF-ASDF
+    CreatedTime: 2024-01-16 12:58:58.952000-07:00
+    DashboardId: DASHBOARD003-ASDFASDFASDF-ASDF
+    LastPublishedTime: 2024-01-16 12:58:58.952000-07:00
+    LastUpdatedTime: 2024-01-16 12:58:59.231000-07:00
+    Name: FULLCLONE-DASHBOARD003
     Version:
-      CreatedTime: 2024-01-15 19:50:01.232000-07:00
+      CreatedTime: 2024-01-16 12:58:59.231000-07:00
       DataSetArns:
-      - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
+      - arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/DATASET003-ASDFASDFASDF-ASDF
       Errors: []
       Sheets:
       - Name: Sheet 1
         SheetId: 2ed4d134-af38-461d-ab2e-6853684a92b4_c8befdca-95c2-473b-86af-0519b1f0af2c
-      SourceEntityArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:analysis/914d1077-43a2-457c-9de2-2f6c12cf534f
       Status: CREATION_SUCCESSFUL
       VersionNumber: '1'
-  RequestId: b841e220-ae9d-4d9e-a0bc-4000be1a4138
+  RequestId: 2e2da8ea-52cb-4a77-824c-4d4a949fb74e
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
-      content-length: '1389'
+      content-length: '1193'
       content-type: application/json
-      date: Wed, 17 Jan 2024 01:07:47 GMT
-      x-amzn-requestid: b841e220-ae9d-4d9e-a0bc-4000be1a4138
+      date: Wed, 17 Jan 2024 01:07:50 GMT
+      x-amzn-requestid: 2e2da8ea-52cb-4a77-824c-4d4a949fb74e
     HTTPStatusCode: '200'
-    RequestId: b841e220-ae9d-4d9e-a0bc-4000be1a4138
+    RequestId: 2e2da8ea-52cb-4a77-824c-4d4a949fb74e
     RetryAttempts: '0'
   Status: '200'
 DescribeDashboardDefinition:
-  DashboardId: 2ed4d134-af38-461d-ab2e-6853684a92b4
+  DashboardId: DASHBOARD003-ASDFASDFASDF-ASDF
   DashboardPublishOptions:
     AdHocFilteringOption:
-      AvailabilityStatus: DISABLED
+      AvailabilityStatus: ENABLED
     DataPointDrillUpDownOption:
       AvailabilityStatus: ENABLED
     DataPointMenuLabelOption:
@@ -66,11 +63,9 @@ DescribeDashboardDefinition:
         SheetContentType: INTERACTIVE
     CalculatedFields: []
     DataSetIdentifierDeclarations:
-    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/5664749b-76d6-46b8-a18d-700c91d08bf7
-      Identifier: athenatesttable
+    - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/DATASET003-ASDFASDFASDF-ASDF
+      Identifier: DATASET003
     FilterGroups: []
-    Options:
-      WeekStart: SUNDAY
     ParameterDeclarations: []
     Sheets:
     - ContentType: INTERACTIVE
@@ -108,13 +103,13 @@ DescribeDashboardDefinition:
                 - NumericalDimensionField:
                     Column:
                       ColumnName: id
-                      DataSetIdentifier: athenatesttable
+                      DataSetIdentifier: DATASET003
                     FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.id.0.1705373376044
                 Rows:
                 - CategoricalDimensionField:
                     Column:
                       ColumnName: name
-                      DataSetIdentifier: athenatesttable
+                      DataSetIdentifier: DATASET003
                     FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.name.3.1705373376044
                 Values:
                 - NumericalMeasureField:
@@ -122,21 +117,23 @@ DescribeDashboardDefinition:
                       SimpleNumericalAggregation: SUM
                     Column:
                       ColumnName: age
-                      DataSetIdentifier: athenatesttable
+                      DataSetIdentifier: DATASET003
                     FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.age.1.1705373376044
                 - NumericalMeasureField:
                     AggregationFunction:
                       SimpleNumericalAggregation: SUM
                     Column:
                       ColumnName: score
-                      DataSetIdentifier: athenatesttable
+                      DataSetIdentifier: DATASET003
                     FieldId: 491e3d47-ac11-4d5b-ac15-a543486ac7d9.score.2.1705373376044
             SortConfiguration:
               FieldSortOptions: []
             TableOptions:
-              CellStyle: {}
+              CellStyle:
+                TextWrap: WRAP
               CollapsedRowDimensionsVisibility: HIDDEN
-              ColumnHeaderStyle: {}
+              ColumnHeaderStyle:
+                TextWrap: WRAP
               RowAlternateColorOptions:
                 Status: DISABLED
                 UsePrimaryBackgroundColor: ENABLED
@@ -161,23 +158,23 @@ DescribeDashboardDefinition:
           Title:
             Visibility: VISIBLE
           VisualId: 2ed4d134-af38-461d-ab2e-6853684a92b4_5ddf5aa4-dc64-4e52-b0a7-fc3a7f98ac76
-  Name: AthenaNoSpice
-  RequestId: 7fcec83a-3375-4b83-9aa2-db28e97f76c8
+  Name: FULLCLONE-DASHBOARD003
+  RequestId: 6e8b17e8-7dbe-4cd3-a6a7-6df5f35f59b5
   ResourceStatus: CREATION_SUCCESSFUL
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
-      content-length: '7061'
+      content-length: '6975'
       content-type: application/json
-      date: Wed, 17 Jan 2024 01:07:47 GMT
-      x-amzn-requestid: 7fcec83a-3375-4b83-9aa2-db28e97f76c8
+      date: Wed, 17 Jan 2024 01:07:50 GMT
+      x-amzn-requestid: 6e8b17e8-7dbe-4cd3-a6a7-6df5f35f59b5
     HTTPStatusCode: '200'
-    RequestId: 7fcec83a-3375-4b83-9aa2-db28e97f76c8
+    RequestId: 6e8b17e8-7dbe-4cd3-a6a7-6df5f35f59b5
     RetryAttempts: '0'
   Status: '200'
 DescribeDashboardPermissions:
-  DashboardArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/2ed4d134-af38-461d-ab2e-6853684a92b4
-  DashboardId: 2ed4d134-af38-461d-ab2e-6853684a92b4
+  DashboardArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dashboard/DASHBOARD003-ASDFASDFASDF-ASDF
+  DashboardId: DASHBOARD003-ASDFASDFASDF-ASDF
   LinkSharingConfiguration:
     Permissions: []
   Permissions:
@@ -190,16 +187,16 @@ DescribeDashboardPermissions:
     - quicksight:DeleteDashboard
     - quicksight:DescribeDashboardPermissions
     - quicksight:UpdateDashboardPublishedVersion
-    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 50c97039-8cf8-4dfd-8fb1-ba5ac9b3ceef
+    Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
+  RequestId: a60c5413-112e-4171-a309-2dc010013bfa
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
-      content-length: '656'
+      content-length: '650'
       content-type: application/json
-      date: Wed, 17 Jan 2024 01:07:48 GMT
-      x-amzn-requestid: 50c97039-8cf8-4dfd-8fb1-ba5ac9b3ceef
+      date: Wed, 17 Jan 2024 01:07:51 GMT
+      x-amzn-requestid: a60c5413-112e-4171-a309-2dc010013bfa
     HTTPStatusCode: '200'
-    RequestId: 50c97039-8cf8-4dfd-8fb1-ba5ac9b3ceef
+    RequestId: a60c5413-112e-4171-a309-2dc010013bfa
     RetryAttempts: '0'
   Status: '200'

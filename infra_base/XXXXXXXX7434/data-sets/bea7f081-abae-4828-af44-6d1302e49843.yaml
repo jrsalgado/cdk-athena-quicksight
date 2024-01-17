@@ -133,16 +133,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: 196fe38a-058f-4cda-9151-2f378ddb0ea0
+  RequestId: 3329a60f-e830-4763-945f-078b714e9638
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '8076'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:18 GMT
-      x-amzn-requestid: 196fe38a-058f-4cda-9151-2f378ddb0ea0
+      date: Wed, 17 Jan 2024 01:07:39 GMT
+      x-amzn-requestid: 3329a60f-e830-4763-945f-078b714e9638
     HTTPStatusCode: '200'
-    RequestId: 196fe38a-058f-4cda-9151-2f378ddb0ea0
+    RequestId: 3329a60f-e830-4763-945f-078b714e9638
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -155,29 +155,29 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
+    - quicksight:PassDataSet
     - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
     - quicksight:UpdateRefreshSchedule
-    - quicksight:PassDataSet
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:UpdateDataSet
     - quicksight:DescribeDataSetPermissions
+    - quicksight:UpdateDataSet
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/japo-write
-  RequestId: 86bec178-7d2a-4f9a-8ba5-c7337ec0ccd7
+  RequestId: e475ead8-40d6-4d2f-88ed-04faac01c2d7
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '973'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:19 GMT
-      x-amzn-requestid: 86bec178-7d2a-4f9a-8ba5-c7337ec0ccd7
+      date: Wed, 17 Jan 2024 01:07:41 GMT
+      x-amzn-requestid: e475ead8-40d6-4d2f-88ed-04faac01c2d7
     HTTPStatusCode: '200'
-    RequestId: 86bec178-7d2a-4f9a-8ba5-c7337ec0ccd7
+    RequestId: e475ead8-40d6-4d2f-88ed-04faac01c2d7
     RetryAttempts: '0'
   Status: '200'

@@ -74,7 +74,7 @@ def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: qui
         aws_account_id= Aws.ACCOUNT_ID,
         data_set_id= self.configParams['DataSetAthenaId01'].value_as_string,
         name= self.configParams['DataSetAthenaName01'].value_as_string,
-        import_mode= base_dataset['importMode'],
+        import_mode= originalResource['describeDataSet']['dataSet']['importMode'],
         permissions= permissions,
         data_set_usage_configuration= base_dataset['dataSetUsageConfiguration'],
         physical_table_map= physical_table_map,

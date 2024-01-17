@@ -11,16 +11,16 @@ DescribeAnalysis:
     - Name: Sheet 1
       SheetId: df3ba474-1acf-4d16-b7b4-bc15dfac010b
     Status: DELETED
-  RequestId: d7582a11-d168-458a-a310-9252e2173b92
+  RequestId: c5c2ea12-c4e6-4847-94fa-a98d1973b922
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '849'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:42 GMT
-      x-amzn-requestid: d7582a11-d168-458a-a310-9252e2173b92
+      date: Wed, 17 Jan 2024 01:07:58 GMT
+      x-amzn-requestid: c5c2ea12-c4e6-4847-94fa-a98d1973b922
     HTTPStatusCode: '200'
-    RequestId: d7582a11-d168-458a-a310-9252e2173b92
+    RequestId: c5c2ea12-c4e6-4847-94fa-a98d1973b922
     RetryAttempts: '0'
   Status: '200'
 DescribeAnalysisDefinition:
@@ -30,17 +30,17 @@ DescribeAnalysisDefinition:
     - DataSetArn: arn:aws:quicksight:us-east-1:XXXXXXXX7434:dataset/2adf1225-b13e-4b4c-a701-ea6ccc5502a1
       Identifier: jsaCustomSQL
   Name: jsaCustomSQL analysis
-  RequestId: 1a183a4f-5b08-4815-b7be-031245ef0f8e
+  RequestId: af3ec028-ae26-4e3d-a013-ada33b859bea
   ResourceStatus: DELETED
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '527'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:42 GMT
-      x-amzn-requestid: 1a183a4f-5b08-4815-b7be-031245ef0f8e
+      date: Wed, 17 Jan 2024 01:07:59 GMT
+      x-amzn-requestid: af3ec028-ae26-4e3d-a013-ada33b859bea
     HTTPStatusCode: '200'
-    RequestId: 1a183a4f-5b08-4815-b7be-031245ef0f8e
+    RequestId: af3ec028-ae26-4e3d-a013-ada33b859bea
     RetryAttempts: '0'
   Status: '200'
 DescribeAnalysisPermissions:
@@ -56,15 +56,15 @@ DescribeAnalysisPermissions:
     - quicksight:DescribeAnalysis
     - quicksight:UpdateAnalysis
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: 13dbeaea-2bee-4937-bead-e579a9f37e6e
+  RequestId: cdc93d2a-d9a6-4b7f-ab03-ef5c54b15430
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '550'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:43 GMT
-      x-amzn-requestid: 13dbeaea-2bee-4937-bead-e579a9f37e6e
+      date: Wed, 17 Jan 2024 01:07:59 GMT
+      x-amzn-requestid: cdc93d2a-d9a6-4b7f-ab03-ef5c54b15430
     HTTPStatusCode: '200'
-    RequestId: 13dbeaea-2bee-4937-bead-e579a9f37e6e
+    RequestId: cdc93d2a-d9a6-4b7f-ab03-ef5c54b15430
     RetryAttempts: '0'
   Status: '200'

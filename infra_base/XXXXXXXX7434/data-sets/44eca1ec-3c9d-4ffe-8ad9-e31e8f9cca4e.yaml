@@ -153,16 +153,16 @@ DescribeDataSet:
             Format: CSV
             StartFromRow: '1'
             TextQualifier: DOUBLE_QUOTE
-  RequestId: a03652a7-d665-4ce3-8515-ed79b5597d85
+  RequestId: cf36fc75-8fe7-4226-9bc6-115dae2b694d
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '8963'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:08 GMT
-      x-amzn-requestid: a03652a7-d665-4ce3-8515-ed79b5597d85
+      date: Wed, 17 Jan 2024 01:07:28 GMT
+      x-amzn-requestid: cf36fc75-8fe7-4226-9bc6-115dae2b694d
     HTTPStatusCode: '200'
-    RequestId: a03652a7-d665-4ce3-8515-ed79b5597d85
+    RequestId: cf36fc75-8fe7-4226-9bc6-115dae2b694d
     RetryAttempts: '0'
   Status: '200'
 DescribeDataSetPermissions:
@@ -175,29 +175,29 @@ DescribeDataSetPermissions:
     - quicksight:PutDataSetRefreshProperties
     - quicksight:CreateRefreshSchedule
     - quicksight:CancelIngestion
-    - quicksight:UpdateRefreshSchedule
-    - quicksight:DeleteRefreshSchedule
     - quicksight:ListRefreshSchedules
     - quicksight:PassDataSet
+    - quicksight:DeleteRefreshSchedule
+    - quicksight:UpdateRefreshSchedule
     - quicksight:DescribeDataSetRefreshProperties
     - quicksight:DescribeDataSet
     - quicksight:CreateIngestion
     - quicksight:DescribeRefreshSchedule
     - quicksight:ListIngestions
-    - quicksight:UpdateDataSet
     - quicksight:DescribeDataSetPermissions
+    - quicksight:UpdateDataSet
     - quicksight:DeleteDataSetRefreshProperties
     - quicksight:DescribeIngestion
     Principal: arn:aws:quicksight:us-east-1:XXXXXXXX7434:user/default/boss
-  RequestId: e23465be-4523-421a-bb89-0b1edb7479f6
+  RequestId: 0352ec68-251d-4aec-ace2-ec955c7d421a
   ResponseMetadata:
     HTTPHeaders:
       connection: keep-alive
       content-length: '967'
       content-type: application/json
-      date: Tue, 16 Jan 2024 16:47:09 GMT
-      x-amzn-requestid: e23465be-4523-421a-bb89-0b1edb7479f6
+      date: Wed, 17 Jan 2024 01:07:30 GMT
+      x-amzn-requestid: 0352ec68-251d-4aec-ace2-ec955c7d421a
     HTTPStatusCode: '200'
-    RequestId: e23465be-4523-421a-bb89-0b1edb7479f6
+    RequestId: 0352ec68-251d-4aec-ace2-ec955c7d421a
     RetryAttempts: '0'
   Status: '200'

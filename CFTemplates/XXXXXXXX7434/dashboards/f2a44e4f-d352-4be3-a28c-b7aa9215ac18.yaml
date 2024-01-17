@@ -1,0 +1,581 @@
+Parameters:
+  DashboardDataSetIdentifier01:
+    Description: TODO
+    Type: String
+  DashboardId01:
+    Description: TODO
+    Type: String
+  DashboardName01:
+    Description: TODO
+    Type: String
+  DataSetAthenaCatalog01:
+    Description: Catalog for DataSetAthenaCatalog01, e.g., 'AwsDataCatalog'
+    Type: String
+  DataSetAthenaId01:
+    Description: ID for DataSetAthenaId01, e.g., '2384dd87-5baa-4308-b2e4-1ec602bba012'
+    Type: String
+  DataSetAthenaName01:
+    Description: Name for DataSetAthenaName01, e.g., 'athenatesttable'
+    Type: String
+  DataSetAthenaSchema01:
+    Description: Schema for DataSetAthenaSchema01, e.g., 'athenatestdatabase'
+    Type: String
+  DataSetAthenaTableName01:
+    Description: TableName for DataSetAthenaTableName01, e.g., 'athenatesttable'
+    Type: String
+  DataSourceAthenaWorkGroup01:
+    Default: primary
+    Description: Athena Workgroup for the Data Source
+    Type: String
+  DataSourceId01:
+    Description: ID of Athena Data Source
+    Type: String
+  DataSourceName01:
+    Description: Name of the Data Source
+    Type: String
+  QuickSightNamespace:
+    Default: default
+    Description: Namespace for the ARN
+    Type: String
+  QuickSightPrincipalType:
+    Default: user
+    Description: Principal type for the ARN
+    Type: String
+  QuickSightUsername:
+    Default: master
+    Description: Username with QuickSight permissions
+    Type: String
+Resources:
+  AthenaDataSetTable01:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSetTable01
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSetId:
+        Ref: DataSetAthenaId01
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
+      ImportMode: SPICE
+      LogicalTableMap:
+        b92281c9-df0f-41c0-8048-68800db19cb7:
+          Alias:
+            Ref: DataSetAthenaTableName01
+          Source:
+            PhysicalTableId: aa27c141-0d42-4f63-87ea-095eefbaf752
+      Name:
+        Ref: DataSetAthenaName01
+      Permissions:
+      - Actions:
+        - quicksight:DeleteDataSet
+        - quicksight:UpdateDataSetPermissions
+        - quicksight:PutDataSetRefreshProperties
+        - quicksight:CreateRefreshSchedule
+        - quicksight:CancelIngestion
+        - quicksight:ListRefreshSchedules
+        - quicksight:UpdateRefreshSchedule
+        - quicksight:PassDataSet
+        - quicksight:DeleteRefreshSchedule
+        - quicksight:DescribeDataSetRefreshProperties
+        - quicksight:DescribeDataSet
+        - quicksight:CreateIngestion
+        - quicksight:DescribeRefreshSchedule
+        - quicksight:ListIngestions
+        - quicksight:UpdateDataSet
+        - quicksight:DescribeDataSetPermissions
+        - quicksight:DeleteDataSetRefreshProperties
+        - quicksight:DescribeIngestion
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            namespace:
+              Ref: QuickSightNamespace
+            principal_type:
+              Ref: QuickSightPrincipalType
+            username:
+              Ref: QuickSightUsername
+      PhysicalTableMap:
+        aa27c141-0d42-4f63-87ea-095eefbaf752:
+          RelationalTable:
+            Catalog: AwsDataCatalog
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSource01
+              - Arn
+            InputColumns:
+            - Name: id
+              Type: INTEGER
+            - Name: name
+              Type: STRING
+            - Name: age
+              Type: INTEGER
+            - Name: score
+              Type: DECIMAL
+            Name:
+              Ref: DataSetAthenaTableName01
+            Schema:
+              Ref: DataSetAthenaSchema01
+    Type: AWS::QuickSight::DataSet
+  AthenaDataSource01:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource01
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId:
+        Ref: DataSourceId01
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup:
+            Ref: DataSourceAthenaWorkGroup01
+      Name:
+        Ref: DataSourceName01
+      Permissions:
+      - Actions:
+        - quicksight:DescribeDataSource
+        - quicksight:DescribeDataSourcePermissions
+        - quicksight:PassDataSource
+        - quicksight:UpdateDataSource
+        - quicksight:DeleteDataSource
+        - quicksight:UpdateDataSourcePermissions
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            principalType:
+              Ref: QuickSightPrincipalType
+            qsNamespace:
+              Ref: QuickSightNamespace
+            user:
+              Ref: QuickSightUsername
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Type: AWS::QuickSight::DataSource
+  QuickSightDashboard01:
+    Metadata:
+      aws:cdk:path: QsStack/QuickSightDashboard01
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DashboardId:
+        Ref: DashboardId01
+      Definition:
+        AnalysisDefaults:
+          DefaultNewSheetConfiguration:
+            InteractiveLayoutConfiguration:
+              Grid:
+                CanvasSizeOptions:
+                  ScreenCanvasSizeOptions:
+                    OptimizedViewPortWidth: 1600px
+                    ResizeOption: FIXED
+            SheetContentType: INTERACTIVE
+        CalculatedFields: []
+        DataSetIdentifierDeclarations:
+        - DataSetArn:
+            Fn::GetAtt:
+            - AthenaDataSetTable01
+            - Arn
+          Identifier:
+            Ref: DashboardDataSetIdentifier01
+        FilterGroups: []
+        ParameterDeclarations: []
+        Sheets:
+        - ContentType: INTERACTIVE
+          Layouts:
+          - Configuration:
+              GridLayout:
+                CanvasSizeOptions:
+                  ScreenCanvasSizeOptions:
+                    OptimizedViewPortWidth: 1600px
+                    ResizeOption: FIXED
+                Elements:
+                - ColumnIndex: 0
+                  ColumnSpan: 18
+                  ElementId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_6f9a2f97-750f-4844-84cd-19b3030e18d9
+                  ElementType: VISUAL
+                  RowIndex: 0
+                  RowSpan: 12
+                - ColumnIndex: 18
+                  ColumnSpan: 18
+                  ElementId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_6eaab5b5-7b3f-495b-9282-23925f24f1dc
+                  ElementType: VISUAL
+                  RowIndex: 0
+                  RowSpan: 12
+                - ColumnIndex: 0
+                  ColumnSpan: 36
+                  ElementId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_d9692411-92a5-4dea-8c12-30ee4cecc2fd
+                  ElementType: VISUAL
+                  RowIndex: 12
+                  RowSpan: 12
+                - ColumnSpan: 18
+                  ElementId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_859e866a-e364-4f72-ac8c-fb1fcc69c8ff
+                  ElementType: VISUAL
+                  RowSpan: 12
+                - ColumnSpan: 18
+                  ElementId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_dc41a295-6566-4527-b633-008aa256b027
+                  ElementType: VISUAL
+                  RowSpan: 12
+          Name: Initial Sheet
+          SheetId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_ccde7fb5-26ce-456f-ab70-c0419c693943
+          Visuals:
+          - LineChartVisual:
+              Actions: []
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: HIDDEN
+                FieldWells:
+                  LineChartAggregatedFieldWells:
+                    Category:
+                    - NumericalDimensionField:
+                        Column:
+                          ColumnName: id
+                          DataSetIdentifier:
+                            Ref: DashboardDataSetIdentifier01
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.id.1.1705075088127
+                    Colors: []
+                    Values:
+                    - NumericalMeasureField:
+                        AggregationFunction:
+                          SimpleNumericalAggregation: SUM
+                        Column:
+                          ColumnName: age
+                          DataSetIdentifier:
+                            Ref: DashboardDataSetIdentifier01
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.age.0.1705075086391
+                    - NumericalMeasureField:
+                        AggregationFunction:
+                          SimpleNumericalAggregation: SUM
+                        Column:
+                          ColumnName: score
+                          DataSetIdentifier:
+                            Ref: DashboardDataSetIdentifier01
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.2.1705075092283
+                SortConfiguration:
+                  CategoryItemsLimitConfiguration:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.age.0.1705075086391
+                  ColorItemsLimitConfiguration:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.age.0.1705075086391
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.id.1.1705075088127
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.2.1705075092283
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+                Type: LINE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                Visibility: VISIBLE
+              VisualId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_6f9a2f97-750f-4844-84cd-19b3030e18d9
+          - PieChartVisual:
+              Actions: []
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: MEDIUM
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - NumericalDimensionField:
+                        Column:
+                          ColumnName: id
+                          DataSetIdentifier:
+                            Ref: DashboardDataSetIdentifier01
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.id.0.1705075175580
+                    Values:
+                    - NumericalMeasureField:
+                        AggregationFunction:
+                          SimpleNumericalAggregation: SUM
+                        Column:
+                          ColumnName: score
+                          DataSetIdentifier:
+                            Ref: DashboardDataSetIdentifier01
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.1.1705075177809
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.1.1705075177809
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.id.0.1705075175580
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.1.1705075177809
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                Visibility: VISIBLE
+              VisualId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_6eaab5b5-7b3f-495b-9282-23925f24f1dc
+          - ScatterPlotVisual:
+              Actions: []
+              ChartConfiguration:
+                FieldWells:
+                  ScatterPlotCategoricallyAggregatedFieldWells:
+                    Category:
+                    - NumericalDimensionField:
+                        Column:
+                          ColumnName: id
+                          DataSetIdentifier:
+                            Ref: DashboardDataSetIdentifier01
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.id.0.1705075311764
+                    Label: []
+                    Size: []
+                    XAxis:
+                    - NumericalMeasureField:
+                        AggregationFunction:
+                          SimpleNumericalAggregation: SUM
+                        Column:
+                          ColumnName: age
+                          DataSetIdentifier:
+                            Ref: DashboardDataSetIdentifier01
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.age.1.1705075313069
+                    YAxis:
+                    - NumericalMeasureField:
+                        AggregationFunction:
+                          SimpleNumericalAggregation: SUM
+                        Column:
+                          ColumnName: score
+                          DataSetIdentifier:
+                            Ref: DashboardDataSetIdentifier01
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.2.1705075314939
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.id.0.1705075311764
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.age.1.1705075313069
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.2.1705075314939
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                Visibility: VISIBLE
+              VisualId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_d9692411-92a5-4dea-8c12-30ee4cecc2fd
+          - KPIVisual:
+              Actions: []
+              ChartConfiguration:
+                FieldWells:
+                  TargetValues: []
+                  TrendGroups:
+                  - NumericalDimensionField:
+                      Column:
+                        ColumnName: id
+                        DataSetIdentifier:
+                          Ref: DashboardDataSetIdentifier01
+                      FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.id.1.1705344472345
+                  Values:
+                  - NumericalMeasureField:
+                      AggregationFunction:
+                        SimpleNumericalAggregation: SUM
+                      Column:
+                        ColumnName: score
+                        DataSetIdentifier:
+                          Ref: DashboardDataSetIdentifier01
+                      FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.1.1705344478957
+                KPIOptions:
+                  Comparison:
+                    ComparisonMethod: PERCENT_DIFFERENCE
+                  PrimaryValueDisplayType: ACTUAL
+                  SecondaryValueFontConfiguration:
+                    FontSize:
+                      Relative: EXTRA_LARGE
+                  Sparkline:
+                    Type: AREA
+                    Visibility: VISIBLE
+                  VisualLayoutOptions:
+                    StandardLayout:
+                      Type: VERTICAL
+                SortConfiguration:
+                  TrendGroupSort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.score.1.1705344478957
+              ColumnHierarchies: []
+              ConditionalFormatting:
+                ConditionalFormattingOptions:
+                - ComparisonValue:
+                    TextColor:
+                      Solid:
+                        Color: '#2CAD00'
+                        Expression: percentDifference(SUM({score}),[SUM({score}) DESC],1,[])
+                          > 0.0
+                - ComparisonValue:
+                    TextColor:
+                      Solid:
+                        Color: '#DE3B00'
+                        Expression: percentDifference(SUM({score}),[SUM({score}) DESC],1,[])
+                          < 0.0
+                - ComparisonValue:
+                    Icon:
+                      CustomCondition:
+                        Color: '#2CAD00'
+                        Expression: percentDifference(SUM({score}),[SUM({score}) DESC],1,[])
+                          > 0.0
+                        IconOptions:
+                          Icon: CARET_UP
+                - ComparisonValue:
+                    Icon:
+                      CustomCondition:
+                        Color: '#DE3B00'
+                        Expression: percentDifference(SUM({score}),[SUM({score}) DESC],1,[])
+                          < 0.0
+                        IconOptions:
+                          Icon: CARET_DOWN
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                Visibility: VISIBLE
+              VisualId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_859e866a-e364-4f72-ac8c-fb1fcc69c8ff
+          - KPIVisual:
+              Actions: []
+              ChartConfiguration:
+                FieldWells:
+                  TargetValues: []
+                  TrendGroups:
+                  - NumericalDimensionField:
+                      Column:
+                        ColumnName: id
+                        DataSetIdentifier:
+                          Ref: DashboardDataSetIdentifier01
+                      FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.id.0.1705344489638
+                  Values:
+                  - NumericalMeasureField:
+                      AggregationFunction:
+                        SimpleNumericalAggregation: SUM
+                      Column:
+                        ColumnName: age
+                        DataSetIdentifier:
+                          Ref: DashboardDataSetIdentifier01
+                      FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.age.1.1705344490502
+                KPIOptions:
+                  Comparison:
+                    ComparisonMethod: PERCENT_DIFFERENCE
+                  PrimaryValueDisplayType: ACTUAL
+                  SecondaryValueFontConfiguration:
+                    FontSize:
+                      Relative: EXTRA_LARGE
+                  Sparkline:
+                    Type: AREA
+                    Visibility: VISIBLE
+                  VisualLayoutOptions:
+                    StandardLayout:
+                      Type: VERTICAL
+                SortConfiguration:
+                  TrendGroupSort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: b92281c9-df0f-41c0-8048-68800db19cb7.age.1.1705344490502
+              ColumnHierarchies: []
+              ConditionalFormatting:
+                ConditionalFormattingOptions:
+                - ComparisonValue:
+                    TextColor:
+                      Solid:
+                        Color: '#2CAD00'
+                        Expression: percentDifference(SUM({age}),[SUM({age}) DESC],1,[])
+                          > 0.0
+                - ComparisonValue:
+                    TextColor:
+                      Solid:
+                        Color: '#DE3B00'
+                        Expression: percentDifference(SUM({age}),[SUM({age}) DESC],1,[])
+                          < 0.0
+                - ComparisonValue:
+                    Icon:
+                      CustomCondition:
+                        Color: '#2CAD00'
+                        Expression: percentDifference(SUM({age}),[SUM({age}) DESC],1,[])
+                          > 0.0
+                        IconOptions:
+                          Icon: CARET_UP
+                - ComparisonValue:
+                    Icon:
+                      CustomCondition:
+                        Color: '#DE3B00'
+                        Expression: percentDifference(SUM({age}),[SUM({age}) DESC],1,[])
+                          < 0.0
+                        IconOptions:
+                          Icon: CARET_DOWN
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                Visibility: VISIBLE
+              VisualId: f2a44e4f-d352-4be3-a28c-b7aa9215ac18_dc41a295-6566-4527-b633-008aa256b027
+      Name:
+        Ref: DashboardName01
+      Permissions:
+      - Actions:
+        - quicksight:DescribeDashboard
+        - quicksight:ListDashboardVersions
+        - quicksight:UpdateDashboardPermissions
+        - quicksight:QueryDashboard
+        - quicksight:UpdateDashboard
+        - quicksight:DeleteDashboard
+        - quicksight:DescribeDashboardPermissions
+        - quicksight:UpdateDashboardPublishedVersion
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            namespace:
+              Ref: QuickSightNamespace
+            principal_type:
+              Ref: QuickSightPrincipalType
+            username:
+              Ref: QuickSightUsername
+    Type: AWS::QuickSight::Dashboard
