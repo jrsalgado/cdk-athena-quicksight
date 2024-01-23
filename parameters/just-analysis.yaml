@@ -1,0 +1,7 @@
+AnalysisId01:
+  Type: String
+  Description: Custom ID for Analysis resource, must be unique
+AnalysisName01:
+  Type: String
+  Description: Name of Analysis resource
+  

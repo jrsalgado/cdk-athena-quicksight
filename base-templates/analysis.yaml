@@ -1,0 +1,23 @@
+BaseAnalysis:
+  Type: AWS::QuickSight::Analysis
+  Properties:
+    AnalysisId: "base-analysis-id"
+    Name: "Base Analysis"
+    AwsAccountId: 
+      Ref: AWS::AccountId
+    Definition:
+      CalculatedFields: []
+      DataSetIdentifierDeclarations: []
+      FilterGroups: []
+      ParameterDeclarations: []
+      Sheets: []
+    Permissions: 
+      - Actions: 
+          - "quicksight:RestoreAnalysis"
+          - "quicksight:UpdateAnalysisPermissions"
+          - "quicksight:DeleteAnalysis"
+          - "quicksight:DescribeAnalysisPermissions"
+          - "quicksight:QueryAnalysis"
+          - "quicksight:DescribeAnalysis"
+          - "quicksight:UpdateAnalysis"
+        Principal: "base-analysis-principal-arn"

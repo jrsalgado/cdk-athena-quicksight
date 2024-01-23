@@ -27,6 +27,8 @@ class QsStack(Stack):
         data_source_id= getenv('ORIGIN_DATASOURCE_ID', None)
         data_set_id = getenv('ORIGIN_DATASET_ID', None)
         dashboard_id = getenv('ORIGIN_DASHBOARD_ID', None)
+        analysis_id= getenv('ORIGIN_ANALYSIS_ID', None)
+        
         masked_origin_aws_account_id = mask_aws_account_id(getenv('ORIGIN_AWS_ACCOUNT_ID'))
 
         if getenv('ORIGIN_IDS_RESOLVE'):
@@ -34,6 +36,10 @@ class QsStack(Stack):
             camelOriginalResource = readFromOriginResourceFile('dashboards',dashboard_id , masked_origin_aws_account_id)[0]
             data_set_arn = camelOriginalResource['describeDashboard']['dashboard']['version']['dataSetArns'][0]
             data_set_id = extract_id_from_arn(data_set_arn)
+
+            if 'linkEntities' in camelOriginalResource['describeDashboard']['dashboard']:
+                if getenv('INCLUDE_ANALYSIS', None) == 'true':
+                    analysis_id = extract_id_from_arn(camelOriginalResource['describeDashboard']['dashboard']['linkEntities'][0])
 
             # From datasSetId get the original resource DataSete file and resolve its DataSourceId
             camDataSetOriginalResource = readFromOriginResourceFile('data-sets', data_set_id, masked_origin_aws_account_id)[0]
@@ -50,6 +56,11 @@ class QsStack(Stack):
             dataset_params_files = self.read_params_file(dataset_params)
             self.define_parameters(dataset_params_files)
 
+        if analysis_id:
+            analysis_params = self.node.try_get_context("analysis_params")
+            analysis_params_files = self.read_params_file(analysis_params)
+            self.define_parameters(analysis_params_files)
+
         if dashboard_id:
             dashboard_params = self.node.try_get_context("dashboard_params")
             dashboard_params_files = self.read_params_file(dashboard_params)
@@ -63,6 +74,8 @@ class QsStack(Stack):
             data_set_01 = createDataSet(self, originDatasetId=data_set_id, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
         if dashboard_id:
             dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataSet=data_set_01)
+        if analysis_id:
+            analysis01 = createAnalysis(self, analysis_id=analysis_id, analysis_name="QuickSightAnalysis01", dataSet=data_set_01)
             
         ######################################################
 

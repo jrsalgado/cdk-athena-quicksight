@@ -3,7 +3,6 @@ import click
 import subprocess
 import os
 import boto3
-import sys
 from qs.utils import readFromOriginResourceFile, mask_aws_account_id, generate_id, updateTemplateAfterSynth
 from infra_base.qs_fetch import fetchQSAllResources
 
