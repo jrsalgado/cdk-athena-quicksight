@@ -12,6 +12,7 @@ from qs.utils import find_all_values_iterative, mask_aws_account_id
 from qs.qs_datasource import createDataSource
 from qs.qs_dataset import createDataSet
 from qs.qs_dashboard import createDashboard
+from qs.qs_analysis import createAnalysis
 ###########################################################
 
 class QsStack(Stack):
@@ -38,7 +39,7 @@ class QsStack(Stack):
             data_set_id = extract_id_from_arn(data_set_arn)
 
             if 'linkEntities' in camelOriginalResource['describeDashboard']['dashboard']:
-                if getenv('INCLUDE_ANALYSIS', None) == 'true':
+                if getenv('INCLUDE_ANALYSIS', None):
                     analysis_id = extract_id_from_arn(camelOriginalResource['describeDashboard']['dashboard']['linkEntities'][0])
 
             # From datasSetId get the original resource DataSete file and resolve its DataSourceId

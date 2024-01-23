@@ -80,6 +80,7 @@ def cdk_synth(originAccountId:str , dashboardId: str):
     # Define the CDK command to deploy your stack
     os.environ['ORIGIN_DASHBOARD_ID']= dashboardId
     os.environ['ORIGIN_IDS_RESOLVE']= "True"
+    os.environ['INCLUDE_ANALYSIS']= "True"
 
     cdk_command = [
         "cdk", 
@@ -92,6 +93,8 @@ def cdk_synth(originAccountId:str , dashboardId: str):
         "dataset_params=parameters/just-data-set.yaml",
         "--context",
         "dashboard_params=parameters/just-dashboard.yaml",
+        "--context",
+        "analysis_params=parameters/just-analysis.yaml",
     ]
     masked_origin_aws_account_id = mask_aws_account_id(originAccountId)
     template_dir= f"./CFTemplates/{masked_origin_aws_account_id}/dashboards"
