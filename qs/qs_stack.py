@@ -25,22 +25,26 @@ class QsStack(Stack):
         general_params_file = self.read_params_file(general_params)
         self.define_parameters(general_params_file)
 
-        data_source_id= getenv('ORIGIN_DATASOURCE_ID', None)
+        data_source_id = getenv('ORIGIN_DATASOURCE_ID', None)
         data_set_id = getenv('ORIGIN_DATASET_ID', None)
         dashboard_id = getenv('ORIGIN_DASHBOARD_ID', None)
-        analysis_id= getenv('ORIGIN_ANALYSIS_ID', None)
-        
+        analysis_id = getenv('ORIGIN_ANALYSIS_ID', None)
         masked_origin_aws_account_id = mask_aws_account_id(getenv('ORIGIN_AWS_ACCOUNT_ID'))
 
-        if getenv('ORIGIN_IDS_RESOLVE'):
-            # From original resource Dashboard file resolve the datasSetId
-            camelOriginalResource = readFromOriginResourceFile('dashboards',dashboard_id , masked_origin_aws_account_id)[0]
-            data_set_arn = camelOriginalResource['describeDashboard']['dashboard']['version']['dataSetArns'][0]
-            data_set_id = extract_id_from_arn(data_set_arn)
-
-            if 'linkEntities' in camelOriginalResource['describeDashboard']['dashboard']:
+        if getenv('ORIGIN_IDS_RESOLVE') is not None:
+            if dashboard_id is not None:
+                # From original resource Dashboard file resolve the datasSetId
+                camelOriginalResource = readFromOriginResourceFile('dashboards',dashboard_id , masked_origin_aws_account_id)[0]
+                data_set_arn = camelOriginalResource['describeDashboard']['dashboard']['version']['dataSetArns'][0]
+                data_set_id = extract_id_from_arn(data_set_arn)
                 if getenv('INCLUDE_ANALYSIS', None):
-                    analysis_id = extract_id_from_arn(camelOriginalResource['describeDashboard']['dashboard']['linkEntities'][0])
+                    if 'linkEntities' in camelOriginalResource['describeDashboard']['dashboard']:
+                        analysis_id = extract_id_from_arn(camelOriginalResource['describeDashboard']['dashboard']['linkEntities'][0])
+            elif analysis_id is not None:
+                # From original resource Dashboard file resolve the datasSetId
+                camelOriginalResource = readFromOriginResourceFile('analyses',analysis_id , masked_origin_aws_account_id)[0]
+                data_set_arn = camelOriginalResource['describeAnalysis']['analysis']['dataSetArns'][0] # type: ignore
+                data_set_id = extract_id_from_arn(data_set_arn)
 
             # From datasSetId get the original resource DataSete file and resolve its DataSourceId
             camDataSetOriginalResource = readFromOriginResourceFile('data-sets', data_set_id, masked_origin_aws_account_id)[0]
@@ -69,13 +73,13 @@ class QsStack(Stack):
 
         ######################################################
         # Creates An Cloudformation file with: 
-        if data_source_id:
+        if data_source_id is not None:
             data_source_01 = createDataSource( self, datasource_name="AthenaDataSource01" )
-        if data_set_id:
+        if data_set_id is not None:
             data_set_01 = createDataSet(self, originDatasetId=data_set_id, dataset_name="AthenaDataSetTable01", dataSource=data_source_01)
-        if dashboard_id:
+        if dashboard_id is not None:
             dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataSet=data_set_01)
-        if analysis_id:
+        if analysis_id is not None:
             analysis01 = createAnalysis(self, analysis_id=analysis_id, analysis_name="QuickSightAnalysis01", dataSet=data_set_01)
             
         ######################################################

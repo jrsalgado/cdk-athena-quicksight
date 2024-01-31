@@ -1,0 +1,17 @@
+#!.venv/bin/python
+import click
+from clicommands.fetch import fetch
+from clicommands.build import build
+from clicommands.deploy import deploy
+
+@click.group()
+def qscli2():
+    click.echo("Inside qscli2")
+
+
+qscli2.add_command(fetch)
+qscli2.add_command(build)
+qscli2.add_command(deploy)
+
+if __name__ == "__main__":
+    qscli2()
