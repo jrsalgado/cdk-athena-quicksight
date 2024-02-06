@@ -14,6 +14,9 @@ from qs.qs_dataset import createDataSet
 from qs.qs_dashboard import createDashboard
 from qs.qs_analysis import createAnalysis
 ###########################################################
+from qs.athena import createAthena
+###########################################################
+from qs.glue import createGlue
 
 class QsStack(Stack):
 
@@ -31,15 +34,31 @@ class QsStack(Stack):
         analysis_id = getenv('ORIGIN_ANALYSIS_ID', None)
         masked_origin_aws_account_id = mask_aws_account_id(getenv('ORIGIN_AWS_ACCOUNT_ID'))
 
+        # Build athena template
+        if getenv('SYNTH_ATHENA'):
+            athena_params = self.node.try_get_context("athena_params")
+            athena_params_file = self.read_params_file(athena_params)
+            self.define_parameters(athena_params_file)
+
+            createAthena(self, account_id=getenv('ORIGIN_AWS_ACCOUNT_ID'))
+
+        # Build glue template
+        if getenv('ORIGIN_DATABASE_NAME'):
+            glue_params = self.node.try_get_context("glue_params")
+            glue_params_file = self.read_params_file(glue_params)
+            self.define_parameters(glue_params_file)
+
+            database01 = createGlue(self, account_id=getenv('ORIGIN_AWS_ACCOUNT_ID'))
+            return
+
         if getenv('ORIGIN_IDS_RESOLVE') is not None:
             if dashboard_id is not None:
                 # From original resource Dashboard file resolve the datasSetId
                 camelOriginalResource = readFromOriginResourceFile('dashboards',dashboard_id , masked_origin_aws_account_id)[0]
                 data_set_arn = camelOriginalResource['describeDashboard']['dashboard']['version']['dataSetArns'][0]
                 data_set_id = extract_id_from_arn(data_set_arn)
-                if getenv('INCLUDE_ANALYSIS', None):
-                    if 'linkEntities' in camelOriginalResource['describeDashboard']['dashboard']:
-                        analysis_id = extract_id_from_arn(camelOriginalResource['describeDashboard']['dashboard']['linkEntities'][0])
+                if 'linkEntities' in camelOriginalResource['describeDashboard']['dashboard']:
+                    analysis_id = extract_id_from_arn(camelOriginalResource['describeDashboard']['dashboard']['linkEntities'][0])
             elif analysis_id is not None:
                 # From original resource Dashboard file resolve the datasSetId
                 camelOriginalResource = readFromOriginResourceFile('analyses',analysis_id , masked_origin_aws_account_id)[0]

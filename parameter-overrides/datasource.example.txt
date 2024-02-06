@@ -1,0 +1,5 @@
+DataSourceId01=<REPLACE>
+DataSourceName01=<REPLACE>
+DataSourceAthenaWorkGroup01=v
+
+QuickSightUsername=<REPLACE>

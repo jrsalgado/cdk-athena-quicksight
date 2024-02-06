@@ -1,0 +1,11 @@
+DataSourceId01=<REPLACE>
+DataSourceName01=<REPLACE>
+DataSourceAthenaWorkGroup01=<REPLACE>
+
+DataSetAthenaId01=<REPLACE>
+DataSetAthenaName01=<REPLACE>
+DataSetAthenaCatalog01=<REPLACE>
+DataSetAthenaTableName01=<REPLACE>
+DataSetAthenaSchema01=<REPLACE>
+
+QuickSightUsername=<REPLACE>

@@ -1,0 +1,18 @@
+DataSourceId01=<REPLACE>            # Has to be unique
+DataSourceName01=<REPLACE>
+DataSourceAthenaWorkGroup01=<REPLACE>
+
+DataSetAthenaId01=<REPLACE>         # Has to be unique
+DataSetAthenaName01=<REPLACE>
+DataSetAthenaCatalog01=<REPLACE>    # Get from Athena Datacalog
+DataSetAthenaTableName01=<REPLACE>  # Get from PhysicalTableMap of the dataset dependency
+DataSetAthenaSchema01=<REPLACE>     # Get from PhysicalTableMap of the dataset dependency
+
+DashboardId01=<REPLACE>             # Has to be unique
+DashboardName01=<REPLACE>
+DashboardDataSetIdentifier01=<REPLACE with Data Set name> # Has to be the dataset name
+
+AnalysisId01=<REPLACE>              # Has to be unique
+AnalysisName01=<REPLACE>
+
+QuickSightUsername=<REPLACE from original> # Quicksight username with access

@@ -4,6 +4,8 @@ import re
 import yaml
 from yaml.loader import SafeLoader
 import os
+import boto3
+import shutil
 
 def pascal_to_camel(key):
     if key == "KPIVisual":
@@ -168,3 +170,65 @@ def updateTemplateAfterSynth(template_path: str):
     # Write updated dictionary to the same YAML file
     with open(template_path, 'w') as yaml_file:
         yaml.dump(templateOutput, yaml_file, default_flow_style=False)
+
+def deploy_stack(template_file_path, parameters_path, aws_region, aws_profile, stack_name_prefix='stack'):
+    parameter_overrides = []
+    parameter_file_path = f'parameter-overrides/{parameters_path}'
+    with open(parameter_file_path, 'r') as file:
+        for line in file:
+            print(line)
+            if not line.strip() == '':
+                key, value = line.strip().split('=')
+                parameter_overrides.append({'ParameterKey': key, 'ParameterValue': value})
+
+    session = boto3.Session(profile_name=aws_profile)
+    cloudformation_client = session.client('cloudformation', region_name=aws_region)
+    stack_name = f'{stack_name_prefix}-{generate_id(8)}'
+
+    response = cloudformation_client.create_stack(
+        StackName=stack_name,
+        TemplateBody=open(template_file_path, 'r').read(),
+        Parameters=parameter_overrides,
+    )
+
+    print(f"Stack creation initiated. Stack ID: {response['StackId']}")
+
+    waiter = cloudformation_client.get_waiter('stack_create_complete')
+    waiter.wait(StackName=stack_name)
+    print("Stack creation complete.")
+
+    stack_info = cloudformation_client.describe_stacks(StackName=stack_name)
+    return stack_info['Stacks'][0]
+
+def cleanDirs(paths):
+    """
+    Deletes a directory and all its contents. If the directory does not exist, nothing is done.
+
+    Parameters:
+    - paths (str or list): The path or list of paths to the directories to be cleaned.
+
+    Returns:
+    - None
+    """
+    if isinstance(paths, str):
+        paths = [paths]
+
+    for path in paths:
+        if not os.path.exists(path):
+            print(f"Nothing to delete at '{path}'.")
+            continue
+        try:
+            shutil.rmtree(path)
+            print(f"Directory '{path}' and its contents successfully deleted.")
+        except OSError as e:
+            print(f"Error removing directory '{path}': {e}")
+
+def convertToYaml(data: dict):
+    yaml_data = yaml.dump(data, default_flow_style=False)
+    return yaml_data
+
+def writeYaml(dataObj: dict, path: str):
+    maskedData = mask_account_ids(dataObj)
+    dataYaml = convertToYaml(maskedData)
+    with open(path, 'w') as file:
+        file.write(dataYaml)

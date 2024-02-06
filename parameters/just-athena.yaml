@@ -1,0 +1,9 @@
+AthenaDataCatalogName:
+  Type: String
+  Description: Name for the data catalog to be created
+AthenaWorkgroupName:
+  Type: String
+  Description: Name for the workgroup to be created
+AthenaWorkgroupOutputLocation:
+  Type: String
+  Description: Location for the query results of the workgroup to be created

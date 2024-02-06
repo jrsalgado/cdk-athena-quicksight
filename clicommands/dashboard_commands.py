@@ -1,8 +1,23 @@
 import boto3
 import os
 import subprocess
-#from infra_base.qs_fetch import fetchQSAnalysesResources
-from qs.utils import mask_aws_account_id, updateTemplateAfterSynth
+from infra_base.qs_fetch import fetchQSDashboardsResources
+from qs.utils import mask_aws_account_id, updateTemplateAfterSynth, deploy_stack
+
+def fetch_all(account_id, profile=None, region_name='us-east-1'):
+    """
+    Fetch and store the description of all the exisiting Quicksight Dashboards
+    
+    :param account_id: Origin AWS Account ID of the Dashboard
+    :param profile: Local AWS Profile
+    :pass:
+    """
+    print("Fetching All Dashboards from commands...")
+    session = boto3.Session(profile_name=profile)
+    os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
+    quicksight_client = session.client('quicksight', region_name)
+    fetchQSDashboardsResources(quicksight_client, account_id)
+    pass
 
 def build_by_id(origin_account_id:str, dashboard_id:str, create_dependencies:bool, data_source_id= None, data_set_id= None ):
     """
@@ -12,7 +27,6 @@ def build_by_id(origin_account_id:str, dashboard_id:str, create_dependencies:boo
     :param analysis_id: Origin Dashboard Id
     :pass:
     """
-    print(create_dependencies)
     assert create_dependencies is True or (data_source_id is not None and data_set_id is not None), "Either create_dependencies must be explicitly True or both data_source_id and data_set_id must be set to non-None values."
 
     os.environ['ORIGIN_AWS_ACCOUNT_ID'] = origin_account_id
@@ -36,6 +50,8 @@ def build_by_id(origin_account_id:str, dashboard_id:str, create_dependencies:boo
         "dataset_params=parameters/just-data-set.yaml",
         "--context",
         "dashboard_params=parameters/just-dashboard.yaml",
+        "--context",
+        "analysis_params=parameters/just-analysis.yaml",
     ]
 
     masked_origin_aws_account_id = mask_aws_account_id(origin_account_id)
@@ -57,3 +73,5 @@ def build_by_id(origin_account_id:str, dashboard_id:str, create_dependencies:boo
         print(f"Error running CDK synth: {e}")
     pass
 
+def deploy_by_id(template_file_path, parameters_path, aws_region, aws_profile):
+    deploy_stack(template_file_path, parameters_path, aws_region, aws_profile, stack_name_prefix='dashboard')

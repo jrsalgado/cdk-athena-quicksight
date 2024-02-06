@@ -1,0 +1,3 @@
+GlueDatabaseName:
+  Type: String
+  Description: Name for the Glue database to be created
