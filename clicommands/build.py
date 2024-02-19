@@ -95,7 +95,8 @@ def dashboard(account_id, dashboard_id, data_set_id, data_source_id, create_depe
 @click.option('--account-id', required=True, help='The origin account id')
 @click.option('--workgroup-name', required=True, help='The name of the existing Athena Workgroup to be cloned')
 @click.option('--catalog-name', required=True, help='The name of the existing Athena Data Catalog to be cloned')
-def athena(account_id, workgroup_name, catalog_name):
+@click.option('--same-env', is_flag=True) # Boolean option, if present adds hash sufix to resource names/ids
+def athena(account_id, workgroup_name, catalog_name, same_env):
     assert account_id is not None, "--account-id must be provided"
     assert workgroup_name is not None, "workgroup-name must be provided" 
     assert catalog_name is not None, "catalog-name must be provided" 
@@ -104,7 +105,7 @@ def athena(account_id, workgroup_name, catalog_name):
     click.echo(f"Building Workgroup = {workgroup_name}")
     click.echo(f"Building Athena Data Catalog = {catalog_name}")
     
-    athena_build(account_id, workgroup_name, catalog_name)
+    athena_build(account_id, workgroup_name, catalog_name, same_env)
 
 
 ################################
@@ -112,12 +113,13 @@ def athena(account_id, workgroup_name, catalog_name):
 ################################
 @build.command()
 @click.option('--account-id', required=True, help='The origin account id')
+@click.option('--same-env', is_flag=True)
 @click.argument('database-name', required=True)
-def glue(account_id, database_name):
+def glue(account_id, database_name, same_env):
     assert account_id is not None, "--account-id must be provided"
     assert database_name is not None, "database-name must be provided"
     
     click.echo(f"Building Glue Database template from Account={account_id}")
     click.echo(f"Building Database = {database_name}")
     
-    glue_database_build_by_id(account_id, database_name)
+    glue_database_build_by_id(account_id, database_name, same_env)

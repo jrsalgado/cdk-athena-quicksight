@@ -6,6 +6,7 @@ from yaml.loader import SafeLoader
 import os
 import boto3
 import shutil
+import subprocess
 
 def pascal_to_camel(key):
     if key == "KPIVisual":
@@ -232,3 +233,89 @@ def writeYaml(dataObj: dict, path: str):
     dataYaml = convertToYaml(maskedData)
     with open(path, 'w') as file:
         file.write(dataYaml)
+
+def read_parameters(params_file_name):
+    parameter_overrides = []
+    parameter_file_path = f'parameter-overrides/{params_file_name}'
+    with open(parameter_file_path, 'r') as file:
+        for line in file:
+            print(line)
+            if not line.strip() == '':
+                key, value = line.strip().split('=')
+                parameter_overrides.append({'ParameterKey': key, 'ParameterValue': value})
+    return parameter_overrides
+
+def update_stack(stack_name, template_body, template_url, parameters_path, region, profile):
+    parameters = read_parameters(parameters_path)
+
+    session = boto3.Session(profile_name=profile)
+    cloudformation_client = session.client('cloudformation', region_name=region)
+    change_set_name = f'update-{generate_id(8)}'
+
+    change_set_args = {
+        'StackName': stack_name,
+        'ChangeSetName': change_set_name,
+        'Parameters': parameters,
+    }
+
+    if template_body:
+        change_set_args['TemplateBody'] = open(template_body, 'r').read()
+    elif template_url:
+        change_set_args['TemplateURL'] = template_url
+
+    create_response = cloudformation_client.create_change_set(**change_set_args)
+
+    print(f"Change set creation initiated. Stack ID:{create_response['StackId']}")
+
+    create_waiter = cloudformation_client.get_waiter('change_set_create_complete')
+    create_waiter.wait(
+        ChangeSetName=change_set_name,
+        StackName=stack_name
+    )
+    print("Change set creation complete.")
+
+    print('Executing change set')
+    execute_response = cloudformation_client.execute_change_set(
+        ChangeSetName=change_set_name,
+        StackName=stack_name
+    )
+
+def replace_slashes_with_double_underscores(string):
+    if '/' not in string:
+        return string
+    else:
+        return string.replace('/', '__')
+
+def extract_role_name_from_arn(input_string):
+    pattern = r"\/([^\/]+)$"  # Regex pattern to match the role name at the end of the string
+    match = re.search(pattern, input_string)
+    if match:
+        return match.group(1)
+    else:
+        return None
+
+def zip_directory(directory, zip_filename):  
+    if os.path.exists(directory):
+        try:
+            subprocess.run([
+                    'zip',
+                    '-r',
+                    zip_filename,
+                    directory
+                ],check=True,)
+        except subprocess.CalledProcessError as e:
+            print(f"Error creating a zip file of infra_base content: {e}")
+
+        print(f"Contents of {directory} zipped successfully to {zip_filename}.")
+    else:
+        print(f"Directory {directory} does not exist.")
+
+def create_params_override(file_name, params): 
+	with open(f"./parameter-overrides/{file_name}", 'w') as f: 
+		for key, value in params.items(): 
+			f.write(f"{key}={value}\n")
+
+def list_resources(action, file_path: str ):
+    resource_list = action()
+    writeYaml(resource_list, file_path)
+    return resource_list

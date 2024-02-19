@@ -1,4 +1,8 @@
 # General
+Environment:
+  Type: String
+  Default: pre
+  Description: Name of the environment for the tag
 QuickSightPrincipalType:
   Type: String
   Default: user

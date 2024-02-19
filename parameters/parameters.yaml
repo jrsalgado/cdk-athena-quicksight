@@ -12,18 +12,6 @@ Country:
     - mx
     - us
   Description: Name of the country for the tag
-Environment:
-  Type: String
-  Default: dev
-  AllowedValues:
-    - dev
-    - qa
-    - stg
-    - pre
-    - ocu
-    - sha
-    - prod
-  Description: Name of the environment for the tag
 Project:
   Type: String
   Default: test

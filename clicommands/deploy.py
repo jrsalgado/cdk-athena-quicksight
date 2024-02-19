@@ -95,7 +95,7 @@ def dashboards():
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The AWS Account ID to deploy the Athena cloned resources')
 @click.option('--region', default="us-east-1", help='AWS Region')
 @click.option('--profile', default=None, help='AWS Profile')
-@click.option('--parameters-path', default="athena.local.txt", help='Parameter overrides file located on dir ./parameter-overrides')
+@click.option('--parameters-path', default="athena.origin.txt", help='Parameter overrides file located on dir ./parameter-overrides')
 @click.argument('template-file-path', type=click.Path(exists=True))
 def athena(account_id, parameters_path, template_file_path, region, profile):
     click.echo(f'Deploying to AWS AccountId = {account_id} ...')
@@ -109,7 +109,7 @@ def athena(account_id, parameters_path, template_file_path, region, profile):
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The AWS Account ID to deploy the Glue cloned resources')
 @click.option('--region', default="us-east-1", help='AWS Region')
 @click.option('--profile', default=None, help='AWS Profile')
-@click.option('--parameters-path', default="glue.local.txt", help='Parameter overrides file located on dir ./parameter-overrides')
+@click.option('--parameters-path', default="glue.origin.txt", help='Parameter overrides file located on dir ./parameter-overrides')
 @click.argument('template-file-path', type=click.Path(exists=True))
 def glue(account_id, parameters_path, template_file_path, region, profile):
     click.echo(f'Deploying to AWS AccountId = {account_id} ...')

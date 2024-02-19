@@ -31,7 +31,7 @@ def createDataSource( stack: Stack, datasource_name: str ):
         id= datasource_name,
         aws_account_id= aws_account_id,
         data_source_id= stack.configParams['DataSourceId01'].value_as_string, # type: ignore
-        name=           stack.configParams['DataSourceName01'].value_as_string, # type: ignore
+        name=           f"{stack.configParams['Environment'].value_as_string}-{stack.configParams['DataSourceName01'].value_as_string}", # type: ignore
         type=           base_datasource['type'],
         data_source_parameters= base_datasource['dataSourceParameters'],
         permissions=    base_datasource['permissions'],

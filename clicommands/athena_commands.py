@@ -2,8 +2,7 @@ import boto3
 import os
 import subprocess
 from infra_base.athena_fetch import fetchAthenaResources, fetchAthenaWorkgroups, fetchAthenaDataCatalogs
-
-from qs.utils import mask_aws_account_id, updateTemplateAfterSynth, deploy_stack
+from qs.utils import mask_aws_account_id, updateTemplateAfterSynth, deploy_stack, generate_id
 
 def fetch_all(account_id, profile=None, region_name='us-east-1'):
     """
@@ -52,8 +51,9 @@ def fetch_data_catalogs(account_id, profile=None, region_name='us-east-1'):
     fetchAthenaDataCatalogs(athena_client, account_id)
     pass
 
-def build(account_id, workgroup_name, catalog_name):
+def build(account_id, workgroup_name, catalog_name, same_env):
     os.environ['SYNTH_ATHENA'] = 'True'
+    os.environ['HASH_SUFFIX'] = f"-{generate_id(6)}" if same_env else ''
 
     os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     os.environ['ORIGIN_WORKGROUP_NAME'] = workgroup_name

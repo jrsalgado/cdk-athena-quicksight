@@ -5,9 +5,6 @@ from aws_cdk import Fn, Aws
 from os import getenv
 from qs.utils import mask_aws_account_id
 
-#from qs_utils.id_generator import generate_id
-#from qs_utils.case_parser import convert_keys_to_camel_case
-
 def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: quicksight.CfnDataSource ):
 
     with open("base-templates/data-set.yaml") as f:
@@ -73,7 +70,7 @@ def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: qui
         dataset_name,
         aws_account_id= Aws.ACCOUNT_ID,
         data_set_id= self.configParams['DataSetAthenaId01'].value_as_string,
-        name= self.configParams['DataSetAthenaName01'].value_as_string,
+        name= f"{self.configParams['Environment'].value_as_string}-{self.configParams['DataSetAthenaName01'].value_as_string}",
         import_mode= originalResource['describeDataSet']['dataSet']['importMode'],
         permissions= permissions,
         data_set_usage_configuration= base_dataset['dataSetUsageConfiguration'],

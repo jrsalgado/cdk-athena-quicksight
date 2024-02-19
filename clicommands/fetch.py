@@ -2,18 +2,18 @@ import click
 import os
 import boto3
 from infra_base.qs_fetch import fetchQSAllResources
-from qs.utils import mask_aws_account_id
+from qs.utils import mask_aws_account_id, zip_directory, generate_id
 
 from clicommands.data_source_commands import fetch_all as data_source_fetch_all
 from clicommands.data_set_commands import fetch_all as data_set_fetch_all
 from clicommands.analisys_commands import fetch_all as analisys_fetch_all
 from clicommands.dashboard_commands import fetch_all as dashboard_fetch_all
-
 from clicommands.athena_commands import fetch_all as athena_fetch_all
 from clicommands.athena_commands import fetch_workgroups as athena_fetch_workgroups
 from clicommands.athena_commands import fetch_data_catalogs as athena_fetch_data_catalogs
-
 from clicommands.glue_commands import fetch_all as glue_fetch_all
+from clicommands.lambda_commands import fetch_all as lambda_fetch_all
+
 
 @click.group()
 def fetch():
@@ -24,19 +24,39 @@ def fetch():
 @fetch.command()
 @click.option('--account-id', default="aaa-bbb-ccc-ddd", help='The origin account id')
 @click.option('--profile', default=None, help='AWS CLI Profile')
-def all(account_id, profile):
+@click.option('--region', default="us-east-1", help='Local AWS profile')
+def all(account_id, profile, region):
     click.echo('Fetching all resources from Quicksight, Athena and Glue.')
     click.echo(f'AWS Account ID: {account_id}')
     click.echo(f'Output directory: ./infra_base/{mask_aws_account_id(account_id)}/')
     os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     session = boto3.Session(profile_name=profile)
 
-    quicksight_client = session.client('quicksight',region_name='us-east-1')
+    quicksight_client = session.client('quicksight',region_name=region)
     fetchQSAllResources(quicksight_client, account_id)
     
     athena_fetch_all(account_id, profile)
 
     glue_fetch_all(account_id, profile)
+    
+    lambda_fetch_all(account_id, region, profile)
+
+    zip_directory(f'./infra_base/{mask_aws_account_id(account_id)}/', f'fetched_resources_{generate_id(8)}.zip')
+
+
+################################
+### Lambda Commands
+################################
+@fetch.command()
+@click.option('--account-id', required=True, help='The origin account id')
+@click.option('--profile', default=None, help='Local AWS profile')
+@click.option('--region', default="us-east-1", help='Local AWS profile')
+def lambdas(account_id, profile, region):
+    assert account_id is not None, "--account-id must be provided"
+    click.echo(f"Fetching All Lambda related resources from account={account_id}")
+    click.echo(f"AWS Profile={profile}")
+    click.echo(f"AWS Region={region}")
+    lambda_fetch_all(account_id, region, profile)
 
 
 ################################

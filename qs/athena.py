@@ -6,14 +6,24 @@ from os import getenv
 from qs.utils import convert_keys_to_snake_case
 from qs.utils import convert_keys_to_camel_case
 from qs.utils import mask_aws_account_id
+from qs.utils import create_params_override
 
 def createAthena(self, account_id):
+
+    workgroupOriginCamel, workgroupOriginSnake = readFromAthenaOriginResourceFile(mask_aws_account_id(account_id), resource_type='workgroups', resource_name=getenv('ORIGIN_WORKGROUP_NAME'))
+    catalogOriginCamel, catalogOriginSnake = readFromAthenaOriginResourceFile(mask_aws_account_id(account_id), resource_type='data-catalogs', resource_name=getenv('ORIGIN_CATALOG_NAME'))
+
+    params_object = {
+        'AthenaWorkgroupName': f"{workgroupOriginSnake['work_group']['name']}{getenv('HASH_SUFFIX')}",
+        'AthenaWorkgroupOutputLocation': workgroupOriginSnake['work_group']['configuration']['result_configuration']['output_location'],
+        'AthenaDataCatalogName': f"{catalogOriginSnake['data_catalog']['name']}{getenv('HASH_SUFFIX')}"
+    }
+
+    create_params_override(file_name='athena.origin.txt', params=params_object)
 
     ######################
     ## Workgroup 
     ######################
-
-    workgroupOriginCamel, workgroupOriginSnake = readFromAthenaOriginResourceFile(mask_aws_account_id(account_id), resource_type='workgroups', resource_name=getenv('ORIGIN_WORKGROUP_NAME'))
 
     workgroupCamelConfiguration = workgroupOriginCamel['workGroup']['configuration']
     workgroupSnakeConfiguration = workgroupOriginSnake['work_group']['configuration']
@@ -31,7 +41,7 @@ def createAthena(self, account_id):
 
     workgroup01 = athena.CfnWorkGroup(self, 
         "AthenaWorkGroup01",
-        name=self.configParams['AthenaWorkgroupName'].value_as_string,
+        name=f"{self.configParams['Environment'].value_as_string}-{self.configParams['AthenaWorkgroupName'].value_as_string}",
         work_group_configuration=athena.CfnWorkGroup.WorkGroupConfigurationProperty(
             **workgroupSnakeConfigurationParsedBooleans,
             engine_version=engine_version,
@@ -45,7 +55,6 @@ def createAthena(self, account_id):
     ## Data CAtalog 
     ######################
 
-    catalogOriginCamel, catalogOriginSnake = readFromAthenaOriginResourceFile(mask_aws_account_id(account_id), resource_type='data-catalogs', resource_name=getenv('ORIGIN_CATALOG_NAME'))
     catalogSnakeConfiguration = catalogOriginSnake['data_catalog']
     catalogSnakeConfiguration.pop('name', None)
     catalogSnakeConfiguration.pop('type', None)
@@ -53,7 +62,7 @@ def createAthena(self, account_id):
 
     data_catalog01 = athena.CfnDataCatalog(self,
         "AthenaDataCatalog01",
-        name=self.configParams['AthenaDataCatalogName'].value_as_string,
+        name=f"{self.configParams['Environment'].value_as_string}-{self.configParams['AthenaDataCatalogName'].value_as_string}",
         type="GLUE",
         parameters={
             "catalog-id": Aws.ACCOUNT_ID

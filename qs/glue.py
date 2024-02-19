@@ -6,6 +6,7 @@ from os import getenv
 from qs.utils import convert_keys_to_snake_case
 from qs.utils import convert_keys_to_camel_case
 from qs.utils import mask_aws_account_id
+from qs.utils import create_params_override
 
 def createGlue(self, account_id):
 
@@ -14,15 +15,19 @@ def createGlue(self, account_id):
     ######################
 
     databaseOriginCamel, databaseOriginSnake = readFromGlueOriginResourceFile(mask_aws_account_id(account_id), database_name=getenv('ORIGIN_DATABASE_NAME'))
-
-
     databaseCamelConfiguration = databaseOriginCamel['databaseDescription']['database']
+
+    params_object = {  
+        'GlueDatabaseName': f"{databaseCamelConfiguration['name']}{getenv('HASH_SUFFIX')}"
+    }
+
+    create_params_override(file_name='glue.origin.txt', params=params_object)
 
     database01 = glue.CfnDatabase(self, 
         "GlueDatabase01", 
         catalog_id=Aws.ACCOUNT_ID, 
         database_input=glue.CfnDatabase.DatabaseInputProperty(
-            name=self.configParams['GlueDatabaseName'].value_as_string,
+            name=f"{self.configParams['Environment'].value_as_string}-{self.configParams['GlueDatabaseName'].value_as_string}",
             create_table_default_permissions=databaseCamelConfiguration['createTableDefaultPermissions']
     ))
 
@@ -60,7 +65,7 @@ def createTable(self, database_ref, camel_table_config, snake_table_config, inde
         catalog_id=Aws.ACCOUNT_ID,
         database_name=database_ref,
         table_input=glue.CfnTable.TableInputProperty(
-            name=tableOriginCamelConfiguration['name'],
+            name=f"{self.configParams['Environment'].value_as_string}-{tableOriginCamelConfiguration['name']}",
             parameters=tableOriginCamelConfiguration['parameters'],
             table_type=tableOriginCamelConfiguration['tableType'],
             storage_descriptor=glue.CfnTable.StorageDescriptorProperty(

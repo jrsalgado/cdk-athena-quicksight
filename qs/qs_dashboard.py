@@ -91,7 +91,7 @@ def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
         dashboard_name,
         aws_account_id= Aws.ACCOUNT_ID,
         dashboard_id=self.configParams['DashboardId01'].value_as_string,
-        name=self.configParams['DashboardName01'].value_as_string,
+        name=f"{self.configParams['Environment'].value_as_string}-{self.configParams['DashboardName01'].value_as_string}",
         permissions=permissions,
         definition=definition
     )

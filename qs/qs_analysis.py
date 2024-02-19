@@ -79,7 +79,7 @@ def createAnalysis(self, analysis_id: str, analysis_name: str, dataSet: quicksig
         analysis_name,
         analysis_id=self.configParams['AnalysisId01'].value_as_string,
         aws_account_id=Aws.ACCOUNT_ID,
-        name=self.configParams['AnalysisName01'].value_as_string,
+        name=f"{self.configParams['Environment'].value_as_string}-{self.configParams['AnalysisName01'].value_as_string}",
         definition=definition,
         permissions=permissions
         )

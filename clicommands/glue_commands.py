@@ -2,7 +2,7 @@ import boto3
 import os
 import subprocess
 from infra_base.glue_fetch import fetchGlueResources
-from qs.utils import mask_aws_account_id, updateTemplateAfterSynth, deploy_stack
+from qs.utils import mask_aws_account_id, updateTemplateAfterSynth, deploy_stack, update_stack, generate_id
 
 def fetch_all(account_id, profile=None, region_name='us-east-1'):
     """
@@ -20,9 +20,10 @@ def fetch_all(account_id, profile=None, region_name='us-east-1'):
     fetchGlueResources(glue_client, account_id)
     pass
 
-def build_by_id(account_id, database_name):
+def build_by_id(account_id, database_name, same_env):
     os.environ['ORIGIN_AWS_ACCOUNT_ID']= account_id
     os.environ['ORIGIN_DATABASE_NAME'] = database_name
+    os.environ['HASH_SUFFIX'] = f"-{generate_id(6)}".lower() if same_env else ''
 
     cdk_command = [
         "cdk", 
@@ -55,3 +56,6 @@ def build_by_id(account_id, database_name):
 
 def deploy_by_id(template_file_path, parameters_path, aws_region, aws_profile):
     deploy_stack(template_file_path, parameters_path, aws_region, aws_profile, stack_name_prefix='glue')
+
+def update_stack_by_name(stack_name, template_body, template_url, parameters_path, region, profile):
+    update_stack(stack_name, template_body, template_url, parameters_path, region, profile)
