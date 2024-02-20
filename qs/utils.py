@@ -319,3 +319,12 @@ def list_resources(action, file_path: str ):
     resource_list = action()
     writeYaml(resource_list, file_path)
     return resource_list
+
+def read_origin_resource_file(resource_path):
+    with open(resource_path) as f:
+        resource_description = yaml.load(f, Loader=SafeLoader)
+
+    camel_case_description = convert_keys_to_camel_case(resource_description)
+    snake_case_description =  convert_keys_to_snake_case(resource_description)
+
+    return camel_case_description, snake_case_description

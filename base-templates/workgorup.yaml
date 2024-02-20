@@ -1,0 +1,12 @@
+BaseWorkGroup:
+  Type: "AWS::Athena::WorkGroup"
+  Properties:
+    Name: "BaseWorkGroup"
+    State: "ENABLED"
+    WorkGroupConfiguration: 
+      BytesScannedCutoffPerQuery: 1099511627776000
+      EnforceWorkGroupConfiguration: false
+      PublishCloudWatchMetricsEnabled: false
+      RequesterPaysEnabled: false
+      ResultConfiguration: 
+        OutputLocation: ""

@@ -93,14 +93,12 @@ def dashboard(account_id, dashboard_id, data_set_id, data_source_id, create_depe
 ################################
 @build.command()
 @click.option('--account-id', required=True, help='The origin account id')
-@click.option('--workgroup-name', required=True, help='The name of the existing Athena Workgroup to be cloned')
-@click.option('--catalog-name', required=True, help='The name of the existing Athena Data Catalog to be cloned')
+@click.option('--workgroup-name', default="base", help='The name of the existing Athena Workgroup to be cloned')
+@click.option('--catalog-name', default="base", help='The name of the existing Athena Data Catalog to be cloned')
 @click.option('--same-env', is_flag=True) # Boolean option, if present adds hash sufix to resource names/ids
 def athena(account_id, workgroup_name, catalog_name, same_env):
     assert account_id is not None, "--account-id must be provided"
-    assert workgroup_name is not None, "workgroup-name must be provided" 
-    assert catalog_name is not None, "catalog-name must be provided" 
-    
+
     click.echo(f"Building Athena template from Account={account_id}")
     click.echo(f"Building Workgroup = {workgroup_name}")
     click.echo(f"Building Athena Data Catalog = {catalog_name}")
