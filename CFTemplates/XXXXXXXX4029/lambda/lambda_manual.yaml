@@ -12,14 +12,122 @@ Parameters:
     Description: Name for the IAM role to be created.
     Type: String
   DatabaseName:
-    Default: awsconfig
+    Default: pre-awsconfig
     Description: Name for the Glue database to be created.
     Type: String
   TableName:
-    Default: aws_config_configuration_snapshot
+    Default: pre-aws_config_configuration_snapshot
     Description: Name for the Glue table to be created.
     Type: String
 Resources:
+  MyBucketNotificationLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.lambda_handler
+      Runtime: python3.11
+      Role:
+        Fn::GetAtt:
+          - LambdaRole01
+          - Arn
+      Code:
+        ZipFile: |
+          import boto3
+
+          def lambda_handler(event, context):
+              # Extract parameters from the event
+              bucket_name = event['ResourceProperties']['BucketName']
+              lambda_function_arn = event['ResourceProperties']['LambdaFunctionArn']
+
+              # Initialize a session using provided profile and region
+              session = boto3.Session()
+
+              # Get the Lambda function ARN and configure the notification
+              lambda_client = session.client('lambda')
+              lambda_response = lambda_client.get_function(FunctionName=lambda_function_arn)
+              
+              notification_configuration = {
+                  'LambdaFunctionConfigurations': [
+                      {
+                          'LambdaFunctionArn': lambda_response['Configuration']['FunctionArn'],
+                          'Events': ['s3:ObjectCreated:*']
+                      }
+                  ]
+              }
+
+              # Update the bucket's notification configuration
+              s3_client = session.client('s3')
+              s3_client.put_bucket_notification_configuration(
+                  Bucket=bucket_name,
+                  NotificationConfiguration=notification_configuration
+              )
+
+              # Return success to CloudFormation
+              return {
+                  'Status': 'SUCCESS',
+                  'PhysicalResourceId': 'CustomResource',
+                  'Data': {}
+              }
+
+  MyBucketNotificationCustomResource:
+    Type: Custom::UpdateBucketNotification
+    Properties:
+      ServiceToken: !GetAtt MyBucketNotificationLambdaFunction.Arn
+      BucketName: config-bucket-274028817147
+      LambdaFunctionArn: !GetAtt MyBucketNotificationLambdaFunction.Arn
+
+  LambdaRole01:
+    Type: AWS::IAM::Role
+    Metadata:
+      aws:cdk:path: QsStack/LambdaRole01/Resource
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
+      Path: /service-role/
+      RoleName: !Join
+        - ""
+        - - Ref: Environment
+          - "-"
+          - Ref: LambdaRoleName
+      Policies:
+        - PolicyName: InlineLambdaPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Action: logs:CreateLogGroup
+                Effect: Allow
+                Resource: !Join
+                  - ""
+                  - - "arn:aws:logs:"
+                    - !Ref AWS::Region
+                    - ":"
+                    - !Ref AWS::AccountId
+                    - ":*"
+              - Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Effect: Allow
+                Resource: !Join
+                  - ""
+                  - - "arn:aws:logs:"
+                    - !Ref AWS::Region
+                    - ":"
+                    - !Ref AWS::AccountId
+                    - ":log-group:/aws/lambda/"
+                    - !Ref LambdaFunctionName
+                    - ":*"
+              - Action:
+                  - lambda:GetFunction
+                  - s3:PutBucketNotificationConfiguration
+                Effect: Allow
+                Resource: "*"
+
   LambdaFunction01:
     Type: AWS::Lambda::Function
     Metadata:
@@ -146,63 +254,6 @@ Resources:
         LogFormat: Text
         LogGroup: /aws/lambda/aws_config_bucket_events_to_athena
       Timeout: 60
-
-  LambdaRole01:
-    Type: AWS::IAM::Role
-    Metadata:
-      aws:cdk:path: QsStack/LambdaRole01/Resource
-    Properties:
-      AssumeRolePolicyDocument:
-        Statement:
-          - Action: sts:AssumeRole
-            Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-        Version: "2012-10-17"
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
-      Path: /service-role/
-      RoleName: !Join
-        - ""
-        - - Ref: Environment
-          - "-"
-          - Ref: LambdaRoleName
-
-  IAMPolicy:
-    Type: "AWS::IAM::Policy"
-    Properties:
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Action: logs:CreateLogGroup
-            Effect: Allow
-            Resource: !Join
-              - ""
-              - - "arn:aws:logs:"
-                - !Ref AWS::Region
-                - ":"
-                - !Ref AWS::AccountId
-                - ":*"
-          - Action:
-              - logs:CreateLogStream
-              - logs:PutLogEvents
-            Effect: Allow
-            Resource: !Join
-              - ""
-              - - "arn:aws:logs:"
-                - !Ref AWS::Region
-                - ":"
-                - !Ref AWS::AccountId
-                - ":log-group:/aws/lambda/"
-                - !Ref LambdaFunction01
-                - ":*"
-      Roles:
-        - !Ref LambdaRole01
-      PolicyName: !Join
-        - ""
-        - - Ref: Environment
-          - "-"
-          - "AWSLambdaBasicExecutionRole"
 
   LambdaFunctionS3Permission:
     Type: AWS::Lambda::Permission
