@@ -87,8 +87,6 @@ Resources:
             Principal:
               Service: lambda.amazonaws.com
         Version: "2012-10-17"
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
       Path: /service-role/
       RoleName: !Join
         - ""
@@ -127,7 +125,12 @@ Resources:
                   - s3:PutBucketNotificationConfiguration
                 Effect: Allow
                 Resource: "*"
-
+              - Action:
+                  - athena:StartQueryExecution
+                  - athena:GetQueryExecution
+                  - athena:StopQueryExecution
+                Effect: Allow
+                Resource: "*"
   LambdaFunction01:
     Type: AWS::Lambda::Function
     Metadata:
