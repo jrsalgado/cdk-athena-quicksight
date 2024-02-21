@@ -19,6 +19,11 @@ Parameters:
     Default: pre-aws_config_configuration_snapshot
     Description: Name for the Glue table to be created.
     Type: String
+
+Conditions:
+  MyBucketNotificationLambdaFunction: !Equals [ !Ref Environment, "prod" ]
+  CreateMyBucketNotificationCustomResource: !Equals [ !Ref Environment, "prod" ]
+
 Resources:
   MyBucketNotificationLambdaFunction:
     Type: AWS::Lambda::Function
