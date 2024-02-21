@@ -1,3 +1,4 @@
+# aws cloudformation deploy --capabilities CAPABILITY_NAMED_IAM --template-file lambda_template.yaml --parameter-overrides S3EventNotification=Yes Environment=pre ConfigBucketName=config-bucket-274028817147 EventNotificationLambdaFunctionName=create_s3_event_notification EventNotificationLambdaRoleName=create_s3_event_notification_role PartitionAthenaTableLambdaFunctionName=aws_config_bucket_events_to_athena PartitionAthenaTableLambdaRoleName=aws_config_bucket_role DatabaseName=pre-awsconfig TableName=pre-aws_config_configuration_snapshot --stack-name test-stack-5
 Parameters:
   Environment:
     Default: pre
