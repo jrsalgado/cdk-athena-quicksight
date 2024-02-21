@@ -3,6 +3,10 @@ Parameters:
     Default: pre
     Description: Name of the environment for the tag
     Type: String
+  S3EventNotification:
+    Default: "No"
+    Description: Create a helper lambda function to create the s3 event notification
+    Type: String
   LambdaFunctionName:
     Default: aws_config_bucket_events_to_athena
     Description: Name for the Lambda function to be created.
@@ -20,13 +24,17 @@ Parameters:
     Description: Name for the Glue table to be created.
     Type: String
 
+
 Conditions:
-  MyBucketNotificationLambdaFunction: !Equals [ !Ref Environment, "prod" ]
-  CreateMyBucketNotificationCustomResource: !Equals [ !Ref Environment, "prod" ]
+  CreateS3EventNotification:
+    Fn::Equals:
+      - !Ref S3EventNotification
+      - "yes"
 
 Resources:
   MyBucketNotificationLambdaFunction:
     Type: AWS::Lambda::Function
+    Condition: CreateS3EventNotification
     Properties:
       Handler: index.lambda_handler
       Runtime: python3.11
@@ -75,6 +83,7 @@ Resources:
 
   MyBucketNotificationCustomResource:
     Type: Custom::UpdateBucketNotification
+    Condition: CreateS3EventNotification
     Properties:
       ServiceToken: !GetAtt MyBucketNotificationLambdaFunction.Arn
       BucketName: config-bucket-274028817147
