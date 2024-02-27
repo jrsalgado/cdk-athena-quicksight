@@ -1,29 +1,45 @@
-# aws cloudformation deploy --capabilities CAPABILITY_NAMED_IAM --template-file lambda_template.yaml --parameter-overrides S3EventNotification=Yes Environment=pre ConfigBucketName=config-bucket-274028817147 EventNotificationLambdaFunctionName=create_s3_event_notification EventNotificationLambdaRoleName=create_s3_event_notification_role PartitionAthenaTableLambdaFunctionName=aws_config_bucket_events_to_athena PartitionAthenaTableLambdaRoleName=aws_config_bucket_role DatabaseName=pre-awsconfig TableName=pre-aws_config_configuration_snapshot --stack-name test-stack-5
+#aws cloudformation deploy \
+# --capabilities CAPABILITY_NAMED_IAM \
+# --template-file lambda_partition.yaml \
+# --parameter-overrides \
+# ConfigBucketName=<REPLACE_WITH_BUCKET_FROM_AWSCONFIG_DELIVERY_CHANEL> \
+# EnableS3Event=Yes \
+# S3EventLambdaName=create_s3_event_notification \
+# S3EventRoleName=create_s3_event_notification_role \
+# AthenaPartitionLambdaName=aws_config_bucket_events \
+# AthenaPartitionRoleName=partition_lambda_execution_role \
+# DatabaseName=awsconfig \
+# TableName=aws_config_configuration_snapshot \
+# AthenaWorkgroup=primary \
+# AthenaDataCatalog=AwsDataCatalog \
+# --stack-name partition-config-data-stack
+
+
 Parameters:
   Environment:
-    Default: pre
+    Default: ''
     Description: Name of the environment prefix
     Type: String
   ConfigBucketName:
     Description: Name of the S3 bucket where the AWS Config snapshots are stored.
     Type: String
-  S3EventNotification:
+  EnableS3Event:
     Default: "No"
-    Description: Create a helper lambda function to create the s3 event notification
+    Description: Enable helper Lambda function to create S3 event notifications
     Type: String
-  EventNotificationLambdaFunctionName:
+  S3EventLambdaName:
     Default: create_s3_event_notification
     Description: Name for the Lambda function that will create an s3 event notification.
     Type: String
-  EventNotificationLambdaRoleName:
+  S3EventRoleName:
     Default: create_s3_event_notification_role
     Description: Name for the IAM role to be created.
     Type: String
-  PartitionAthenaTableLambdaFunctionName:
+  AthenaPartitionLambdaName:
     Default: aws_config_bucket_events
     Description: Name for the Lambda function that will partition the athena table every time AWS Config stores a snapshot to s3
     Type: String
-  PartitionAthenaTableLambdaRoleName:
+  AthenaPartitionRoleName:
     Default: aws_config_bucket_events_role
     Description: Name for the IAM role to be created.
     Type: String
@@ -35,19 +51,29 @@ Parameters:
     Default: aws_config_configuration_snapshot
     Description: Name of the existing database table.
     Type: String
+  AthenaWorkgroup:
+    Default: primary
+    Description: Name of the existing athena workgroup.
+    Type: String
+  AthenaDataCatalog:
+    Default: AwsDataCatalog
+    Description: Name of the existing athena data catalog.
+    Type: String
+  AthenaOutputLocation:
+    Default: ''
+    Description: Name of the s3 bucket where Athena stores query results.
+    Type: String
 
 Conditions:
-  CreateS3EventNotification:
-    Fn::Equals:
-      - !Ref S3EventNotification
-      - "Yes"
+  UseEnvironmentPrefix: !Not [!Equals [!Ref Environment, '']]
+  CreateS3EventNotification: !Equals [!Ref EnableS3Event, "Yes"]
+  UseCustomAthenaOutputLocation: !Not [!Equals [!Ref AthenaOutputLocation, '']]
+
 
 Resources:
-  CreateS3EventNotificationLambdaRole:
+  S3NotificationLambdaRole:
     Type: AWS::IAM::Role
     Condition: CreateS3EventNotification
-    Metadata:
-      aws:cdk:path: QsStack/PartitionAthenaTableLambdaRole/Resource
     Properties:
       AssumeRolePolicyDocument:
         Statement:
@@ -57,89 +83,91 @@ Resources:
               Service: lambda.amazonaws.com
         Version: "2012-10-17"
       Path: /
-      RoleName: !Join
-        - ""
-        - - Ref: Environment
-          - "-"
-          - Ref: EventNotificationLambdaRoleName
+      RoleName: !If [UseEnvironmentPrefix, !Sub "${Environment}_${S3EventRoleName}", !Ref S3EventRoleName]
       Policies:
-        - PolicyName: CreateEventNotificationLambdaPolicy
+        - PolicyName: !If [UseEnvironmentPrefix, !Sub "${Environment}-CreateEventNotificationLambdaPolicy", CreateEventNotificationLambdaPolicy]
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
               - Action:
                   - lambda:GetFunction
-                  - s3:PutBucketNotificationConfiguration
                 Effect: Allow
-                Resource: "*"
+                Resource: !GetAtt AthenaPartitionLambda.Arn
               - Action:
-                  - athena:StartQueryExecution
-                  - athena:GetQueryExecution
-                  - athena:StopQueryExecution
+                  - s3:PutBucketNotification
                 Effect: Allow
-                Resource: "*"
+                Resource: !Sub "arn:aws:s3:::${ConfigBucketName}"
 
-  CreateS3EventNotificationLambda:
+  S3NotificationLambda:
     Type: AWS::Lambda::Function
     Condition: CreateS3EventNotification
     Properties:
+      FunctionName: !If [UseEnvironmentPrefix, !Sub "${Environment}_${S3EventLambdaName}", !Ref S3EventLambdaName]
       Handler: index.lambda_handler
+      Description: Helper Lambda function to create S3 event notifications
+      Timeout: 60
       Runtime: python3.11
       Role:
         Fn::GetAtt:
-          - CreateS3EventNotificationLambdaRole
+          - S3NotificationLambdaRole
           - Arn
       Code:
         ZipFile: |
           import boto3
+          import cfnresponse
+          from botocore.exceptions import ClientError
+
 
           def lambda_handler(event, context):
-              # Extract parameters from the event
-              bucket_name = event['ResourceProperties']['BucketName']
-              lambda_function_arn = event['ResourceProperties']['LambdaFunctionArn']
+              try:
+                  # Extract parameters from the event
+                  bucket_name = event["ResourceProperties"]["BucketName"]
+                  lambda_function_arn = event["ResourceProperties"]["LambdaFunctionArn"]
 
-              # Initialize a session using provided profile and region
-              session = boto3.Session()
+                  # Initialize a session using provided profile and region
+                  session = boto3.Session()
 
-              # Get the Lambda function ARN and configure the notification
-              lambda_client = session.client('lambda')
-              lambda_response = lambda_client.get_function(FunctionName=lambda_function_arn)
-              
-              notification_configuration = {
-                  'LambdaFunctionConfigurations': [
-                      {
-                          'LambdaFunctionArn': lambda_response['Configuration']['FunctionArn'],
-                          'Events': ['s3:ObjectCreated:*']
-                      }
-                  ]
-              }
+                  notification_configuration = {
+                      "LambdaFunctionConfigurations": [
+                          {
+                              "LambdaFunctionArn": lambda_function_arn,
+                              "Events": ["s3:ObjectCreated:*"],
+                          }
+                      ]
+                  }
 
-              # Update the bucket's notification configuration
-              s3_client = session.client('s3')
-              s3_client.put_bucket_notification_configuration(
-                  Bucket=bucket_name,
-                  NotificationConfiguration=notification_configuration
-              )
+                  # Update the bucket's notification configuration
+                  s3_client = session.client("s3")
+                  s3_client.put_bucket_notification_configuration(
+                      Bucket=bucket_name, NotificationConfiguration=notification_configuration
+                  )
 
-              # Return success to CloudFormation
-              return {
-                  'Status': 'SUCCESS',
-                  'PhysicalResourceId': 'CustomResource',
-                  'Data': {}
-              }
+              except ClientError as error:
+                  cfnresponse.send(
+                      event,
+                      context,
+                      cfnresponse.FAILED,
+                      {"code": error.response["Error"]["Code"]},
+                  )
+                  return
 
-  CreateS3EventNotificationCustomResource:
-    Type: Custom::CreateBucketEventNotification
+              except Error as error:
+                  cfnresponse.send(event, context, cfnresponse.FAILED, {"error": error})
+                  return
+
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+
+
+  S3EventCustomResource:
+    Type: AWS::CloudFormation::CustomResource
     Condition: CreateS3EventNotification
     Properties:
-      ServiceToken: !GetAtt CreateS3EventNotificationLambda.Arn
+      ServiceToken: !GetAtt S3NotificationLambda.Arn
       BucketName: !Ref ConfigBucketName
-      LambdaFunctionArn: !GetAtt CreateS3EventNotificationLambda.Arn
+      LambdaFunctionArn: !GetAtt AthenaPartitionLambda.Arn
 
-  PartitionAthenaTableLambdaRole:
+  AthenaPartitionLambdaRole:
     Type: AWS::IAM::Role
-    Metadata:
-      aws:cdk:path: QsStack/PartitionAthenaTableLambdaRole/Resource
     Properties:
       AssumeRolePolicyDocument:
         Statement:
@@ -149,11 +177,7 @@ Resources:
               Service: lambda.amazonaws.com
         Version: "2012-10-17"
       Path: /service-role/
-      RoleName: !Join
-        - ""
-        - - Ref: Environment
-          - "-"
-          - Ref: PartitionAthenaTableLambdaRoleName
+      RoleName: !If [UseEnvironmentPrefix, !Sub "${Environment}_${AthenaPartitionRoleName}", !Ref AthenaPartitionRoleName]
       Policies:
         - PolicyName: PartitionAthenaTableLambdaPolicy
           PolicyDocument:
@@ -179,11 +203,49 @@ Resources:
                     - ":"
                     - !Ref AWS::AccountId
                     - ":log-group:/aws/lambda/*"
+              - Action:
+                  - athena:StartQueryExecution
+                  - athena:GetQueryExecution
+                  - athena:StopQueryExecution
+                  - athena:GetDataCatalog
+                Effect: Allow
+                Resource: !Sub "arn:aws:athena:${AWS::Region}:${AWS::AccountId}:workgroup/${AthenaWorkgroup}"
+              - Action:
+                  - glue:GetTable
+                  - glue:GetDatabase
+                  - glue:BatchDeletePartition
+                  - glue:BatchCreatePartition
+                Effect: Allow
+                Resource:
+                  - !Sub "arn:aws:glue:${AWS::Region}:${AWS::AccountId}:table/${DatabaseName}/${TableName}"
+                  - !Sub "arn:aws:glue:${AWS::Region}:${AWS::AccountId}:database/${DatabaseName}"
+                  - !Sub "arn:aws:glue:${AWS::Region}:${AWS::AccountId}:catalog"
+              - Action:
+                  - s3:GetBucketLocation
+                Effect: Allow
+                Resource: 
+                  - !Sub "arn:aws:s3:::${ConfigBucketName}"
+                  - !If
+                    - UseCustomAthenaOutputLocation
+                    - !Join 
+                      - ""
+                      - - "arn:aws:s3:::"
+                        - !Select [2, !Split ["/", !Ref AthenaOutputLocation]]
+                    - !Sub "arn:aws:s3:::aws-athena-query-results-${AWS::AccountId}-${AWS::Region}"
+              - Action:
+                  - s3:PutObject
+                Effect: Allow
+                Resource: !If
+                  - UseCustomAthenaOutputLocation
+                  - !Join 
+                    - ""
+                    - - "arn:aws:s3:::"
+                      - !Select [2, !Split ["/", !Ref AthenaOutputLocation]]
+                      - "/*"
+                  - !Sub "arn:aws:s3:::aws-athena-query-results-${AWS::AccountId}-${AWS::Region}/*"
 
-  PartitionAthenaTableLambda:
+  AthenaPartitionLambda:
     Type: AWS::Lambda::Function
-    Metadata:
-      aws:cdk:path: QsStack/PartitionAthenaTableLambda/Resource
     Properties:
       Architectures:
         - x86_64
@@ -191,128 +253,186 @@ Resources:
         Variables:
           DATABASE_NAME: !Ref DatabaseName
           TABLE_NAME: !Ref TableName
+          ATHENA_WORKGROUP: !Ref AthenaWorkgroup
+          ATHENA_OUTPUT_LOCATION: !Ref AthenaOutputLocation
+          ATHENA_DATA_CATALOG: !Ref AthenaDataCatalog
+          ENVIRONMENT: !If [UseEnvironmentPrefix, !Sub "${Environment}", ""]
       Code:
         ZipFile: |
           import datetime
-          import re
-          import boto3
           import os
-
-          # TABLE_NAME = 'aws_config_configuration_snapshot'
-          # DATABASE_NAME = 'sampledb'
-
-          TABLE_NAME = os.environ['TABLE_NAME']
-          DATABASE_NAME = os.environ['DATABASE_NAME']
-
-          ACCOUNT_ID = None # Determined at runtime
-          LATEST_PARTITION_VALUE = 'latest'
-
-          athena = boto3.client('athena')
-
+          import re
+          
+          import boto3
+          
+          ENVIRONMENT = os.environ["ENVIRONMENT"]
+          REGION = os.environ["AWS_REGION"]
+          TABLE_NAME = os.environ["TABLE_NAME"]
+          DATABASE_NAME = os.environ["DATABASE_NAME"]
+          ATHENA_WORKGROUP = os.environ["ATHENA_WORKGROUP"]
+          ATHENA_DATA_CATALOG = os.environ["ATHENA_DATA_CATALOG"]
+          ATHENA_OUTPUT_LOCATION = None  # Determined at runtime
+          ACCOUNT_ID = None  # Determined at runtime
+          LATEST_PARTITION_VALUE = "latest"
+          
+          athena = boto3.client("athena")
+          
           def lambda_handler(event, context):
               global ACCOUNT_ID
-
-              object_key = event['Records'][0]['s3']['object']['key']
+              global ATHENA_OUTPUT_LOCATION
+          
+              object_key = event["Records"][0]["s3"]["object"]["key"]
               match = get_configuration_snapshot_object_key_match(object_key)
               if match is None:
-                  print('Ignoring event for non-configuration snapshot object key', object_key)
+                  print("Ignoring event for non-configuration snapshot object key", object_key)
                   return
-              print('Adding partitions for configuration snapshot object key', object_key)
+              print("Adding partitions for configuration snapshot object key", object_key)
+          
+              ACCOUNT_ID = context.invoked_function_arn.split(":")[4]
+          
+              if os.environ["ATHENA_OUTPUT_LOCATION"] != '':
+                  ATHENA_OUTPUT_LOCATION = os.environ["ATHENA_OUTPUT_LOCATION"]
+                  print('Using provided ATHENA_OUTPUT_LOCATION env variable')
+              else:
+                  ATHENA_OUTPUT_LOCATION = f's3://aws-athena-query-results-{ACCOUNT_ID}-{REGION}'
+                  print('Using default output location')
               
-              ACCOUNT_ID = context.invoked_function_arn.split(':')[4]
-              object_key_parent = 's3://{bucket_name}/{object_key_parent}/'.format(
-                  bucket_name=event['Records'][0]['s3']['bucket']['name'],
-                  object_key_parent=os.path.dirname(object_key))
+          
+              object_key_parent = "s3://{bucket_name}/{object_key_parent}/".format(
+                  bucket_name=event["Records"][0]["s3"]["bucket"]["name"],
+                  object_key_parent=os.path.dirname(object_key),
+              )
               configuration_snapshot_accountid = get_configuration_snapshot_accountid(match)
               configuration_snapshot_region = get_configuration_snapshot_region(match)
               configuration_snapshot_date = get_configuration_snapshot_date(match)
-              
-              drop_partition(configuration_snapshot_accountid, configuration_snapshot_region, LATEST_PARTITION_VALUE)
-              add_partition(configuration_snapshot_accountid, configuration_snapshot_region, LATEST_PARTITION_VALUE, object_key_parent)
-              add_partition(configuration_snapshot_accountid, configuration_snapshot_region, get_configuration_snapshot_date(match).strftime('%Y-%m-%d'), object_key_parent)
-              
+          
+              drop_partition(
+                  configuration_snapshot_accountid,
+                  configuration_snapshot_region,
+                  LATEST_PARTITION_VALUE,
+              )
+              add_partition(
+                  configuration_snapshot_accountid,
+                  configuration_snapshot_region,
+                  LATEST_PARTITION_VALUE,
+                  object_key_parent,
+              )
+              add_partition(
+                  configuration_snapshot_accountid,
+                  configuration_snapshot_region,
+                  get_configuration_snapshot_date(match).strftime("%Y-%m-%d"),
+                  object_key_parent,
+              )
+          
+          
           def get_configuration_snapshot_object_key_match(object_key):
-              # Matches object keys like AWSLogs/123456789012/Config/us-east-1/2018/4/11/ConfigSnapshot/123456789012_Config_us-east-1_ConfigSnapshot_20180411T054711Z_a970aeff-cb3d-4c4e-806b-88fa14702hdb.json.gz
-              return re.match('AWSLogs/(\d+)/Config/([\w-]+)/(\d+)/(\d+)/(\d+)/ConfigSnapshot/[^\\\]+$', object_key)
-
+          
+              if ENVIRONMENT != "":
+                  return re.match(
+                      f"{ENVIRONMENT}-AWSLogs/(\d+)/Config/([\w-]+)/(\d+)/(\d+)/(\d+)/ConfigSnapshot/[^\\\]+$",
+                      object_key,
+                  )
+          
+              return re.match(
+                  "AWSLogs/(\d+)/Config/([\w-]+)/(\d+)/(\d+)/(\d+)/ConfigSnapshot/[^\\\]+$",
+                  object_key,
+              )
+          
+          
           def get_configuration_snapshot_accountid(match):
-              print('AccountId:', match.group(1))
+              print("AccountId:", match.group(1))
               return match.group(1)
-
+          
+          
           def get_configuration_snapshot_region(match):
               return match.group(2)
-
+          
+          
           def get_configuration_snapshot_date(match):
               return datetime.date(int(match.group(3)), int(match.group(4)), int(match.group(5)))
-              
-          def add_partition(accountid_partition_value, region_partition_value, dt_partition_value, partition_location):
-              execute_query('ALTER TABLE {table_name} ADD PARTITION {partition} location \'{partition_location}\''.format(
-                  table_name=TABLE_NAME,
-                  partition=build_partition_string(accountid_partition_value, region_partition_value, dt_partition_value),
-                  partition_location=partition_location))
-                  
-          def drop_partition(accountid_partition_value, region_partition_value, dt_partition_value):
-              execute_query('ALTER TABLE {table_name} DROP PARTITION {partition}'.format(
-                  table_name=TABLE_NAME,
-                  partition=build_partition_string(accountid_partition_value, region_partition_value, dt_partition_value)))
-                  
-          def build_partition_string(accountid_partition_value, region_partition_value, dt_partition_value):
+          
+          
+          def add_partition(
+              accountid_partition_value,
+              region_partition_value,
+              dt_partition_value,
+              partition_location,
+          ):
+              execute_query(
+                  "ALTER TABLE {table_name} ADD PARTITION {partition} location '{partition_location}'".format(
+                      table_name=TABLE_NAME,
+                      partition=build_partition_string(
+                          accountid_partition_value, region_partition_value, dt_partition_value
+                      ),
+                      partition_location=partition_location,
+                  )
+              )
+          
+          
+          def drop_partition(
+              accountid_partition_value, region_partition_value, dt_partition_value
+          ):
+              execute_query(
+                  "ALTER TABLE {table_name} DROP PARTITION {partition}".format(
+                      table_name=TABLE_NAME,
+                      partition=build_partition_string(
+                          accountid_partition_value, region_partition_value, dt_partition_value
+                      ),
+                  )
+              )
+          
+          
+          def build_partition_string(
+              accountid_partition_value, region_partition_value, dt_partition_value
+          ):
               return "(accountid='{accountid_partition_value}', dt='{dt_partition_value}', region='{region_partition_value}')".format(
-                accountid_partition_value=accountid_partition_value,
+                  accountid_partition_value=accountid_partition_value,
                   dt_partition_value=dt_partition_value,
-                  region_partition_value=region_partition_value)
-
+                  region_partition_value=region_partition_value,
+              )
+          
+          
           def execute_query(query):
-              print('Executing query:', query)
-              query_output_location = 's3://aws-athena-query-results-{account_id}-{region}'.format(
-                  account_id=ACCOUNT_ID,
-                  region=os.environ['AWS_REGION'])
+              print("Executing query:", query)
+          
+              query_output_location = ATHENA_OUTPUT_LOCATION
+          
               start_query_response = athena.start_query_execution(
+                  WorkGroup=ATHENA_WORKGROUP,
                   QueryString=query,
                   QueryExecutionContext={
-                      'Database': DATABASE_NAME
+                      "Catalog": ATHENA_DATA_CATALOG,
+                      "Database": DATABASE_NAME,
                   },
                   ResultConfiguration={
-                      'OutputLocation': query_output_location,
-                  }
+                      "OutputLocation": query_output_location,
+                  },
               )
-              print('Query started')
-              
+              print("Query started")
+          
               is_query_running = True
               while is_query_running:
                   get_query_execution_response = athena.get_query_execution(
-                      QueryExecutionId=start_query_response['QueryExecutionId']
+                      QueryExecutionId=start_query_response["QueryExecutionId"]
                   )
-                  query_state = get_query_execution_response['QueryExecution']['Status']['State']
-                  is_query_running = query_state in ('RUNNING','QUEUED')
-                  
-                  if not is_query_running and query_state != 'SUCCEEDED':
-                      raise Exception('Query failed')
-              print('Query completed')
-      Description: Function for partitioning AWS Config data from a s3 bucket
-      FunctionName:
-        Fn::Join:
-          - ""
-          - - Ref: Environment
-            - "-"
-            - Ref: PartitionAthenaTableLambdaFunctionName
+                  query_state = get_query_execution_response["QueryExecution"]["Status"]["State"]
+                  is_query_running = query_state in ("RUNNING", "QUEUED")
+
+                  if not is_query_running and query_state != "SUCCEEDED":
+                      raise Exception("Query failed")
+              print("Query completed")
+      Description: Function for partitioning AWS Config data on Athena table
+      FunctionName: !If [UseEnvironmentPrefix, !Sub "${Environment}_${AthenaPartitionLambdaName}", !Ref AthenaPartitionLambdaName]
       Handler: index.lambda_handler
-      Role:
-        Fn::GetAtt:
-          - PartitionAthenaTableLambdaRole
-          - Arn
+      Role: !GetAtt AthenaPartitionLambdaRole.Arn
       Runtime: python3.11
       Timeout: 60
 
-  PartitionAthenaTableLambdaPermission:
+  AthenaPartitionLambdaPermission:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
-      FunctionName: !GetAtt PartitionAthenaTableLambda.Arn
+      FunctionName: !GetAtt AthenaPartitionLambda.Arn
       Principal: s3.amazonaws.com
       SourceAccount: !Ref AWS::AccountId
-      SourceArn:
-        Fn::Join:
-          - ""
-          - - "arn:aws:s3:::"
-            - !Ref ConfigBucketName
+      SourceArn: !Sub "arn:aws:s3:::${ConfigBucketName}"
