@@ -1,3 +1,41 @@
+# aws cloudformation deploy \
+# --capabilities CAPABILITY_NAMED_IAM \
+# --template-file lambda_partition.yaml \
+# --parameter-overrides \
+# ConfigBucketName=<REPLACE_WITH_BUCKET_FROM_AWSCONFIG_DELIVERY_CHANEL> \
+# ConfigBucketAccountId=<REPLACE_WITH_ACCOUNT_ID_WHERE_S3_EXIST> \
+# EnableDatasourceResources=True \
+# S3EventLambdaName=create_s3_event_notification \
+# S3EventRoleName=create_s3_event_notification_role \
+# EnableDatabaseResources=False \
+# PartitionLambdaAccountId=<REPLACE_WITH_ACCOUNT_ID_WHERE_LAMBDA_PARTITION_EXIST> \
+# AthenaPartitionLambdaName=aws_config_bucket_events \
+# AthenaPartitionRoleName=aws_config_bucket_events_role \
+# DatabaseName=awsconfig \
+# TableName=aws_config_configuration_snapshot \
+# AthenaWorkgroup=primary \
+# AthenaDataCatalog=AwsDataCatalog \
+# --stack-name datasource-resources-stack
+
+# aws cloudformation deploy \
+# --capabilities CAPABILITY_NAMED_IAM \
+# --template-file lambda_partition.yaml \
+# --parameter-overrides \
+# ConfigBucketName=<REPLACE_WITH_BUCKET_FROM_AWSCONFIG_DELIVERY_CHANEL> \
+# ConfigBucketAccountId=<REPLACE_WITH_ACCOUNT_ID_WHERE_S3_EXIST> \
+# EnableDatasourceResources=False \
+# S3EventLambdaName=create_s3_event_notification \
+# S3EventRoleName=create_s3_event_notification_role \
+# EnableDatabaseResources=True \
+# PartitionLambdaAccountId=<REPLACE_WITH_ACCOUNT_ID_WHERE_LAMBDA_PARTITION_EXIST> \
+# AthenaPartitionLambdaName=aws_config_bucket_events \
+# AthenaPartitionRoleName=‎aws_config_bucket_events_role \
+# DatabaseName=awsconfig \
+# TableName=aws_config_configuration_snapshot \
+# AthenaWorkgroup=primary \
+# AthenaDataCatalog=AwsDataCatalog \
+# --stack-name database-resources-stack
+
 Parameters:
   Environment:
     Default: ''
