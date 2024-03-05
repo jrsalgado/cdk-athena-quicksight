@@ -1,0 +1,2390 @@
+Description: >
+  Note: This dashboard requires AWS Config database and tables to exist
+  Database: [pro_]awsconfig
+  Tables:
+    - [pro_]aws_config_configuration_snapshot
+    - framework_control_source
+    - framework_control
+    - assessment_control_evidence
+
+Metadata: 
+  AWS::CloudFormation::Interface: 
+    ParameterGroups: 
+      - Label: 
+          default: "General Parameters"
+        Parameters: 
+          - Environment
+          - DashboardName01
+      - Label: 
+          default: "Athena Connection Parameters"
+        Parameters: 
+          - DataSourceAthenaWorkGroup01
+          - DataSetAthenaCatalog01
+          - DataSetAthenaSchema01
+          - DataSetAthenaTableName01
+      - Label: 
+          default: "QuickSight Permissions Principal Parameters, arn:aws:quicksight:us-east-1:XXXXXXXXXXXX:user/default/secCompliance/<SANTANDER_USER>@sbna.santander.us"
+        Parameters: 
+          - QuickSightUsername
+          - QuickSightNamespace
+          - QuickSightPrincipalType
+    ParameterLabels: 
+      Environment: 
+        default: "Environment Prefix"
+      DashboardName01: 
+        default: "Dashboard Name"
+      DataSourceAthenaWorkGroup01: 
+        default: "Athena WorkGroup Name"
+      DataSetAthenaCatalog01: 
+        default: "Athena DataCatalog Name"
+      DataSetAthenaSchema01: 
+        default: "Athena Database Name"
+      DataSetAthenaTableName01: 
+        default: "Athena Table Name (aws_config_configuration_snapshot)"
+      QuickSightNamespace:
+        default: "QuickSight resources namespace For Principal ARN (default)"
+      QuickSightPrincipalType:
+        default: "Principal Type (user|group)"
+      QuickSightUsername:
+        default: "Username For Principal ARN that gives access to QuickSight resources (<AWS_ROLE>/<IAM_USER>)"
+
+Parameters:
+  DashboardName01:
+    Description: Name for the new dashboard to be created
+    Type: String
+  DataSetAthenaCatalog01:
+    Default: AwsDataCatalog
+    Description: "Name of the existing Athena Data Catalog, example: AwsDataCatalog"
+    Type: String
+  DataSetAthenaSchema01:
+    Default: awsconfig
+    Description: "Name of the existing database where AWS Config stores snapshots, example: awsconfig"
+    Type: String
+  DataSetAthenaTableName01:
+    Default: aws_config_configuration_snapshot
+    Description: >
+      Name of the existing table for the AWS Config database, example: aws_config_configuration_snapshot
+      Note: This dashboard requires AWS Config database and tables to exist
+      Database: [pro_]awsconfig
+      Tables:
+        - [pro_]aws_config_configuration_snapshot
+        - framework_control_source
+        - framework_control
+        - assessment_control_evidence
+    Type: String
+  DataSourceAthenaWorkGroup01:
+    Type: String
+    Default: primary
+    Description: "Name of the existing Athena Workgroup, example: primary"
+  Environment:
+    Default: None
+    Description: "Environment prefix used in resource names, example: pro-ALL-Assessment-Controls"
+    AllowedValues:
+      - None
+      - pre
+      - pro
+      - prod
+    Type: String
+  QuickSightNamespace:
+    Default: default
+    Description: The namespace in the principal ARN of QuickSight Resources.
+    Type: String
+  QuickSightPrincipalType:
+    Default: user
+    Description: The type of principal for QuickSight Resources (e.g., user, group).
+    Type: String
+  QuickSightUsername:
+    Description: The username for the QuickSight principal.
+    Type: String
+
+Conditions:
+  UseEnvironmentPrefix: !Not [!Equals [!Ref Environment, 'None']]
+
+# NEEDED DEPENDENCIES
+# - Dataset AthenaDataSet0vhj5n needs the following glue tables to exist:
+#   - assessment_control_evidence (CloudFormation Parameter for SQL QUERY: AssessmentControlEvidenceTableName) 
+
+# - Dataset AthenaDataSetj8hiyb and AthenaDataSet77cusy needs the following glue tables to exist:
+#   - Identifier = framework_control
+#   - Dataset = framework_control
+#   - Datasource = auditmanager_framework_controls
+
+Resources:
+  AthenaDataSet0vhj5n:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSet_0vhj5n
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSetId: b81d6cd8-046d-4620-8619-8bc495ca6dc7-iaeaki
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
+      ImportMode: SPICE
+      LogicalTableMap:
+        50171ea6-e140-490b-a196-cf2b8cfc1f7e:
+          Alias: ALL-Assessment-Controls
+          DataTransforms:
+          - RenameColumnOperation:
+              ColumnName: status
+              NewColumnName: actrl_status
+          Source:
+            PhysicalTableId: 6485f78f-b946-42be-8855-a51b9c063790
+        58ecc579-9063-4365-be96-b78ba4148257:
+          Alias: Intermediate Table
+          Source:
+            JoinInstruction:
+              LeftOperand: 50171ea6-e140-490b-a196-cf2b8cfc1f7e
+              OnClause: '{control_id} = {id}'
+              RightOperand: 7ccea1ca-9418-467a-abc8-40cee81a46be
+              Type: LEFT
+        7ccea1ca-9418-467a-abc8-40cee81a46be:
+          Alias: framework_control
+          DataTransforms:
+          - RenameColumnOperation:
+              ColumnName: name
+              NewColumnName: name[framework_control]
+          - RenameColumnOperation:
+              ColumnName: type
+              NewColumnName: fctrl_type
+          Source:
+            PhysicalTableId: e08c7b53-f19f-4390-b7bf-b912dcad6031
+        9783c78d-0958-4e17-b2b0-e7a69f0192cf:
+          Alias: Intermediate Table (2)
+          Source:
+            JoinInstruction:
+              LeftOperand: 58ecc579-9063-4365-be96-b78ba4148257
+              OnClause: '{id} = {control_id[framework_control_source]}'
+              RightOperand: dc35e992-2d4b-4a6b-8c22-48da5a422251
+              Type: LEFT
+        b2c1a894-3846-4102-af05-6b2be374d9fc:
+          Alias: assessment_control_evidence
+          DataTransforms:
+          - RenameColumnOperation:
+              ColumnName: compliance_check
+              NewColumnName: ev_compliance_check
+          - RenameColumnOperation:
+              ColumnName: control_id
+              NewColumnName: control_id[assessment_control_evidence]
+          Source:
+            PhysicalTableId: f13abbb7-e9ad-44a2-b4ed-2d0436b23f48
+        dc35e992-2d4b-4a6b-8c22-48da5a422251:
+          Alias: framework_control_source
+          DataTransforms:
+          - RenameColumnOperation:
+              ColumnName: control_id
+              NewColumnName: control_id[framework_control_source]
+          Source:
+            PhysicalTableId: 9a3a1cbc-1094-427c-8415-08ae5550dfcf
+        f8294b35-e182-4acb-833d-f067d5dfc27d:
+          Alias: Intermediate Table (3)
+          DataTransforms:
+          - CreateColumnsOperation:
+              Columns:
+              - ColumnId: c0d35e37-76eb-4e80-8959-768d7e6ba35c
+                ColumnName: num_sources_compliant
+                Expression: countIf({source_id},{ev_compliance_check}="COMPLIANT")
+          - CreateColumnsOperation:
+              Columns:
+              - ColumnId: 0e55f4c0-3a1f-4ac5-a1ab-c81c54bd556f
+                ColumnName: num_sources_non_compliant
+                Expression: countIf({source_id}, {ev_compliance_check} = 'NON_COMPLIANT')
+          - CreateColumnsOperation:
+              Columns:
+              - ColumnId: ea5b9db0-fa61-4f5d-a833-6f5cad6b3b9a
+                ColumnName: num_sources_other
+                Expression: count({source_id}) - countIf({source_id}, {ev_compliance_check}
+                  = 'NON_COMPLIANT') - countIf({source_id}, {ev_compliance_check}
+                  = 'COMPLIANT')
+          - ProjectOperation:
+              ProjectedColumns:
+              - control_id
+              - assessment_id
+              - assessment_name
+              - name
+              - actrl_status
+              - evidence_count
+              - assessment_report_evidence_count
+              - id
+              - name[framework_control]
+              - fctrl_type
+              - description
+              - testing_information
+              - control_status
+              - created_by
+              - last_updated_by
+              - domain_name
+              - domain_id
+              - domain_framework_id
+              - source_id
+              - source_name
+              - source_description
+              - source_type
+              - source_status
+              - source_keyword_inputtype
+              - source_keyword_inputvalue
+              - source_configrule_scope
+              - source_configrule_name
+              - troubleshooting_text
+              - source_frequency
+              - control_id[framework_control_source]
+              - control_source_id
+              - evidence_folder_id
+              - evidence_id
+              - assessment_report_selection
+              - aws_account_id
+              - aws_organization
+              - ev_compliance_check
+              - iam_id
+              - evidence_by_type
+              - event_name
+              - event_source
+              - evidence_aws_account_id
+              - data_source
+              - time
+              - time_zone
+              - control_id[assessment_control_evidence]
+              - num_sources_compliant
+              - num_sources_non_compliant
+              - num_sources_other
+          Source:
+            JoinInstruction:
+              LeftOperand: 9783c78d-0958-4e17-b2b0-e7a69f0192cf
+              OnClause: '{source_id} = {control_source_id}'
+              RightOperand: b2c1a894-3846-4102-af05-6b2be374d9fc
+              Type: LEFT
+      Name: !If [UseEnvironmentPrefix, !Sub "${Environment}-ALL-Assessment-Controls", ALL-Assessment-Controls]
+      Permissions:
+      - Actions:
+        - quicksight:DeleteDataSet
+        - quicksight:UpdateDataSetPermissions
+        - quicksight:PutDataSetRefreshProperties
+        - quicksight:CreateRefreshSchedule
+        - quicksight:CancelIngestion
+        - quicksight:ListRefreshSchedules
+        - quicksight:UpdateRefreshSchedule
+        - quicksight:PassDataSet
+        - quicksight:DeleteRefreshSchedule
+        - quicksight:DescribeDataSetRefreshProperties
+        - quicksight:DescribeDataSet
+        - quicksight:CreateIngestion
+        - quicksight:DescribeRefreshSchedule
+        - quicksight:ListIngestions
+        - quicksight:UpdateDataSet
+        - quicksight:DescribeDataSetPermissions
+        - quicksight:DeleteDataSetRefreshProperties
+        - quicksight:DescribeIngestion
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            namespace:
+              Ref: QuickSightNamespace
+            principal_type:
+              Ref: QuickSightPrincipalType
+            username:
+              Ref: QuickSightUsername
+      PhysicalTableMap:
+        6485f78f-b946-42be-8855-a51b9c063790:
+          CustomSql:
+            Columns:
+            - Name: control_id
+              Type: STRING
+            - Name: assessment_id
+              Type: STRING
+            - Name: assessment_name
+              Type: STRING
+            - Name: name
+              Type: STRING
+            - Name: status
+              Type: STRING
+            - Name: evidence_count
+              Type: INTEGER
+            - Name: assessment_report_evidence_count
+              Type: INTEGER
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceumnyqu
+              - Arn
+            Name: ALL-Assessment-Controls
+            SqlQuery: 
+              Fn::Join:
+              - ""
+              - - "SELECT *\r\nFROM "
+                - Fn::Join:
+                  - ""
+                  - - !Ref DataSetAthenaSchema01
+                    - "."
+                    - assessment_control
+        9a3a1cbc-1094-427c-8415-08ae5550dfcf:
+          RelationalTable:
+            Catalog:
+              Ref: DataSetAthenaCatalog01
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceumnyqu
+              - Arn
+            InputColumns:
+            - Name: source_id
+              Type: STRING
+            - Name: source_name
+              Type: STRING
+            - Name: source_description
+              Type: STRING
+            - Name: source_type
+              Type: STRING
+            - Name: source_status
+              Type: STRING
+            - Name: source_keyword_inputtype
+              Type: STRING
+            - Name: source_keyword_inputvalue
+              Type: STRING
+            - Name: source_configrule_scope
+              Type: STRING
+            - Name: source_configrule_name
+              Type: STRING
+            - Name: troubleshooting_text
+              Type: STRING
+            - Name: source_frequency
+              Type: STRING
+            - Name: control_id
+              Type: STRING
+            Name: framework_control_source
+            Schema:
+              Ref: DataSetAthenaSchema01
+        e08c7b53-f19f-4390-b7bf-b912dcad6031:
+          RelationalTable:
+            Catalog:
+              Ref: DataSetAthenaCatalog01
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceumnyqu
+              - Arn
+            InputColumns:
+            - Name: id
+              Type: STRING
+            - Name: name
+              Type: STRING
+            - Name: type
+              Type: STRING
+            - Name: description
+              Type: STRING
+            - Name: testing_information
+              Type: STRING
+            - Name: control_status
+              Type: STRING
+            - Name: created_by
+              Type: STRING
+            - Name: last_updated_by
+              Type: STRING
+            - Name: domain_name
+              Type: STRING
+            - Name: domain_id
+              Type: STRING
+            - Name: domain_framework_id
+              Type: STRING
+            Name: framework_control
+            Schema:
+              Ref: DataSetAthenaSchema01
+        f13abbb7-e9ad-44a2-b4ed-2d0436b23f48:
+          RelationalTable:
+            Catalog:
+              Ref: DataSetAthenaCatalog01
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceumnyqu
+              - Arn
+            InputColumns:
+            - Name: control_source_id
+              Type: STRING
+            - Name: evidence_folder_id
+              Type: STRING
+            - Name: evidence_id
+              Type: STRING
+            - Name: assessment_report_selection
+              Type: STRING
+            - Name: aws_account_id
+              Type: STRING
+            - Name: aws_organization
+              Type: STRING
+            - Name: compliance_check
+              Type: STRING
+            - Name: iam_id
+              Type: STRING
+            - Name: evidence_by_type
+              Type: STRING
+            - Name: event_name
+              Type: STRING
+            - Name: event_source
+              Type: STRING
+            - Name: evidence_aws_account_id
+              Type: STRING
+            - Name: data_source
+              Type: STRING
+            - Name: time
+              Type: DATETIME
+            - Name: time_zone
+              Type: STRING
+            - Name: control_id
+              Type: STRING
+            Name: assessment_control_evidence
+            Schema:
+              Ref: DataSetAthenaSchema01
+    Type: AWS::QuickSight::DataSet
+  AthenaDataSet77cusy:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSet_77cusy
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSetId: 3722fc25-0b0a-4a8c-a3c7-cb046d20298d-emhism
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
+      ImportMode: SPICE
+      LogicalTableMap:
+        327d48da-dde4-499c-be1c-d720681b95ce:
+          Alias: framework_control
+          Source:
+            PhysicalTableId: 8ef3e95e-fc77-4274-b308-7593c9207490
+        904500cd-a457-4c4e-ac59-3256f9fbae4f:
+          Alias: ConfigRulePerResourceType
+          Source:
+            PhysicalTableId: 84a46756-144d-4056-8bb3-f2bba5190353
+        91a3cacf-2ae0-4332-84eb-8788c50cca8e:
+          Alias: Intermediate Table
+          Source:
+            JoinInstruction:
+              LeftOperand: 327d48da-dde4-499c-be1c-d720681b95ce
+              OnClause: '{id} = {control_id}'
+              RightOperand: eceb3fb0-7ae7-4f80-944c-a074f3940df2
+              Type: LEFT
+        cadf6822-3fac-4e64-9fcc-2cfc60f68706:
+          Alias: Intermediate Table (2)
+          DataTransforms:
+          - CreateColumnsOperation:
+              Columns:
+              - ColumnId: 77d25c3a-9f89-46cb-a75f-424be17dacf6
+                ColumnName: num_sources_ready
+                Expression: countIf({source_id},{source_status}="READY")
+          - CreateColumnsOperation:
+              Columns:
+              - ColumnId: 839c694a-4134-4c47-ba41-fa77358c0cb7
+                ColumnName: num_sources_draft
+                Expression: countIf({source_id},{source_status}="DRAFT")
+          - ProjectOperation:
+              ProjectedColumns:
+              - id
+              - name
+              - type
+              - description
+              - testing_information
+              - control_status
+              - created_by
+              - last_updated_by
+              - domain_name
+              - domain_id
+              - domain_framework_id
+              - source_id
+              - source_name
+              - source_description
+              - source_type
+              - source_status
+              - source_keyword_inputtype
+              - source_keyword_inputvalue
+              - source_configrule_scope
+              - source_configrule_name
+              - troubleshooting_text
+              - source_frequency
+              - control_id
+              - configRuleName
+              - configRuleId
+              - configRuleArn
+              - accountId
+              - targetResourceType
+              - targetResourceTypeCount
+              - num_sources_ready
+              - num_sources_draft
+          Source:
+            JoinInstruction:
+              LeftOperand: 91a3cacf-2ae0-4332-84eb-8788c50cca8e
+              OnClause: '{source_configrule_name} = {configRuleName}'
+              RightOperand: 904500cd-a457-4c4e-ac59-3256f9fbae4f
+              Type: LEFT
+        eceb3fb0-7ae7-4f80-944c-a074f3940df2:
+          Alias: framework_control_source
+          Source:
+            PhysicalTableId: 2430418c-151a-48d8-8cdb-e4660d57ab5f
+      Name: !If [UseEnvironmentPrefix, !Sub "${Environment}-framework_control", framework_control]
+      Permissions:
+      - Actions:
+        - quicksight:DeleteDataSet
+        - quicksight:UpdateDataSetPermissions
+        - quicksight:PutDataSetRefreshProperties
+        - quicksight:CreateRefreshSchedule
+        - quicksight:CancelIngestion
+        - quicksight:ListRefreshSchedules
+        - quicksight:UpdateRefreshSchedule
+        - quicksight:PassDataSet
+        - quicksight:DeleteRefreshSchedule
+        - quicksight:DescribeDataSetRefreshProperties
+        - quicksight:DescribeDataSet
+        - quicksight:CreateIngestion
+        - quicksight:DescribeRefreshSchedule
+        - quicksight:ListIngestions
+        - quicksight:UpdateDataSet
+        - quicksight:DescribeDataSetPermissions
+        - quicksight:DeleteDataSetRefreshProperties
+        - quicksight:DescribeIngestion
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            namespace:
+              Ref: QuickSightNamespace
+            principal_type:
+              Ref: QuickSightPrincipalType
+            username:
+              Ref: QuickSightUsername
+      PhysicalTableMap:
+        2430418c-151a-48d8-8cdb-e4660d57ab5f:
+          RelationalTable:
+            Catalog:
+              Ref: DataSetAthenaCatalog01
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceco1iye
+              - Arn
+            InputColumns:
+            - Name: source_id
+              Type: STRING
+            - Name: source_name
+              Type: STRING
+            - Name: source_description
+              Type: STRING
+            - Name: source_type
+              Type: STRING
+            - Name: source_status
+              Type: STRING
+            - Name: source_keyword_inputtype
+              Type: STRING
+            - Name: source_keyword_inputvalue
+              Type: STRING
+            - Name: source_configrule_scope
+              Type: STRING
+            - Name: source_configrule_name
+              Type: STRING
+            - Name: troubleshooting_text
+              Type: STRING
+            - Name: source_frequency
+              Type: STRING
+            - Name: control_id
+              Type: STRING
+            Name: framework_control_source
+            Schema:
+              Ref: DataSetAthenaSchema01
+        84a46756-144d-4056-8bb3-f2bba5190353:
+          CustomSql:
+            Columns:
+            - Name: configRuleName
+              Type: STRING
+            - Name: configRuleId
+              Type: STRING
+            - Name: configRuleArn
+              Type: STRING
+            - Name: accountId
+              Type: STRING
+            - Name: targetResourceType
+              Type: STRING
+            - Name: targetResourceTypeCount
+              Type: INTEGER
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceco1iye
+              - Arn
+            Name: ConfigRulePerResourceType
+            SqlQuery: 
+              Fn::Join:
+                - ""
+                - - "SELECT DISTINCT\r\njson_extract_scalar(rule,'$.configRuleName')\
+                    \ as configRuleName,\r\njson_extract_scalar(rule,'$.configRuleId') as\
+                    \ configRuleId,\r\njson_extract_scalar(rule,'$.configRuleArn') as configRuleArn,\r\
+                    \nconfigurationItem.awsaccountid as accountId,\r\njson_extract_scalar(configurationItem.configuration,'$.targetResourceType')\
+                    \ as targetResourceType,\r\nresourceTypes.resourceTypeCount as targetResourceTypeCount\r\
+                    \nFROM "
+                  - Fn::Join:
+                    - ""
+                    - - !Ref DataSetAthenaSchema01
+                      - "."
+                      - !Ref DataSetAthenaTableName01
+                  - "\r\nCROSS JOIN UNNEST(configurationitems)\
+                    \ AS t(configurationItem)\r\nCROSS JOIN UNNEST(\r\n    CAST(json_extract(configurationItem.configuration,'$.configRuleList')\
+                    \ as array(json))\r\n) AS t(rule)\r\nLEFT JOIN (SELECT \r\n    configurationItem.resourceType\
+                    \ as resourceType,\r\n    count(configurationItem.resourceId) as resourceTypeCount\r\
+                    \n    FROM "
+                  - Fn::Join:
+                    - ""
+                    - - !Ref DataSetAthenaSchema01
+                      - "."
+                      - !Ref DataSetAthenaTableName01
+                  - "\r\n    CROSS\
+                    \ JOIN UNNEST(configurationitems) AS t(configurationItem)\r\n    WHERE\
+                    \ dt = 'latest'\r\n    AND region = 'us-east-1'\r\n    GROUP BY configurationItem.resourceType)\
+                    \ as resourceTypes\r\nON (json_extract_scalar(configurationItem.configuration,'$.targetResourceType')\
+                    \ = resourceTypes.resourceType)\r\nWHERE dt = 'latest'\r\nAND region\
+                    \ = 'us-east-1'\r\n-- AND array_contains(configRuleList2,'configRuleName')\r\
+                    \n-- AND regexp_like(configurationItem.configuration,'configRuleList')\r\
+                    \nAND configurationItem.resourceType = 'AWS::Config::ResourceCompliance'"
+        8ef3e95e-fc77-4274-b308-7593c9207490:
+          RelationalTable:
+            Catalog:
+              Ref: DataSetAthenaCatalog01
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceco1iye
+              - Arn
+            InputColumns:
+            - Name: id
+              Type: STRING
+            - Name: name
+              Type: STRING
+            - Name: type
+              Type: STRING
+            - Name: description
+              Type: STRING
+            - Name: testing_information
+              Type: STRING
+            - Name: control_status
+              Type: STRING
+            - Name: created_by
+              Type: STRING
+            - Name: last_updated_by
+              Type: STRING
+            - Name: domain_name
+              Type: STRING
+            - Name: domain_id
+              Type: STRING
+            - Name: domain_framework_id
+              Type: STRING
+            Name: framework_control
+            Schema:
+              Ref: DataSetAthenaSchema01
+    Type: AWS::QuickSight::DataSet
+  AthenaDataSetj8hiyb:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSet_j8hiyb
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSetId: f85f5654-4d2e-4bdb-8dae-0e5cd4ff9335-yugge5
+      DataSetUsageConfiguration:
+        DisableUseAsDirectQuerySource: false
+        DisableUseAsImportedSource: false
+      ImportMode: SPICE
+      LogicalTableMap:
+        10fb03fa-7b56-49f9-a215-33c167db6bf8:
+          Alias: Intermediate Table (2)
+          Source:
+            JoinInstruction:
+              LeftOperand: b2697ae0-3652-46af-add0-076303b75651
+              OnClause: '{targetResourceType} = {resourceType[ResourceTypeTotals]}'
+              RightOperand: 28dad3c5-648c-42fb-99df-8e4a94d1dd25
+              Type: LEFT
+        28dad3c5-648c-42fb-99df-8e4a94d1dd25:
+          Alias: ResourceTypeTotals
+          DataTransforms:
+          - RenameColumnOperation:
+              ColumnName: resourceType
+              NewColumnName: resourceType[ResourceTypeTotals]
+          Source:
+            PhysicalTableId: 100ea58e-ca6a-4f75-a385-ca745bfe22c8
+        ae35a9ab-0744-407a-b089-4cc91d3a181e:
+          Alias: Resource Compliance per rule
+          Source:
+            PhysicalTableId: e0b3c713-3c31-45fd-ac1f-5f96e39d079f
+        b15cb83c-2b24-44de-b93f-ba4911da9c11:
+          Alias: framework_control
+          Source:
+            PhysicalTableId: bea26cc0-6f18-46dc-b173-e2f7653905ed
+        b2697ae0-3652-46af-add0-076303b75651:
+          Alias: Intermediate Table
+          Source:
+            JoinInstruction:
+              LeftOperand: ae35a9ab-0744-407a-b089-4cc91d3a181e
+              OnClause: '{configRuleName} = {source_configrule_name}'
+              RightOperand: f253eb0f-3a4f-4019-87d0-4f1ad589a593
+              Type: LEFT
+        c10abf60-63b5-4268-9d3f-aaf34dbf4212:
+          Alias: Intermediate Table (3)
+          DataTransforms:
+          - ProjectOperation:
+              ProjectedColumns:
+              - configRuleName
+              - configRuleId
+              - configRuleArn
+              - complianceType
+              - accountId
+              - resourceType
+              - resourceId
+              - resourcename
+              - targetResourceId
+              - targetResourceType
+              - source_id
+              - source_name
+              - source_description
+              - source_type
+              - source_status
+              - source_keyword_inputtype
+              - source_keyword_inputvalue
+              - source_configrule_scope
+              - source_configrule_name
+              - troubleshooting_text
+              - source_frequency
+              - control_id
+              - resourceType[ResourceTypeTotals]
+              - resourceTypeCount
+              - id
+              - name
+              - type
+              - description
+              - testing_information
+              - control_status
+              - created_by
+              - last_updated_by
+              - domain_name
+              - domain_id
+              - domain_framework_id
+          Source:
+            JoinInstruction:
+              LeftOperand: 10fb03fa-7b56-49f9-a215-33c167db6bf8
+              OnClause: '{control_id} = {id}'
+              RightOperand: b15cb83c-2b24-44de-b93f-ba4911da9c11
+              Type: LEFT
+        f253eb0f-3a4f-4019-87d0-4f1ad589a593:
+          Alias: framework_control_source
+          Source:
+            PhysicalTableId: f79ead12-002a-4e02-83c9-faab471c1ea2
+      Name: !If [UseEnvironmentPrefix, !Sub "${Environment}-aws_config_configuration_snapshot", aws_config_configuration_snapshot]
+      Permissions:
+      - Actions:
+        - quicksight:DeleteDataSet
+        - quicksight:UpdateDataSetPermissions
+        - quicksight:PutDataSetRefreshProperties
+        - quicksight:CreateRefreshSchedule
+        - quicksight:CancelIngestion
+        - quicksight:ListRefreshSchedules
+        - quicksight:UpdateRefreshSchedule
+        - quicksight:PassDataSet
+        - quicksight:DeleteRefreshSchedule
+        - quicksight:DescribeDataSetRefreshProperties
+        - quicksight:DescribeDataSet
+        - quicksight:CreateIngestion
+        - quicksight:DescribeRefreshSchedule
+        - quicksight:ListIngestions
+        - quicksight:UpdateDataSet
+        - quicksight:DescribeDataSetPermissions
+        - quicksight:DeleteDataSetRefreshProperties
+        - quicksight:DescribeIngestion
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            namespace:
+              Ref: QuickSightNamespace
+            principal_type:
+              Ref: QuickSightPrincipalType
+            username:
+              Ref: QuickSightUsername
+      PhysicalTableMap:
+        100ea58e-ca6a-4f75-a385-ca745bfe22c8:
+          CustomSql:
+            Columns:
+            - Name: resourceType
+              Type: STRING
+            - Name: resourceTypeCount
+              Type: INTEGER
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourcedxms9m
+              - Arn
+            Name: ResourceTypeTotals
+            SqlQuery: 
+              Fn::Join:
+                - ""
+                - - "SELECT \r\n    configurationItem.resourceType as resourceType,\r\n    count(configurationItem.resourceId) as resourceTypeCount\r\n    FROM "
+                  - Fn::Join:
+                    - ""
+                    - - !Ref DataSetAthenaSchema01
+                      - "."
+                      - !Ref DataSetAthenaTableName01
+                  - "\r\n    CROSS JOIN\
+                    \ UNNEST(configurationitems) AS t(configurationItem)\r\n    WHERE dt\
+                    \ = 'latest'\r\n    AND region = 'us-east-1'\r\n    GROUP BY configurationItem.resourceType"
+        bea26cc0-6f18-46dc-b173-e2f7653905ed:
+          RelationalTable:
+            Catalog:
+              Ref: DataSetAthenaCatalog01
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceul6mbz
+              - Arn
+            InputColumns:
+            - Name: id
+              Type: STRING
+            - Name: name
+              Type: STRING
+            - Name: type
+              Type: STRING
+            - Name: description
+              Type: STRING
+            - Name: testing_information
+              Type: STRING
+            - Name: control_status
+              Type: STRING
+            - Name: created_by
+              Type: STRING
+            - Name: last_updated_by
+              Type: STRING
+            - Name: domain_name
+              Type: STRING
+            - Name: domain_id
+              Type: STRING
+            - Name: domain_framework_id
+              Type: STRING
+            Name: framework_control
+            Schema:
+              Ref: DataSetAthenaSchema01
+        e0b3c713-3c31-45fd-ac1f-5f96e39d079f:
+          CustomSql:
+            Columns:
+            - Name: configRuleName
+              Type: STRING
+            - Name: configRuleId
+              Type: STRING
+            - Name: configRuleArn
+              Type: STRING
+            - Name: complianceType
+              Type: STRING
+            - Name: accountId
+              Type: STRING
+            - Name: resourceType
+              Type: STRING
+            - Name: resourceId
+              Type: STRING
+            - Name: resourcename
+              Type: STRING
+            - Name: targetResourceId
+              Type: STRING
+            - Name: targetResourceType
+              Type: STRING
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourcedxms9m
+              - Arn
+            Name: Resource Compliance per rule
+            SqlQuery: 
+              Fn::Join:
+                - ""
+                - - "SELECT \r\njson_extract_scalar(rule,'$.configRuleName') as configRuleName,\r\njson_extract_scalar(rule,'$.configRuleId') as configRuleId,\r\njson_extract_scalar(rule,'$.configRuleArn') as configRuleArn,\r\njson_extract_scalar(rule,'$.complianceType') as complianceType,\r\nconfigurationItem.awsaccountid as accountId,\r\nconfigurationItem.resourceType,\r\nconfigurationItem.resourceId,\r\nconfigurationItem.resourcename,\r\njson_extract_scalar(configurationItem.configuration,'$.targetResourceId') as targetResourceId,\r\njson_extract_scalar(configurationItem.configuration,'$.targetResourceType') as targetResourceType\r\n-- configurationItem.configuration,\r\n-- rule\r\n-- json_array_contains(json_extract(configurationItem.configuration,'$.configRuleList.*.configRuleName'),'poc-sec-root-account-mfa-enabled') as configRuleFirst,\r\n-- json_extract(configurationItem.configuration,'$.configRuleList') as configRuleList,\r\n-- json_extract_scalar(configurationItem.configuration,'$.configRuleList[?(@.configRuleName)]') as configRuleList3,\r\nFROM "
+                  - Fn::Join:
+                    - ""
+                    - - !Ref DataSetAthenaSchema01
+                      - "."
+                      - !Ref DataSetAthenaTableName01
+                  - "\r\nCROSS JOIN UNNEST(configurationitems) AS t(configurationItem)\r\nCROSS JOIN UNNEST(\r\n    CAST(json_extract(configurationItem.configuration,'$.configRuleList') as array(json))\r\n) AS t(rule)\r\nWHERE dt = 'latest'\r\nAND region = 'us-east-1'\r\n-- AND array_contains(configRuleList2,'configRuleName')\r\n-- AND regexp_like(configurationItem.configuration,'configRuleList')\r\nAND configurationItem.resourceType = 'AWS::Config::ResourceCompliance'"
+        f79ead12-002a-4e02-83c9-faab471c1ea2:
+          RelationalTable:
+            Catalog:
+              Ref: DataSetAthenaCatalog01
+            DataSourceArn:
+              Fn::GetAtt:
+              - AthenaDataSourceul6mbz
+              - Arn
+            InputColumns:
+            - Name: source_id
+              Type: STRING
+            - Name: source_name
+              Type: STRING
+            - Name: source_description
+              Type: STRING
+            - Name: source_type
+              Type: STRING
+            - Name: source_status
+              Type: STRING
+            - Name: source_keyword_inputtype
+              Type: STRING
+            - Name: source_keyword_inputvalue
+              Type: STRING
+            - Name: source_configrule_scope
+              Type: STRING
+            - Name: source_configrule_name
+              Type: STRING
+            - Name: troubleshooting_text
+              Type: STRING
+            - Name: source_frequency
+              Type: STRING
+            - Name: control_id
+              Type: STRING
+            Name: framework_control_source
+            Schema:
+              Ref: DataSetAthenaSchema01
+    Type: AWS::QuickSight::DataSet
+  AthenaDataSourceco1iye:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource_co1iye
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId: a166f854-a98e-44cf-8524-a2c94a844803-weknz9
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup: !Ref DataSourceAthenaWorkGroup01
+      Name: !If [UseEnvironmentPrefix, !Sub "${Environment}-auditmanager_framework_controls", auditmanager_framework_controls]
+      Permissions:
+      - Actions:
+        - quicksight:PassDataSource
+        - quicksight:DescribeDataSourcePermissions
+        - quicksight:UpdateDataSource
+        - quicksight:UpdateDataSourcePermissions
+        - quicksight:DescribeDataSource
+        - quicksight:DeleteDataSource
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            principalType:
+              Ref: QuickSightPrincipalType
+            qsNamespace:
+              Ref: QuickSightNamespace
+            user:
+              Ref: QuickSightUsername
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Type: AWS::QuickSight::DataSource
+  AthenaDataSourcedxms9m:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource_dxms9m
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId: fc286936-71bb-44e1-a331-d5e2a8374e1e-ic3grw
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup: !Ref DataSourceAthenaWorkGroup01
+      Name: !If [UseEnvironmentPrefix, !Sub "${Environment}-awsconfig", awsconfig]
+      Permissions:
+      - Actions:
+        - quicksight:PassDataSource
+        - quicksight:DescribeDataSourcePermissions
+        - quicksight:UpdateDataSource
+        - quicksight:UpdateDataSourcePermissions
+        - quicksight:DescribeDataSource
+        - quicksight:DeleteDataSource
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            principalType:
+              Ref: QuickSightPrincipalType
+            qsNamespace:
+              Ref: QuickSightNamespace
+            user:
+              Ref: QuickSightUsername
+      - Actions:
+        - quicksight:PassDataSource
+        - quicksight:DescribeDataSourcePermissions
+        - quicksight:UpdateDataSource
+        - quicksight:UpdateDataSourcePermissions
+        - quicksight:DescribeDataSource
+        - quicksight:DeleteDataSource
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            principalType:
+              Ref: QuickSightPrincipalType
+            qsNamespace:
+              Ref: QuickSightNamespace
+            user:
+              Ref: QuickSightUsername
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Type: AWS::QuickSight::DataSource
+  AthenaDataSourceul6mbz:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource_ul6mbz
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId: ed35b433-8b42-42f6-a0d3-8422f05c0e7c-qhcwsp
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup: !Ref DataSourceAthenaWorkGroup01
+      Name: !If [UseEnvironmentPrefix, !Sub "${Environment}-awsconfig_resource_count", awsconfig_resource_count]
+      Permissions:
+      - Actions:
+        - quicksight:PassDataSource
+        - quicksight:DescribeDataSourcePermissions
+        - quicksight:UpdateDataSource
+        - quicksight:UpdateDataSourcePermissions
+        - quicksight:DescribeDataSource
+        - quicksight:DeleteDataSource
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            principalType:
+              Ref: QuickSightPrincipalType
+            qsNamespace:
+              Ref: QuickSightNamespace
+            user:
+              Ref: QuickSightUsername
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Type: AWS::QuickSight::DataSource
+  AthenaDataSourceumnyqu:
+    Metadata:
+      aws:cdk:path: QsStack/AthenaDataSource_umnyqu
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DataSourceId: b56497d7-06f7-4361-8eb4-140bce43cf17-x6h9rb
+      DataSourceParameters:
+        AthenaParameters:
+          WorkGroup: !Ref DataSourceAthenaWorkGroup01
+      Name: !If [UseEnvironmentPrefix, !Sub "${Environment}-auditmanager_assessment_evidences", auditmanager_assessment_evidences]
+      Permissions:
+      - Actions:
+        - quicksight:PassDataSource
+        - quicksight:DescribeDataSourcePermissions
+        - quicksight:UpdateDataSource
+        - quicksight:UpdateDataSourcePermissions
+        - quicksight:DescribeDataSource
+        - quicksight:DeleteDataSource
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            principalType:
+              Ref: QuickSightPrincipalType
+            qsNamespace:
+              Ref: QuickSightNamespace
+            user:
+              Ref: QuickSightUsername
+      SslProperties:
+        DisableSsl: false
+      Type: ATHENA
+    Type: AWS::QuickSight::DataSource
+  QuicksightDashboard:
+    Metadata:
+      aws:cdk:path: QsStack/QuicksightDashboard
+    Properties:
+      AwsAccountId:
+        Ref: AWS::AccountId
+      DashboardId: cb511158-789d-4fcf-a4c3-e7e8da6a4270-4hlf9v
+      Definition:
+        AnalysisDefaults:
+          DefaultNewSheetConfiguration:
+            InteractiveLayoutConfiguration:
+              Grid:
+                CanvasSizeOptions:
+                  ScreenCanvasSizeOptions:
+                    OptimizedViewPortWidth: 1600px
+                    ResizeOption: FIXED
+            SheetContentType: INTERACTIVE
+        CalculatedFields: []
+        DataSetIdentifierDeclarations:
+        - DataSetArn:
+            Fn::GetAtt:
+            - AthenaDataSet77cusy
+            - Arn
+          Identifier:
+            Ref: AthenaDataSet77cusy
+        - DataSetArn:
+            Fn::GetAtt:
+            - AthenaDataSet0vhj5n
+            - Arn
+          Identifier:
+            Ref: AthenaDataSet0vhj5n
+        - DataSetArn:
+            Fn::GetAtt:
+            - AthenaDataSetj8hiyb
+            - Arn
+          Identifier:
+            Ref: AthenaDataSetj8hiyb
+        FilterGroups:
+        - CrossDataset: SINGLE_DATASET
+          FilterGroupId: 71a6ee03-2c42-4a68-a79f-82b20bf9a5cd
+          Filters:
+          - CategoryFilter:
+              Column:
+                ColumnName: domain_framework_id
+                DataSetIdentifier: framework_control
+              Configuration:
+                FilterListConfiguration:
+                  MatchOperator: CONTAINS
+                  NullOption: NON_NULLS_ONLY
+                  SelectAllOptions: FILTER_ALL_VALUES
+              FilterId: 29c03d97-b2c1-4e3d-9b3b-58d2df819401
+          ScopeConfiguration:
+            SelectedSheets:
+              SheetVisualScopingConfigurations:
+              - Scope: ALL_VISUALS
+                SheetId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_18f419f7-4cd9-4d42-b8f6-7920ec1b11d2
+        - CrossDataset: SINGLE_DATASET
+          FilterGroupId: 39a8d310-fef1-4f07-a6ef-a7fa5a20dc9e
+          Filters:
+          - CategoryFilter:
+              Column:
+                ColumnName: assessment_name
+                DataSetIdentifier: ALL-Assessment-Controls
+              Configuration:
+                CustomFilterListConfiguration:
+                  MatchOperator: CONTAINS
+                  NullOption: NON_NULLS_ONLY
+                  SelectAllOptions: FILTER_ALL_VALUES
+              FilterId: 76b06bf2-9581-4166-b093-f3d1765d14e1
+          ScopeConfiguration:
+            SelectedSheets:
+              SheetVisualScopingConfigurations:
+              - Scope: ALL_VISUALS
+                SheetId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_84248e96-57aa-4234-8415-828cb5e9485e
+        - CrossDataset: SINGLE_DATASET
+          FilterGroupId: 43c14c8f-f001-4267-9268-d48914d6e042
+          Filters:
+          - CategoryFilter:
+              Column:
+                ColumnName: evidence_by_type
+                DataSetIdentifier: ALL-Assessment-Controls
+              Configuration:
+                FilterListConfiguration:
+                  MatchOperator: CONTAINS
+                  NullOption: ALL_VALUES
+                  SelectAllOptions: FILTER_ALL_VALUES
+              FilterId: b406350f-fe60-4d9d-900b-9feada4306eb
+          ScopeConfiguration:
+            SelectedSheets:
+              SheetVisualScopingConfigurations:
+              - Scope: SELECTED_VISUALS
+                SheetId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_84248e96-57aa-4234-8415-828cb5e9485e
+                VisualIds:
+                - cb511158-789d-4fcf-a4c3-e7e8da6a4270_f70e4c4b-c733-4f10-ac57-8a964eca557f
+        ParameterDeclarations:
+        - StringParameterDeclaration:
+            DefaultValues:
+              StaticValues:
+              - 38e7319e-a3af-4c19-88c9-43721809f8e8
+            Name: ControlFramework
+            ParameterValueType: SINGLE_VALUED
+            ValueWhenUnset:
+              ValueWhenUnsetOption: RECOMMENDED_VALUE
+        Sheets:
+        - ContentType: INTERACTIVE
+          Layouts:
+          - Configuration:
+              GridLayout:
+                Elements:
+                - ColumnIndex: 0
+                  ColumnSpan: 13
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_5e91ce2c-a877-41ee-a248-10c7eedd9aca
+                  ElementType: VISUAL
+                  RowIndex: 0
+                  RowSpan: 10
+                - ColumnIndex: 13
+                  ColumnSpan: 20
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_522f388f-a865-4738-b07e-81244d95c588
+                  ElementType: VISUAL
+                  RowIndex: 0
+                  RowSpan: 10
+                - ColumnIndex: 0
+                  ColumnSpan: 33
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_eebc0fd7-fd32-4180-abf3-7c16c3a8f754
+                  ElementType: VISUAL
+                  RowIndex: 10
+                  RowSpan: 12
+                - ColumnIndex: 0
+                  ColumnSpan: 33
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_6087c676-8dff-4b04-a703-3886d832aae2
+                  ElementType: VISUAL
+                  RowIndex: 22
+                  RowSpan: 6
+          Name: Resource Compliance
+          SheetId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_eb9a195c-3a95-4700-87f7-ed4c2e2fdd8c
+          Visuals:
+          - PieChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - ae35a9ab-0744-407a-b089-4cc91d3a181e.resourceType.0.1703706956523
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: 0b570cc3-8d1a-4815-a780-4692ab9198f8
+                Name: Compliant
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: WHOLE
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: complianceType
+                          DataSetIdentifier: aws_config_configuration_snapshot
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.resourceType.0.1703706956523
+                    Values: []
+                Legend:
+                  Width: 100px
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.resourceType.0.1703706956523
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>AWS Config Resource Compliance</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_5e91ce2c-a877-41ee-a248-10c7eedd9aca
+          - PieChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - ae35a9ab-0744-407a-b089-4cc91d3a181e.targetResourceType.0.1703707043540
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: 3cb56064-be00-4270-8372-6c2c8be069df
+                Name: Resource Type
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: MEDIUM
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: targetResourceType
+                          DataSetIdentifier: aws_config_configuration_snapshot
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.targetResourceType.0.1703707043540
+                    Values: []
+                Legend:
+                  Visibility: VISIBLE
+                  Width: 310px
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.targetResourceType.0.1703707043540
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Resource Types</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_522f388f-a865-4738-b07e-81244d95c588
+          - TableVisual:
+              Actions: []
+              ChartConfiguration:
+                FieldOptions:
+                  Order: []
+                  SelectedFieldOptions:
+                  - FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.configRuleName.1.1703707405681
+                    Width: 297px
+                  - FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.resourceId.1.1703707669321
+                    Width: 964px
+                FieldWells:
+                  TableAggregatedFieldWells:
+                    GroupBy:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: configRuleName
+                          DataSetIdentifier: aws_config_configuration_snapshot
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.configRuleName.1.1703707405681
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: resourceId
+                          DataSetIdentifier: aws_config_configuration_snapshot
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.resourceId.1.1703707669321
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: complianceType
+                          DataSetIdentifier: aws_config_configuration_snapshot
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.complianceType.2.1703707680969
+                    Values: []
+                SortConfiguration: {}
+                TableOptions:
+                  CellStyle:
+                    Height: 34
+                  HeaderStyle:
+                    Height: 25
+                    TextWrap: WRAP
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Details</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_eebc0fd7-fd32-4180-abf3-7c16c3a8f754
+          - PieChartVisual:
+              Actions: []
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: WHOLE
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: domain_name
+                          DataSetIdentifier: aws_config_configuration_snapshot
+                        FieldId: b15cb83c-2b24-44de-b93f-ba4911da9c11.domain_name.1.1704399664310
+                    Values:
+                    - CategoricalMeasureField:
+                        AggregationFunction: DISTINCT_COUNT
+                        Column:
+                          ColumnName: configRuleName
+                          DataSetIdentifier: aws_config_configuration_snapshot
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.configRuleName.0.1703879999096
+                Legend:
+                  Width: 201px
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.configRuleName.0.1703879999096
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: ae35a9ab-0744-407a-b089-4cc91d3a181e.configRuleName.0.1703879999096
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: b15cb83c-2b24-44de-b93f-ba4911da9c11.domain_name.1.1704399664310
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>ConfigRule to Framework</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_6087c676-8dff-4b04-a703-3886d832aae2
+        - ContentType: INTERACTIVE
+          FilterControls:
+          - Dropdown:
+              DisplayOptions:
+                SelectAllOptions:
+                  Visibility: VISIBLE
+              FilterControlId: fd1581e5-44e6-4d13-a609-fb0f12d38c10
+              SourceFilterId: 29c03d97-b2c1-4e3d-9b3b-58d2df819401
+              Title: domain_framework_id equals
+              Type: MULTI_SELECT
+          Layouts:
+          - Configuration:
+              GridLayout:
+                CanvasSizeOptions:
+                  ScreenCanvasSizeOptions:
+                    OptimizedViewPortWidth: 1600px
+                    ResizeOption: FIXED
+                Elements:
+                - ColumnIndex: 0
+                  ColumnSpan: 36
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_1129c729-c2ce-469a-9d2f-408f35e7a40c
+                  ElementType: VISUAL
+                  RowIndex: 0
+                  RowSpan: 11
+                - ColumnIndex: 0
+                  ColumnSpan: 36
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_f11c66a4-730e-4789-aa22-47dcc862c01e
+                  ElementType: VISUAL
+                  RowIndex: 11
+                  RowSpan: 12
+                - ColumnIndex: 0
+                  ColumnSpan: 36
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_091a4f56-65d1-42c9-8f6a-3fd78f3b7b7d
+                  ElementType: VISUAL
+                  RowIndex: 23
+                  RowSpan: 12
+                - ColumnIndex: 0
+                  ColumnSpan: 17
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_32e969e9-a8b2-4d16-b07f-91128375f574
+                  ElementType: VISUAL
+                  RowIndex: 35
+                  RowSpan: 7
+                - ColumnIndex: 17
+                  ColumnSpan: 11
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_08f76477-5f4e-495a-900c-f8af6776aae3
+                  ElementType: VISUAL
+                  RowIndex: 35
+                  RowSpan: 7
+                - ColumnIndex: 28
+                  ColumnSpan: 8
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_e48de5b7-1948-4cb2-96e1-a2f4aa013830
+                  ElementType: VISUAL
+                  RowIndex: 35
+                  RowSpan: 7
+                - ColumnIndex: 0
+                  ColumnSpan: 36
+                  ElementId: fd1581e5-44e6-4d13-a609-fb0f12d38c10
+                  ElementType: FILTER_CONTROL
+                  RowIndex: 42
+                  RowSpan: 2
+          Name: Requirement Design Completeness
+          SheetId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_18f419f7-4cd9-4d42-b8f6-7920ec1b11d2
+          Visuals:
+          - PieChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_type.1.1704399970803
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: c9a995ce-3272-42db-a73b-c5cc99813698
+                Name: Source Status Select
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: MEDIUM
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: source_status
+                          DataSetIdentifier: framework_control
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_type.1.1704399970803
+                    Values:
+                    - CategoricalMeasureField:
+                        AggregationFunction: COUNT
+                        Column:
+                          ColumnName: source_id
+                          DataSetIdentifier: framework_control
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_id.1.1704399976823
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_id.1.1704399976823
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_id.1.1704399976823
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_type.1.1704399970803
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Data Source Status</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_e48de5b7-1948-4cb2-96e1-a2f4aa013830
+          - PieChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.1.1704399699655
+                      - 327d48da-dde4-499c-be1c-d720681b95ce.control_status.2.1705100043205
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: 0bdd6df0-15d3-40b3-931f-585e51adbb1e
+                Name: Domain Select
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: WHOLE
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: domain_name
+                          DataSetIdentifier: framework_control
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.1.1704399699655
+                    SmallMultiples:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: control_status
+                          DataSetIdentifier: framework_control
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.control_status.2.1705100043205
+                    Values:
+                    - CategoricalMeasureField:
+                        AggregationFunction: DISTINCT_COUNT
+                        Column:
+                          ColumnName: id
+                          DataSetIdentifier: framework_control
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.id.1.1704403674955
+                Legend:
+                  Width: 251px
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - ColumnSort:
+                      AggregationFunction:
+                        CategoricalAggregationFunction: COUNT
+                      Direction: ASC
+                      SortBy:
+                        ColumnName: control_status
+                        DataSetIdentifier: framework_control
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesSort:
+                  - FieldSort:
+                      Direction: ASC
+                      FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.control_status.2.1705100043205
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.1.1704399699655
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.id.1.1704403674955
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Requirements in Framework</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_1129c729-c2ce-469a-9d2f-408f35e7a40c
+          - TableVisual:
+              Actions: []
+              ChartConfiguration:
+                FieldOptions:
+                  Order: []
+                  SelectedFieldOptions:
+                  - FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.5.1704401897702
+                    Width: 160px
+                  - FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.name.6.1704402479909
+                    Width: 324px
+                FieldWells:
+                  TableUnaggregatedFieldWells:
+                    Values:
+                    - Column:
+                        ColumnName: domain_name
+                        DataSetIdentifier: framework_control
+                      FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.5.1704401897702
+                    - Column:
+                        ColumnName: name
+                        DataSetIdentifier: framework_control
+                      FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.name.6.1704402479909
+                    - Column:
+                        ColumnName: source_type
+                        DataSetIdentifier: framework_control
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_type.5.1704401915881
+                    - Column:
+                        ColumnName: source_name
+                        DataSetIdentifier: framework_control
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_name.6.1704401932062
+                    - Column:
+                        ColumnName: source_status
+                        DataSetIdentifier: framework_control
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_status.7.1704754691701
+                    - Column:
+                        ColumnName: source_configrule_name
+                        DataSetIdentifier: framework_control
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_configrule_name.5.1704401987470
+                    - Column:
+                        ColumnName: targetResourceTypeCount
+                        DataSetIdentifier: framework_control
+                      FieldId: 904500cd-a457-4c4e-ac59-3256f9fbae4f.targetResourceTypeCount.4.1703883109475
+                    - Column:
+                        ColumnName: accountId
+                        DataSetIdentifier: framework_control
+                      FieldId: 904500cd-a457-4c4e-ac59-3256f9fbae4f.accountId.9.1703884259991
+                    - Column:
+                        ColumnName: source_description
+                        DataSetIdentifier: framework_control
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_description.8.1704755038521
+                SortConfiguration: {}
+                TableOptions:
+                  HeaderStyle:
+                    Height: 25
+                    TextWrap: WRAP
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: "<visual-title>\n  Details\n  <br/>\n</visual-title>"
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_091a4f56-65d1-42c9-8f6a-3fd78f3b7b7d
+          - PieChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_type.1.1704399970803
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: ad8be9a9-a4f2-47c7-9332-aa293633b664
+                Name: Source Type Select
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: MEDIUM
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: source_type
+                          DataSetIdentifier: framework_control
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_type.1.1704399970803
+                    Values:
+                    - CategoricalMeasureField:
+                        AggregationFunction: COUNT
+                        Column:
+                          ColumnName: source_id
+                          DataSetIdentifier: framework_control
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_id.1.1704399976823
+                Legend:
+                  Width: 278px
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_id.1.1704399976823
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_type.1.1704399970803
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_id.1.1704399976823
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Data Source Types within all Requirements</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_08f76477-5f4e-495a-900c-f8af6776aae3
+          - BarChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.1.1705014334424
+                      - eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_status.0.1705014334424
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: 602b5255-603f-456d-be80-8e8cc0e7fbc1
+                Name: Source Status
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                BarsArrangement: CLUSTERED
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: HIDDEN
+                FieldWells:
+                  BarChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: domain_name
+                          DataSetIdentifier: framework_control
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.1.1705014334424
+                    Colors:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: source_status
+                          DataSetIdentifier: framework_control
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_status.0.1705014334424
+                    Values: []
+                Legend:
+                  Width: 159px
+                Orientation: VERTICAL
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.1.1705014334424
+                  ColorItemsLimit:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.1.1705014334424
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_status.0.1705014334424
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+                VisualPalette:
+                  ColorMap:
+                  - Color: '#DE3B00'
+                    Element:
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.source_status.0.1705014334424
+                      FieldValue: DRAFT
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: "<visual-title>\n  <b>Data Source Design Status\_</b>\n\
+                    </visual-title>"
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_f11c66a4-730e-4789-aa22-47dcc862c01e
+          - PieChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFieldOptions: ALL_FIELDS
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: a994e3fa-5707-4f1e-90cc-ea6b8f09c196
+                Name: Domain Selection
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: MEDIUM
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: domain_name
+                          DataSetIdentifier: framework_control
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.0.1705100708360
+                    Values:
+                    - CategoricalMeasureField:
+                        AggregationFunction: DISTINCT_COUNT
+                        Column:
+                          ColumnName: control_id
+                          DataSetIdentifier: framework_control
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.control_id.1.1705100720682
+                Legend:
+                  Width: 200px
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.control_id.1.1705100720682
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: 327d48da-dde4-499c-be1c-d720681b95ce.domain_name.0.1705100708360
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: eceb3fb0-7ae7-4f80-944c-a074f3940df2.control_id.1.1705100720682
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Requirements in Framework</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_32e969e9-a8b2-4d16-b07f-91128375f574
+        - ContentType: INTERACTIVE
+          FilterControls:
+          - Dropdown:
+              DisplayOptions:
+                InfoIconLabelOptions:
+                  Visibility: HIDDEN
+                SelectAllOptions:
+                  Visibility: VISIBLE
+                TitleOptions:
+                  FontConfiguration:
+                    FontSize:
+                      Relative: MEDIUM
+                  Visibility: VISIBLE
+              FilterControlId: 3df45b2f-6eb6-4d80-b1bc-ecfeb826f8d1
+              SourceFilterId: 76b06bf2-9581-4166-b093-f3d1765d14e1
+              Title: assessment_name equals
+              Type: MULTI_SELECT
+          Layouts:
+          - Configuration:
+              GridLayout:
+                CanvasSizeOptions:
+                  ScreenCanvasSizeOptions:
+                    OptimizedViewPortWidth: 1600px
+                    ResizeOption: FIXED
+                Elements:
+                - ColumnIndex: 0
+                  ColumnSpan: 36
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_daf54245-b181-4b7f-a26a-1b42a6af8bd5
+                  ElementType: VISUAL
+                  RowIndex: 0
+                  RowSpan: 12
+                - ColumnIndex: 0
+                  ColumnSpan: 15
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_deecb3fb-be06-4518-bd8d-b09111ca564a
+                  ElementType: VISUAL
+                  RowIndex: 12
+                  RowSpan: 12
+                - ColumnIndex: 15
+                  ColumnSpan: 9
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_ec83342f-8340-4bc9-957a-e65cfa76a3c6
+                  ElementType: VISUAL
+                  RowIndex: 12
+                  RowSpan: 6
+                - ColumnIndex: 24
+                  ColumnSpan: 12
+                  ElementId: 3df45b2f-6eb6-4d80-b1bc-ecfeb826f8d1
+                  ElementType: FILTER_CONTROL
+                  RowIndex: 12
+                  RowSpan: 2
+                - ColumnIndex: 24
+                  ColumnSpan: 12
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_db7e0a99-d37e-4e1c-9069-10f61b82bd0f
+                  ElementType: VISUAL
+                  RowIndex: 14
+                  RowSpan: 10
+                - ColumnIndex: 15
+                  ColumnSpan: 9
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_4f1b5c25-0a26-414c-b576-127526cee3ac
+                  ElementType: VISUAL
+                  RowIndex: 18
+                  RowSpan: 6
+                - ColumnIndex: 0
+                  ColumnSpan: 36
+                  ElementId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_f70e4c4b-c733-4f10-ac57-8a964eca557f
+                  ElementType: VISUAL
+                  RowIndex: 36
+                  RowSpan: 12
+          Name: Assessment Progress
+          SheetId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_84248e96-57aa-4234-8415-828cb5e9485e
+          Visuals:
+          - PieChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - 7ccea1ca-9418-467a-abc8-40cee81a46be.domain_name.0.1704755630507
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: ae0cd6f5-8f2e-4a31-bfbb-e20943e94185
+                Name: Domain Selection
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: VISIBLE
+                DonutOptions:
+                  ArcOptions:
+                    ArcThickness: MEDIUM
+                FieldWells:
+                  PieChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: domain_name
+                          DataSetIdentifier: ALL-Assessment-Controls
+                        FieldId: 7ccea1ca-9418-467a-abc8-40cee81a46be.domain_name.0.1704755630507
+                    Values:
+                    - CategoricalMeasureField:
+                        AggregationFunction: DISTINCT_COUNT
+                        Column:
+                          ColumnName: control_id
+                          DataSetIdentifier: ALL-Assessment-Controls
+                        FieldId: 50171ea6-e140-490b-a196-cf2b8cfc1f7e.control_id.1.1704756078004
+                Legend:
+                  Width: 244px
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: 50171ea6-e140-490b-a196-cf2b8cfc1f7e.control_id.1.1704756078004
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: 7ccea1ca-9418-467a-abc8-40cee81a46be.domain_name.0.1704755630507
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: 50171ea6-e140-490b-a196-cf2b8cfc1f7e.control_id.1.1704756078004
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Controls in Assessment</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_deecb3fb-be06-4518-bd8d-b09111ca564a
+          - TableVisual:
+              Actions: []
+              ChartConfiguration:
+                FieldWells:
+                  TableUnaggregatedFieldWells:
+                    Values:
+                    - Column:
+                        ColumnName: name
+                        DataSetIdentifier: ALL-Assessment-Controls
+                      FieldId: 50171ea6-e140-490b-a196-cf2b8cfc1f7e.name.0.1704755885616
+                    - Column:
+                        ColumnName: actrl_status
+                        DataSetIdentifier: ALL-Assessment-Controls
+                      FieldId: 50171ea6-e140-490b-a196-cf2b8cfc1f7e.status.2.1704756388828
+                    - Column:
+                        ColumnName: source_name
+                        DataSetIdentifier: ALL-Assessment-Controls
+                      FieldId: dc35e992-2d4b-4a6b-8c22-48da5a422251.source_name.1.1704755907009
+                    - Column:
+                        ColumnName: fctrl_type
+                        DataSetIdentifier: ALL-Assessment-Controls
+                      FieldId: 7ccea1ca-9418-467a-abc8-40cee81a46be.type.3.1704756425509
+                    - Column:
+                        ColumnName: ev_compliance_check
+                        DataSetIdentifier: ALL-Assessment-Controls
+                      FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.4.1704756458917
+                    - Column:
+                        ColumnName: source_configrule_name
+                        DataSetIdentifier: ALL-Assessment-Controls
+                      FieldId: dc35e992-2d4b-4a6b-8c22-48da5a422251.source_configrule_name.5.1704757201295
+                    - Column:
+                        ColumnName: source_configrule_scope
+                        DataSetIdentifier: ALL-Assessment-Controls
+                      FieldId: dc35e992-2d4b-4a6b-8c22-48da5a422251.source_configrule_scope.6.1704757207313
+                SortConfiguration: {}
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Evidence Details</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_f70e4c4b-c733-4f10-ac57-8a964eca557f
+          - BarChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - dc35e992-2d4b-4a6b-8c22-48da5a422251.source_status.0.1704756184731
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: 7d054622-70d5-4562-b667-fef1e681992b
+                Name: Control Source
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                BarsArrangement: CLUSTERED
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: HIDDEN
+                FieldWells:
+                  BarChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: source_status
+                          DataSetIdentifier: ALL-Assessment-Controls
+                        FieldId: dc35e992-2d4b-4a6b-8c22-48da5a422251.source_status.0.1704756184731
+                    Colors: []
+                    Values: []
+                Orientation: HORIZONTAL
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  ColorItemsLimit:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: dc35e992-2d4b-4a6b-8c22-48da5a422251.source_status.0.1704756184731
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Framework Control Sources</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_ec83342f-8340-4bc9-957a-e65cfa76a3c6
+          - BarChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - 50171ea6-e140-490b-a196-cf2b8cfc1f7e.status.0.1704756782836
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: d3bd6e90-cae8-4c77-a832-391abc78c0f7
+                Name: Assessment Control Status
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                BarsArrangement: CLUSTERED
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: HIDDEN
+                FieldWells:
+                  BarChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: actrl_status
+                          DataSetIdentifier: ALL-Assessment-Controls
+                        FieldId: 50171ea6-e140-490b-a196-cf2b8cfc1f7e.status.0.1704756782836
+                    Colors: []
+                    Values: []
+                Orientation: HORIZONTAL
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  ColorItemsLimit:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: 50171ea6-e140-490b-a196-cf2b8cfc1f7e.status.0.1704756782836
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Assessment Control Status</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_4f1b5c25-0a26-414c-b576-127526cee3ac
+          - BarChartVisual:
+              Actions: []
+              ChartConfiguration:
+                BarsArrangement: CLUSTERED
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: HIDDEN
+                FieldWells:
+                  BarChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: ev_compliance_check
+                          DataSetIdentifier: ALL-Assessment-Controls
+                        FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.1.1704757329622
+                    Colors:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: assessment_report_selection
+                          DataSetIdentifier: ALL-Assessment-Controls
+                        FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.assessment_report_selection.0.1704757308911
+                    Values: []
+                Orientation: VERTICAL
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.1.1704757329622
+                  ColorItemsLimit:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.assessment_report_selection.0.1704757308911
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.1.1704757329622
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Evidence Package</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_db7e0a99-d37e-4e1c-9069-10f61b82bd0f
+          - BarChartVisual:
+              Actions:
+              - ActionOperations:
+                - FilterOperation:
+                    SelectedFieldsConfiguration:
+                      SelectedFields:
+                      - 7ccea1ca-9418-467a-abc8-40cee81a46be.domain_name.3.1704930097709
+                      - b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.2.1705014588371
+                    TargetVisualsConfiguration:
+                      SameSheetTargetVisualConfiguration:
+                        TargetVisualOptions: ALL_VISUALS
+                CustomActionId: 3b145831-72fd-4b62-a11f-b44d4ee64fcd
+                Name: Evidence Status
+                Status: ENABLED
+                Trigger: DATA_POINT_CLICK
+              ChartConfiguration:
+                BarsArrangement: CLUSTERED
+                DataLabels:
+                  Overlap: DISABLE_OVERLAP
+                  Visibility: HIDDEN
+                FieldWells:
+                  BarChartAggregatedFieldWells:
+                    Category:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: domain_name
+                          DataSetIdentifier: ALL-Assessment-Controls
+                        FieldId: 7ccea1ca-9418-467a-abc8-40cee81a46be.domain_name.3.1704930097709
+                    Colors:
+                    - CategoricalDimensionField:
+                        Column:
+                          ColumnName: ev_compliance_check
+                          DataSetIdentifier: ALL-Assessment-Controls
+                        FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.2.1705014588371
+                    Values: []
+                Legend:
+                  Visibility: VISIBLE
+                  Width: 222px
+                Orientation: VERTICAL
+                SortConfiguration:
+                  CategoryItemsLimit:
+                    OtherCategories: INCLUDE
+                  CategorySort:
+                  - FieldSort:
+                      Direction: DESC
+                      FieldId: 7ccea1ca-9418-467a-abc8-40cee81a46be.domain_name.3.1704930097709
+                  ColorItemsLimit:
+                    OtherCategories: INCLUDE
+                  SmallMultiplesLimitConfiguration:
+                    OtherCategories: INCLUDE
+                Tooltip:
+                  FieldBasedTooltip:
+                    AggregationVisibility: HIDDEN
+                    TooltipFields:
+                    - FieldTooltipItem:
+                        FieldId: 7ccea1ca-9418-467a-abc8-40cee81a46be.domain_name.3.1704930097709
+                        Visibility: VISIBLE
+                    - FieldTooltipItem:
+                        FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.2.1705014588371
+                        Visibility: VISIBLE
+                    TooltipTitleType: PRIMARY_VALUE
+                  SelectedTooltipType: DETAILED
+                  TooltipVisibility: VISIBLE
+                VisualPalette:
+                  ColorMap:
+                  - Color: '#DE3B00'
+                    Element:
+                      FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.2.1705014588371
+                      FieldValue: 'null'
+                  - Color: '#F7E65A'
+                    Element:
+                      FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.2.1705014588371
+                      FieldValue: NON_COMPLIANT
+                  - Color: '#B9E52F'
+                    Element:
+                      FieldId: b2c1a894-3846-4102-af05-6b2be374d9fc.compliance_check.2.1705014588371
+                      FieldValue: COMPLIANT
+              ColumnHierarchies: []
+              Subtitle:
+                Visibility: VISIBLE
+              Title:
+                FormatText:
+                  RichText: <visual-title>Data Source Evidence Status</visual-title>
+                Visibility: VISIBLE
+              VisualId: cb511158-789d-4fcf-a4c3-e7e8da6a4270_daf54245-b181-4b7f-a26a-1b42a6af8bd5
+      Name: !If [UseEnvironmentPrefix, !Sub "${Environment}-{DashboardName01}", !Ref DashboardName01]
+      Permissions:
+      - Actions:
+        - quicksight:DescribeDashboard
+        - quicksight:ListDashboardVersions
+        - quicksight:UpdateDashboardPermissions
+        - quicksight:QueryDashboard
+        - quicksight:UpdateDashboard
+        - quicksight:DeleteDashboard
+        - quicksight:DescribeDashboardPermissions
+        - quicksight:UpdateDashboardPublishedVersion
+        Principal:
+          Fn::Sub:
+          - arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}
+          - aws_account:
+              Ref: AWS::AccountId
+            aws_region:
+              Ref: AWS::Region
+            namespace:
+              Ref: QuickSightNamespace
+            principal_type:
+              Ref: QuickSightPrincipalType
+            username:
+              Ref: QuickSightUsername
+    Type: AWS::QuickSight::Dashboard
