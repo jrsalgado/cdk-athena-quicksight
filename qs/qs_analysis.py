@@ -1,4 +1,6 @@
 import yaml
+import humps
+from glom import glom, assign
 from yaml.loader import SafeLoader
 from aws_cdk import aws_quicksight as quicksight
 from aws_cdk import Fn, Aws
@@ -10,12 +12,12 @@ from qs.utils import readFromOriginResourceFile
 
 def createAnalysis(self, analysis_id: str, analysis_name: str, dataSet: quicksight.CfnDataSet):
 
-    with open("base-templates/analysis.yaml") as f:
+    with open("base_templates/analysis.yaml") as f:
         base_template = yaml.load(f, Loader=SafeLoader)
     camel_base_template = convert_keys_to_camel_case(base_template)
     base_analysis = camel_base_template['baseAnalysis']['properties']
 
-    camelOriginalResource, snakeOriginalResource = readFromOriginResourceFile('analyses', analysis_id, mask_aws_account_id(getenv('ORIGIN_AWS_ACCOUNT_ID')))
+    oResource, camelOriginalResource, snakeOriginalResource = readFromOriginResourceFile('analyses', analysis_id, mask_aws_account_id(getenv('ORIGIN_AWS_ACCOUNT_ID')))
 
     permissions = camelOriginalResource['describeAnalysisPermissions']['permissions']
     principal_arn = Fn.sub(
@@ -50,20 +52,10 @@ def createAnalysis(self, analysis_id: str, analysis_name: str, dataSet: quicksig
     # Template - Sheets
     snake_raw_definition_mod = replace_data_set_identifier_iterative(snake_raw_definition.get('sheets', None), self.configParams['DataSetAthenaName01'].value_as_string)
     camel_raw_definition_mod = replace_data_set_identifier_iterative(camel_raw_definition.get('sheets', None), self.configParams['DataSetAthenaName01'].value_as_string)
-    sheets = []
-
-    for i in range(len(snake_raw_definition_mod)):
-        snake_raw_definition_mod[i].pop('visuals', None)
-        snake_raw_definition_mod[i].pop('layouts', None)
-
-        camel_visuals = camel_raw_definition_mod[i]['visuals']
-        camel_layouts_config = convert_element_values_to_int(camel_raw_definition_mod[i]['layouts'])
-        sheets.append(quicksight.CfnAnalysis.SheetDefinitionProperty(
-            visuals= camel_visuals,
-            layouts= camel_layouts_config,
-            **snake_raw_definition_mod[i])
-        )
-
+    
+    # Template - Sheets
+    oSheets = glom(oResource,'DescribeAnalysisDefinition.Definition.Sheets')
+    sheets = definitions_sheets_builder(oSheets)
     definition = quicksight.CfnAnalysis.AnalysisDefinitionProperty(
         data_set_identifier_declarations= data_set_identifier_declarations,
         analysis_defaults= camel_raw_definition.get('analysisDefaults', None),
@@ -85,7 +77,41 @@ def createAnalysis(self, analysis_id: str, analysis_name: str, dataSet: quicksig
         )
 
     return quicksightanalysis
-   
+
+def definitions_sheets_builder(oSheets):
+    sheets= []
+    # Format Visuals
+    for i, sheet in enumerate(oSheets):
+        visuals = [ conv_digits_to_ints(humps.camelize(visual)) for visual in glom(sheet, 'Visuals')  ]
+        layouts = [ conv_digits_to_ints(humps.camelize(layout)) for layout in glom(sheet, 'Layouts')  ]
+        filter_control = None
+
+        if glom(sheet, 'FilterControls', default=None) is not None:
+            filter_control = [ conv_digits_to_ints(humps.camelize(filter_control)) for filter_control in glom(sheet, 'FilterControls') ]
+
+        sheets.append(quicksight.CfnAnalysis.SheetDefinitionProperty(
+            sheet_id= sheet.get('SheetId'),
+            name= sheet.get('Name'),
+            content_type= sheet.get('ContentType'),
+            visuals= visuals,
+            layouts= layouts,
+            filter_controls = filter_control
+        ))
+
+    return sheets
+
+def conv_digits_to_ints(d):
+    if isinstance(d, dict):
+        return {key:conv_digits_to_ints(value) for key, value in d.items()}
+    elif isinstance(d, list):
+        return [conv_digits_to_ints(item) for item in d]
+    elif isinstance(d, tuple):
+        return (conv_digits_to_ints(item) for item in d)
+    elif isinstance(d, str) and d.isdigit():
+        return int(d)
+    else:
+        return d
+
 def replace_data_set_identifier_iterative(obj, data_set_identifier_name):
     stack = [obj]
 

@@ -6,7 +6,7 @@ from aws_cdk import Fn, Aws
 
 def createDataSource( stack: Stack, datasource_name: str ):
 
-    with open("base-templates/data-source.yaml") as f:
+    with open("base_templates/data-source.yaml") as f:
         data = yaml.load(f, Loader=SafeLoader)
 
     converted_data = convert_keys_to_camel_case(data)

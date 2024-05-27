@@ -1,4 +1,5 @@
 import yaml
+from glom import glom
 from yaml.loader import SafeLoader
 from constructs import Construct
 from aws_cdk import (
@@ -54,19 +55,24 @@ class QsStack(Stack):
         if getenv('ORIGIN_IDS_RESOLVE') is not None:
             if dashboard_id is not None:
                 # From original resource Dashboard file resolve the datasSetId
-                camelOriginalResource = readFromOriginResourceFile('dashboards',dashboard_id , masked_origin_aws_account_id)[0]
-                data_set_arn = camelOriginalResource['describeDashboard']['dashboard']['version']['dataSetArns'][0]
-                data_set_id = extract_id_from_arn(data_set_arn)
-                if 'linkEntities' in camelOriginalResource['describeDashboard']['dashboard']:
-                    analysis_id = extract_id_from_arn(camelOriginalResource['describeDashboard']['dashboard']['linkEntities'][0])
+                resourceFileDashboard = readFromOriginResourceFile('dashboards',dashboard_id , masked_origin_aws_account_id)
+                originalDashboard = resourceFileDashboard[0]
+                data_set_arns = glom(originalDashboard,'DescribeDashboard.Dashboard.Version.DataSetArns')
+                # TODO: Allow resolve all datasets
+                data_set_id = extract_id_from_arn(data_set_arns[0])
+                linkEntities = glom(originalDashboard,'DescribeDashboard.Dashboard.LinkEntities')
+                # TODO: Allow resolve all analisys
+                if linkEntities is not None:
+                    analysis_id = extract_id_from_arn(linkEntities[0])
+
             elif analysis_id is not None:
                 # From original resource Dashboard file resolve the datasSetId
-                camelOriginalResource = readFromOriginResourceFile('analyses',analysis_id , masked_origin_aws_account_id)[0]
+                camelOriginalResource = readFromOriginResourceFile('analyses',analysis_id , masked_origin_aws_account_id)[1]
                 data_set_arn = camelOriginalResource['describeAnalysis']['analysis']['dataSetArns'][0] # type: ignore
                 data_set_id = extract_id_from_arn(data_set_arn)
 
             # From datasSetId get the original resource DataSete file and resolve its DataSourceId
-            camDataSetOriginalResource = readFromOriginResourceFile('data-sets', data_set_id, masked_origin_aws_account_id)[0]
+            camDataSetOriginalResource = readFromOriginResourceFile('data-sets', data_set_id, masked_origin_aws_account_id)[1]
             data_source_arns = find_all_values_iterative(camDataSetOriginalResource['describeDataSet'], 'dataSourceArn')
             data_source_id = extract_id_from_arn(data_source_arns[0])
         

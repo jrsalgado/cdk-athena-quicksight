@@ -51,7 +51,7 @@ def readFromOriginResourceFile(resourceType, originId, originAWSAccountId):
     camelOriginalResource = convert_keys_to_camel_case(originalResource)
     snakeOriginalResource =  convert_keys_to_snake_case(originalResource)
 
-    return camelOriginalResource, snakeOriginalResource
+    return originalResource, camelOriginalResource, snakeOriginalResource
 
 def pascal_to_snake(key):
     result = [key[0].lower()]
@@ -93,7 +93,7 @@ def find_all_values_iterative(obj, keySearch):
 
 
 def mask_account_ids(obj):
-    aws_account_id_pattern = re.compile(r'\b\d{12}\b')
+    aws_account_id_pattern = re.compile(r'\b\d{12}(?=:)')
     mask_value= mask_aws_account_id(os.environ['ORIGIN_AWS_ACCOUNT_ID']) if os.environ['ORIGIN_AWS_ACCOUNT_ID'] else 'MASKED_ACCOUNT_ID'
     if isinstance(obj, dict):
         for key, value in obj.items():

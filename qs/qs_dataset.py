@@ -1,5 +1,7 @@
 import yaml
 from yaml.loader import SafeLoader
+import humps
+from glom import glom
 from aws_cdk import aws_quicksight as quicksight
 from aws_cdk import Fn, Aws
 from os import getenv
@@ -7,7 +9,7 @@ from qs.utils import mask_aws_account_id
 
 def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: quicksight.CfnDataSource ):
 
-    with open("base-templates/data-set.yaml") as f:
+    with open("base_templates/data-set.yaml") as f:
         template = yaml.load(f, Loader=SafeLoader)
     converted_data = convert_keys_to_camel_case(template)
     base_dataset = converted_data['baseDataSetAthenaRelationalTable']['properties'] # type: ignore
@@ -19,6 +21,7 @@ def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: qui
 
     with open(originalResourcePath) as f:
         originalResource = yaml.load(f, Loader=SafeLoader)
+    oResource = originalResource
     originalResource = convert_keys_to_camel_case(originalResource)
     snakeOriginalResource =  convert_keys_to_snake_case(originalResource)
 
@@ -56,13 +59,14 @@ def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: qui
             )
 
     # Template - Logical Table Map
-    logical_table_map = snakeOriginalResource['describe_data_set']['data_set']['logical_table_map']
-    camelLogicalTableMap = originalResource['describeDataSet']['dataSet']['logicalTableMap']
-    for key, _ in logical_table_map.items():
+    oLogicalTableMap = glom(oResource, 'DescribeDataSet.DataSet.LogicalTableMap')
+    logical_table_map = {}
+    for key, _ in oLogicalTableMap.items():
+        ltprop = oLogicalTableMap[key]
         logical_table_map[key] = quicksight.CfnDataSet.LogicalTableProperty(
-            alias= self.configParams['DataSetAthenaTableName01'].value_as_string,
-            source= quicksight.CfnDataSet.LogicalTableSourceProperty(**logical_table_map[key]['source']),
-            data_transforms= camelLogicalTableMap[key].get('dataTransforms', None)
+            alias = ltprop.get('Alias'),
+            source = logical_table_source_builder(ltprop.get('Source')),
+            data_transforms = humps.camelize(ltprop.get('DataTransforms')) if ltprop.get('DataTransforms', False) else None
         )
 
     # Template - Data Set reource
@@ -114,3 +118,22 @@ def physical_table_map_to_template(tableMapConfig, propertyClass, name, data_sou
     tableMapConfig['name'] = name
     tableMapConfig['data_source_arn'] = data_source_arn
     return propertyClass(**tableMapConfig)
+
+
+def logical_table_source_builder(ltsource):
+    ltsourceformat = None
+    if 'PhysicalTableId' in ltsource:
+        jiprops = humps.camelize(ltsource.get('PhysicalTableId'))
+        ltsourceformat = quicksight.CfnDataSet.LogicalTableSourceProperty(
+            physical_table_id = jiprops
+        )
+    elif 'JoinInstruction' in ltsource :
+        jiprops = humps.camelize(ltsource.get('JoinInstruction'))
+        ltsourceformat = quicksight.CfnDataSet.LogicalTableSourceProperty(
+            join_instruction = jiprops
+        )
+    else:
+        print('Other Logical Table Source')
+        print(ltsource)
+
+    return ltsourceformat

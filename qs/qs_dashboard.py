@@ -1,4 +1,6 @@
 import yaml
+import humps
+from glom import glom, assign
 from yaml.loader import SafeLoader
 from aws_cdk import aws_quicksight as quicksight
 from aws_cdk import Fn, Aws
@@ -18,16 +20,16 @@ def readFromOriginResourceFile():
     camelOriginalResource = convert_keys_to_camel_case(originalResource)
     snakeOriginalResource =  convert_keys_to_snake_case(originalResource)
 
-    return camelOriginalResource, snakeOriginalResource
+    return originalResource, camelOriginalResource, snakeOriginalResource
 
 def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
 
-    with open("base-templates/dashboard.yaml") as f:
+    with open("base_templates/dashboard.yaml") as f:
         base_template = yaml.load(f, Loader=SafeLoader)
     camel_base_template = convert_keys_to_camel_case(base_template)
     base_dashboard = camel_base_template['baseDashboard']['properties'] # type: ignore
 
-    originalResource, snakeOriginalResource = readFromOriginResourceFile()
+    oResource, originalResource, snakeOriginalResource = readFromOriginResourceFile()
     # Template - Permissions
     permissions = base_dashboard['permissions']
     principal_arn = Fn.sub(
@@ -59,22 +61,8 @@ def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
     raw_definition['data_set_identifier_declarations']= data_set_identifier_declarations
 
     # Template - Sheets
-    #   Sheets[].Visuals[].ANY_KEY.ChartConfiguration.FieldWells.ANY_KEY.ANY_KEY[].ANY_KEY.Column.DataSetIdentifier
-    raw_definition_mod= replace_data_set_identifier_iterative(raw_definition.get('sheets', None), self.configParams['DashboardDataSetIdentifier01'].value_as_string)
-    camel_raw_definition_mod = replace_data_set_identifier_iterative(camel_raw_definition.get('sheets', None), self.configParams['DashboardDataSetIdentifier01'].value_as_string)
-    sheets= []
-
-    for i in range(len(raw_definition_mod)):
-        raw_definition_mod[i].pop('visuals', None)
-        raw_definition_mod[i].pop('layouts', None)
-
-        camel_visuals = camel_raw_definition_mod[i]['visuals']
-        camel_layouts_config = convert_element_values_to_int(camel_raw_definition_mod[i]['layouts'])
-        sheets.append(quicksight.CfnDashboard.SheetDefinitionProperty(
-            visuals= camel_visuals,
-            layouts= camel_layouts_config,
-            **raw_definition_mod[i])
-        )
+    oSheets = glom(oResource,'DescribeDashboardDefinition.Definition.Sheets')
+    sheets = definitions_sheets_builder(oSheets)
 
     definition = quicksight.CfnDashboard.DashboardVersionDefinitionProperty(
         data_set_identifier_declarations= data_set_identifier_declarations,
@@ -97,6 +85,36 @@ def createDashboard(self, dashboard_name: str, dataSet: quicksight.CfnDataSet):
     )
 
     return quicksightdashboard
+
+def definitions_sheets_builder(oSheets):
+    sheets= []
+
+    # Format Visuals
+    for i, sheet in enumerate(oSheets):
+        visuals = [ conv_digits_to_ints(humps.camelize(visual)) for visual in glom(sheet, 'Visuals')  ]
+        layouts = [ conv_digits_to_ints(humps.camelize(layout)) for layout in glom(sheet, 'Layouts')  ]
+
+        sheets.append(quicksight.CfnDashboard.SheetDefinitionProperty(
+            sheet_id= sheet.get('SheetId'),
+            name= sheet.get('Name'),
+            content_type= sheet.get('ContentType'),
+            visuals= visuals,
+            layouts= layouts,
+        ))
+
+    return sheets
+
+def conv_digits_to_ints(d):
+    if isinstance(d, dict):
+        return {key:conv_digits_to_ints(value) for key, value in d.items()}
+    elif isinstance(d, list):
+        return [conv_digits_to_ints(item) for item in d]
+    elif isinstance(d, tuple):
+        return (conv_digits_to_ints(item) for item in d)
+    elif isinstance(d, str) and d.isdigit():
+        return int(d)
+    else:
+        return d
 
 def pascal_to_snake(key):
     result = [key[0].lower()]
