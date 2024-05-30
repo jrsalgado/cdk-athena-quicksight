@@ -31,7 +31,8 @@ def build_by_id(origin_account_id:str, dashboard_id:str, create_dependencies:boo
 
     os.environ['ORIGIN_AWS_ACCOUNT_ID'] = origin_account_id
     os.environ['ORIGIN_DASHBOARD_ID'] = dashboard_id
-
+    os.environ['USE_QUICKSIGHT_DASHBOARD'] = 'yes'
+    
     if create_dependencies is True:
         os.environ['ORIGIN_IDS_RESOLVE'] = str(create_dependencies)
     if data_set_id is not None:

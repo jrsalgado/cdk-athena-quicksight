@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-import os
-
 import aws_cdk as cdk
-
+from os import getenv
 from qs.qs_stack import QsStack
-
+from qs.qs_dashboard_stack import QsDashboardStack
 
 app = cdk.App()
 
-QsStack(app, "QsStack",
+if getenv('USE_QUICKSIGHT_DASHBOARD', None):
+    common_kwargs = {
+        "dashboard_id": getenv('ORIGIN_DASHBOARD_ID', None),
+        "origin_account_id": getenv('ORIGIN_AWS_ACCOUNT_ID', None)
+    }
+
+    QsDashboardStack(app, 'QsStack', **common_kwargs)
+else:
+    QsStack(app, "QsStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.

@@ -53,6 +53,13 @@ def readFromOriginResourceFile(resourceType, originId, originAWSAccountId):
 
     return originalResource, camelOriginalResource, snakeOriginalResource
 
+def readOriginResourceFile(resource_type, origin_id, origin_aws_account):
+    # Copy from original resources
+    origin_path=f"infra_base/{origin_aws_account}/{resource_type}/{origin_id}.yaml"
+    with open(origin_path) as f:
+        originalResource = yaml.load(f, Loader=SafeLoader)
+    return originalResource
+
 def pascal_to_snake(key):
     result = [key[0].lower()]
     for char in key[1:]:
