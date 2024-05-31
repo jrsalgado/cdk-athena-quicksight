@@ -1,65 +1,45 @@
 import yaml
 from yaml.loader import SafeLoader
 import humps
-from glom import glom
+from glom import glom, assign
 from aws_cdk import aws_quicksight as quicksight
 from aws_cdk import Fn, Aws
+from aws_cdk import Stack
 from os import getenv
-from qs.utils import mask_aws_account_id
+from qs.utils import mask_aws_account_id, extract_id_from_arn
 
-def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: quicksight.CfnDataSource ):
-
-    with open("base_templates/data-set.yaml") as f:
-        template = yaml.load(f, Loader=SafeLoader)
-    converted_data = convert_keys_to_camel_case(template)
-    base_dataset = converted_data['baseDataSetAthenaRelationalTable']['properties'] # type: ignore
+def createDataSet(stack: Stack, originDatasetId:str , param_id:str, origin_resource ):
     
-    # Copy from original resources
-    #originDatasetId= getenv('ORIGIN_DATASET_ID')
-    originAWSAccounttId= getenv('ORIGIN_AWS_ACCOUNT_ID')
-    originalResourcePath=f"infra_base/{mask_aws_account_id(originAWSAccounttId)}/data-sets/{originDatasetId}.yaml"
+    with open("base_templates/data-set.yaml") as f:
+        common_base = yaml.load(f, Loader=SafeLoader)
 
-    with open(originalResourcePath) as f:
-        originalResource = yaml.load(f, Loader=SafeLoader)
-    oResource = originalResource
-    originalResource = convert_keys_to_camel_case(originalResource)
-    snakeOriginalResource =  convert_keys_to_snake_case(originalResource)
+    # Set dataset name
+    dataset_name = glom(origin_resource,'DescribeDataSet.DataSet.Name')
+    name = f"{stack.configParams['Environment'].value_as_string}-{stack.configParams[param_id].value_as_string}"
 
-    permissions = base_dataset['permissions']
-
-    # Template - Permissions
-    principal_arn = Fn.sub(
-        "arn:aws:quicksight:${aws_region}:${aws_account}:${principal_type}/${namespace}/${username}",
+    # Set import mode
+    import_mode = glom(origin_resource,'DescribeDataSet.DataSet.ImportMode')
+   
+    # Set Permissions
+    datasetPrincipal= Fn.sub(
+        'arn:aws:quicksight:${aws_region}:${aws_account}:${principalType}/${qsNamespace}/${user}',
         {
-            "aws_account": Aws.ACCOUNT_ID,
-            "aws_region": Aws.REGION,
-            "principal_type": self.configParams['QuickSightPrincipalType'].value_as_string,
-            "namespace": self.configParams['QuickSightNamespace'].value_as_string,
-            "username": self.configParams['QuickSightUsername'].value_as_string
+            'aws_account': Aws.ACCOUNT_ID,
+            'aws_region': Aws.REGION,
+            'principalType': stack.configParams['QuickSightPrincipalType'].value_as_string, # type: ignore
+            'user': stack.configParams['QuickSightUsername'].value_as_string, # type: ignore
+            'qsNamespace': stack.configParams['QuickSightNamespace'].value_as_string, # type: ignore
         }
     )
-    
+    permissions = glom(common_base, 'BaseDataSetAthenaRelationalTable.Properties.Permissions')
     for i in range(len(permissions)):
-        permissions[i]['principal'] = principal_arn
+        assign(permissions,f'{i}.Principal', datasetPrincipal )
     
-    # Template - Physical Table Map
-    physical_table_map = snakeOriginalResource['describe_data_set']['data_set']['physical_table_map']
-    for key, ptmItem in physical_table_map.items():
-        if 'custom_sql' in ptmItem:
-            physical_table_map[key] = quicksight.CfnDataSet.PhysicalTableProperty(
-                 custom_sql= physical_table_map_to_template(ptmItem['custom_sql'], quicksight.CfnDataSet.CustomSqlProperty,self.configParams['DataSetAthenaTableName01'].value_as_string, dataSource.attr_arn )
-            )
-            
-        elif 'relational_table' in ptmItem:
-            ptmItem['relational_table']['name'] = self.configParams['DataSetAthenaTableName01'].value_as_string
-            ptmItem['relational_table']['data_source_arn'] = dataSource.attr_arn
-            ptmItem['relational_table']['schema'] = self.configParams['DataSetAthenaSchema01'].value_as_string
-            physical_table_map[key] = quicksight.CfnDataSet.PhysicalTableProperty(
-                relational_table= quicksight.CfnDataSet.RelationalTableProperty(**ptmItem['relational_table'])
-            )
+    # Set data_set_usage_configuration
+    data_set_usage_configuration = glom(common_base,'BaseDataSetAthenaRelationalTable.Properties.DataSetUsageConfiguration')
 
-    # Template - Logical Table Map
-    oLogicalTableMap = glom(oResource, 'DescribeDataSet.DataSet.LogicalTableMap')
+    # Set logical_table_map
+    oLogicalTableMap = glom(origin_resource, 'DescribeDataSet.DataSet.LogicalTableMap')
     logical_table_map = {}
     for key, _ in oLogicalTableMap.items():
         ltprop = oLogicalTableMap[key]
@@ -69,50 +49,53 @@ def createDataSet(self, originDatasetId:str , dataset_name: str, dataSource: qui
             data_transforms = humps.camelize(ltprop.get('DataTransforms')) if ltprop.get('DataTransforms', False) else None
         )
 
+    # Set physical_table_map
+    oPhysiscalTableMap = glom(origin_resource, 'DescribeDataSet.DataSet.PhysicalTableMap')
+    physical_table_map = {}
+    for key, ptmItem in oPhysiscalTableMap.items():
+        if 'CustomSql' in ptmItem:
+            tmcf = ptmItem['CustomSql']
+            # Set DataSourceArn
+            datasourceid = extract_id_from_arn(tmcf['DataSourceArn'])
+            datasource = stack._datasources[datasourceid]
+            tmcf['DataSourceArn'] = datasource.attr_arn
+            #tmcf['Name'] = stack.configParams['DataSetAthenaTableName01'].value_as_string
+            #print(tmcf['Name'])
+            physical_table_map[key] = quicksight.CfnDataSet.PhysicalTableProperty(
+                custom_sql = humps.camelize(tmcf)
+                )
+        elif 'RelationalTable' in ptmItem:
+            tmcf = ptmItem['RelationalTable']
+            # Set DataSourceArn
+            datasourceid = extract_id_from_arn(tmcf['DataSourceArn'])
+            datasource = stack._datasources[datasourceid]
+            tmcf['DataSourceArn'] = datasource.attr_arn
+            #tmcf['Name'] = self.configParams['DataSetAthenaTableName01'].value_as_string
+            #print(tmcf['Name'])
+            physical_table_map[key] = quicksight.CfnDataSet.PhysicalTableProperty(
+                relational_table = humps.camelize(tmcf)
+                )
+        else:
+            raise CustomError("This kind of PysicalTableMap is not implemented please ask Jayro Salgado")
+
     # Template - Data Set reource
-    quicksightDataSet = quicksight.CfnDataSet(self,
+    quicksightDataSet = quicksight.CfnDataSet(
+        stack,
         dataset_name,
         aws_account_id= Aws.ACCOUNT_ID,
-        data_set_id= self.configParams['DataSetAthenaId01'].value_as_string,
-        name= f"{self.configParams['Environment'].value_as_string}-{self.configParams['DataSetAthenaName01'].value_as_string}",
-        import_mode= originalResource['describeDataSet']['dataSet']['importMode'],
-        permissions= permissions,
-        data_set_usage_configuration= base_dataset['dataSetUsageConfiguration'],
-        physical_table_map= physical_table_map,
-        logical_table_map= logical_table_map
+        data_set_id= stack.configParams[param_id].value_as_string,
+        name = name,
+        import_mode = import_mode,
+        permissions = humps.camelize(permissions),
+        data_set_usage_configuration = humps.camelize(data_set_usage_configuration),
+        physical_table_map=  humps.camelize(physical_table_map),
+        logical_table_map= logical_table_map,
     )
 
     return quicksightDataSet
 
-## UTILS
-def pascal_to_camel(key):
-    return key[0].lower() + key[1:]
-
-def convert_keys_to_camel_case(d):
-    if isinstance(d, dict):
-        return {pascal_to_camel(key): convert_keys_to_camel_case(value) for key, value in d.items()}
-    elif isinstance(d, list):
-        return [convert_keys_to_camel_case(item) for item in d]
-    else:
-        return d
-    
-def pascal_to_snake(key):
-    result = [key[0].lower()]
-    for char in key[1:]:
-        if char.isupper():
-            result.append('_')
-            result.append(char.lower())
-        else:
-            result.append(char)
-    return ''.join(result)
-
-def convert_keys_to_snake_case(d):
-    if isinstance(d, dict):
-        return {pascal_to_snake(key): convert_keys_to_snake_case(value) for key, value in d.items()}
-    elif isinstance(d, list):
-        return [convert_keys_to_snake_case(item) for item in d]
-    else:
-        return d
+class CustomError(Exception):
+    pass
 
 def physical_table_map_to_template(tableMapConfig, propertyClass, name, data_source_arn):
     tableMapConfig['name'] = name

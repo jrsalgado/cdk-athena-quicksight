@@ -31,8 +31,9 @@ def createDataSource( stack: Stack, datasource_name: str, param_id: str, origin_
         }
     )
     permissions = glom(common_base, 'BaseDataSource.Properties.Permissions')
-    assign(permissions,'0.Principal', datasourcePrincipal )
-    
+    for i in range(len(permissions)):
+        assign(permissions,f'{i}.Principal', datasourcePrincipal )
+
     # Set SSL Properties
     #ssl_properties = glom(origin_resource,'DescribeDataSource.DataSource.SslProperties')
     #print(humps.camelize(ssl_properties))

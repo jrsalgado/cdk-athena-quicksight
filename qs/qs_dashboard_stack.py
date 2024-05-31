@@ -8,8 +8,8 @@ from qs.utils import find_all_values_iterative, extract_id_from_arn
 # Quicksight Resources
 from qs.qs_datasource_v2 import createDataSource
 from qs.qs_dataset_v2 import createDataSet
-from qs.qs_dashboard import createDashboard
-from qs.qs_analysis import createAnalysis
+#from qs.qs_dashboard_v2 import createDashboard
+#from qs.qs_analysis import createAnalysis
 
 class QsDashboardStack(Stack):
 
@@ -35,8 +35,6 @@ class QsDashboardStack(Stack):
         datasetarns=glom(oResource,'DescribeDashboard.Dashboard.Version.DataSetArns')
         for _ , datasetarn in enumerate(datasetarns):
             self.create_dataset(datasetarn)
-        #print(self._datasources)
-        #print(self._datasets)
         #dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataSet=data_set_01)
         pass
 
@@ -46,10 +44,20 @@ class QsDashboardStack(Stack):
         datasourcearns = find_all_values_iterative(oResource.get('DescribeDataSet'),'DataSourceArn')
         for _ , datasourcearn in enumerate(datasourcearns):
             self.create_datasource(datasourcearn)
+            
         dataset_name = glom(oResource,'DescribeDataSet.DataSet.Name')
-        #dataset = createDataSet(self, originDatasetId=datasetid, dataset_name=dataset_name)
-        #self._datasets[datasetid] = dataset
-        self._datasets[datasetid] = dataset_name
+        param_id=f'DataSet{dataset_name}'
+        if not self.parameter_exists(param_id):
+            self.configParams[param_id] = CfnParameter(
+                self,
+                param_id,
+                type= 'String',
+                description= f'Data Set Id - {dataset_name}',
+                default= datasetid
+                )
+
+        dataset = createDataSet(self, originDatasetId=datasetid, param_id=param_id, origin_resource = oResource)
+        self._datasets[datasetid] = dataset
         return oResource
 
     def create_datasource(self, datasourcearn):
@@ -60,15 +68,8 @@ class QsDashboardStack(Stack):
         datasource_name = glom(oResource,'DescribeDataSource.DataSource.Name')
         datasource_id = glom(oResource,'DescribeDataSource.DataSource.DataSourceId')
 
-        def parameter_exists(parameter: str) -> bool:
-            try:
-                self.node.find_child(parameter)
-                return True
-            except:
-                return False
-    
         param_id=f'DataSource{datasource_name}'
-        if not parameter_exists(param_id):
+        if not self.parameter_exists(param_id):
             self.configParams[param_id] = CfnParameter(
                 self,
                 param_id,
