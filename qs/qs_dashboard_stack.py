@@ -8,7 +8,7 @@ from qs.utils import find_all_values_iterative, extract_id_from_arn
 # Quicksight Resources
 from qs.qs_datasource_v2 import createDataSource
 from qs.qs_dataset_v2 import createDataSet
-#from qs.qs_dashboard_v2 import createDashboard
+from qs.qs_dashboard_v2 import createDashboard
 #from qs.qs_analysis import createAnalysis
 
 class QsDashboardStack(Stack):
@@ -35,7 +35,21 @@ class QsDashboardStack(Stack):
         datasetarns=glom(oResource,'DescribeDashboard.Dashboard.Version.DataSetArns')
         for _ , datasetarn in enumerate(datasetarns):
             self.create_dataset(datasetarn)
-        #dashboard1 = createDashboard(self, dashboard_name="QuickSightDashboard01", dataSet=data_set_01)
+        
+        dashboard_name = glom(oResource,'DescribeDashboard.Dashboard.Name')
+        param_id= f'Dashboard{dashboard_name}'
+        dashboard_arn = glom(oResource,'DescribeDashboard.Dashboard.Arn')
+        dashboard_id = extract_id_from_arn(datasetarn)
+        if not self.parameter_exists(param_id):
+            self.configParams[param_id] = CfnParameter(
+                self,
+                param_id,
+                type= 'String',
+                description= f'Dashboard - {dashboard_name}',
+                default= dashboard_id
+                )
+        
+        dashboard1 = createDashboard(self, dashboard_name=dashboard_name, param_id = param_id, origin_resource = oResource)
         pass
 
     def create_dataset(self, datasetarn):
