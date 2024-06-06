@@ -8,14 +8,14 @@ from aws_cdk import Stack
 from os import getenv
 from qs.utils import mask_aws_account_id, extract_id_from_arn
 
-def createDataSet(stack: Stack, originDatasetId:str , param_id:str, origin_resource ):
+def createDataSet(stack: Stack, originDatasetId:str , param_id:str, param_name:str, origin_resource ):
     
     with open("base_templates/data-set.yaml") as f:
         common_base = yaml.load(f, Loader=SafeLoader)
 
     # Set dataset name
     dataset_name = glom(origin_resource,'DescribeDataSet.DataSet.Name')
-    name = f"{stack.configParams['Environment'].value_as_string}-{stack.configParams[param_id].value_as_string}"
+    name = f"{stack.configParams['Environment'].value_as_string}-{stack.configParams[param_name].value_as_string}"
 
     # Set import mode
     import_mode = glom(origin_resource,'DescribeDataSet.DataSet.ImportMode')

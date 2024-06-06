@@ -1,9 +1,9 @@
-DataSourceId01:
-  Type: String
-  Description: ID of Athena Data Source
-DataSourceName01:
-  Type: String
-  Description: Name of the Data Source
+#DataSourceId01:
+#  Type: String
+#  Description: ID of Athena Data Source
+#DataSourceName01:
+#  Type: String
+#  Description: Name of the Data Source
 DataSourceAthenaWorkGroup01:
   Type: String
   Default: primary

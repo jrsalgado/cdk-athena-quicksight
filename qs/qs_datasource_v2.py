@@ -6,7 +6,7 @@ from aws_cdk import Stack
 from aws_cdk import Fn, Aws
 from glom import glom, assign
 
-def createDataSource( stack: Stack, datasource_name: str, param_id: str, origin_resource ):
+def createDataSource( stack: Stack, datasource_name: str, param_id: str,param_name: str, origin_resource ):
     aws_account_id = Aws.ACCOUNT_ID
     
     with open("base_templates/data-source.yaml") as f:
@@ -40,14 +40,17 @@ def createDataSource( stack: Stack, datasource_name: str, param_id: str, origin_
     ssl_properties = quicksight.CfnDataSource.SslPropertiesProperty(
         disable_ssl = False
     )
+    
+    # Set type
+    datasourcetype = glom(origin_resource,'DescribeDataSource.DataSource.Type')
 
     quicksightDataSource =  quicksight.CfnDataSource(
         stack,
         id = datasource_name,
         aws_account_id = aws_account_id,
         data_source_id = stack.configParams[param_id].value_as_string,
-        name           = f"{stack.configParams['Environment'].value_as_string}-{stack.configParams[param_id].value_as_string}", # type: ignore
-        type           = 'AWS::QuickSight::DataSource',
+        name           = f"{stack.configParams['Environment'].value_as_string}-{stack.configParams[param_name].value_as_string}", # type: ignore
+        type           = datasourcetype,
         data_source_parameters= humps.camelize(data_source_parameters),
         permissions    = humps.camelize(permissions),
         ssl_properties = ssl_properties

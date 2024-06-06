@@ -1,6 +1,7 @@
 from aws_cdk import CfnParameter, Stack
 from constructs import Construct
 import yaml
+import random
 from yaml.loader import SafeLoader
 from glom import glom
 from qs.utils import mask_aws_account_id, readOriginResourceFile
@@ -37,16 +38,27 @@ class QsDashboardStack(Stack):
             self.create_dataset(datasetarn)
         
         dashboard_name = glom(oResource,'DescribeDashboard.Dashboard.Name')
-        param_id= f'Dashboard{dashboard_name}'
+        param_id= f'DashboardId'
         dashboard_arn = glom(oResource,'DescribeDashboard.Dashboard.Arn')
-        dashboard_id = extract_id_from_arn(datasetarn)
+        dashboard_id = extract_id_from_arn(dashboard_arn)
+        
+        idpart1 = random.randint(10**7, 10**8 - 1)
+        idpart2 = random.randint(10**3, 10**4 - 1)
         if not self.parameter_exists(param_id):
             self.configParams[param_id] = CfnParameter(
                 self,
                 param_id,
                 type= 'String',
-                description= f'Dashboard - {dashboard_name}',
-                default= dashboard_id
+                description= f'Dashboard id - {dashboard_name}',
+                default= f'{idpart1}-{idpart2}'
+                )
+        if not self.parameter_exists('DashboardName'):
+            self.configParams['DashboardName'] = CfnParameter(
+                self,
+                'DashboardName',
+                type= 'String',
+                description= f'Dashboard Name - {dashboard_name}',
+                default= f'{dashboard_name}-{idpart2}'
                 )
         
         dashboard1 = createDashboard(self, dashboard_name=dashboard_name, param_id = param_id, origin_resource = oResource)
@@ -58,19 +70,32 @@ class QsDashboardStack(Stack):
         datasourcearns = find_all_values_iterative(oResource.get('DescribeDataSet'),'DataSourceArn')
         for _ , datasourcearn in enumerate(datasourcearns):
             self.create_datasource(datasourcearn)
-            
+                
+        idpart1 = random.randint(10**7, 10**8 - 1)
+        idpart2 = random.randint(10**3, 10**4 - 1)
+
         dataset_name = glom(oResource,'DescribeDataSet.DataSet.Name')
-        param_id=f'DataSet{dataset_name}'
+        param_id=f'DataSetId{dataset_name}'
         if not self.parameter_exists(param_id):
             self.configParams[param_id] = CfnParameter(
                 self,
                 param_id,
                 type= 'String',
-                description= f'Data Set Id - {dataset_name}',
-                default= datasetid
+                description= f'Original Data Set Id - {datasetid}',
+                default= f'{idpart1}-{idpart2}'
                 )
 
-        dataset = createDataSet(self, originDatasetId=datasetid, param_id=param_id, origin_resource = oResource)
+        param_name=f'DataSetName{dataset_name}'
+        if not self.parameter_exists(param_name):
+            self.configParams[param_name] = CfnParameter(
+                self,
+                param_name,
+                type= 'String',
+                description= f'Original Data Set Name - {dataset_name}',
+                default= f'{dataset_name}-{idpart2}'
+                )
+
+        dataset = createDataSet(self, originDatasetId=datasetid, param_id=param_id, param_name=param_name, origin_resource = oResource)
         self._datasets[datasetid] = dataset
         return oResource
 
@@ -81,18 +106,30 @@ class QsDashboardStack(Stack):
         oResource = readOriginResourceFile('data-sources', datasourceid, self.masked_origin_aws_account_id)
         datasource_name = glom(oResource,'DescribeDataSource.DataSource.Name')
         datasource_id = glom(oResource,'DescribeDataSource.DataSource.DataSourceId')
-
-        param_id=f'DataSource{datasource_name}'
+        
+        idpart1 = random.randint(10**7, 10**8 - 1)
+        idpart2 = random.randint(10**3, 10**4 - 1)
+        param_id=f'DataSourceId{datasource_name}'
         if not self.parameter_exists(param_id):
             self.configParams[param_id] = CfnParameter(
                 self,
                 param_id,
                 type= 'String',
-                description= f'Data Source Id - {datasource_name}',
-                default= datasource_id
+                description= f'Original Data Source Id - {datasource_id}',
+                default= f'{idpart1}-{idpart2}'
                 )
 
-        datasource = createDataSource(self, datasource_name=datasource_name, param_id = param_id, origin_resource = oResource)
+        param_name=f'DataSourceName{datasource_name}'
+        if not self.parameter_exists(param_name):
+            self.configParams[param_name] = CfnParameter(
+                self,
+                param_name,
+                type= 'String',
+                description= f'Data Source Name - {datasource_name}',
+                default= f'{datasource_name}-{idpart2}'
+                )
+
+        datasource = createDataSource(self, datasource_name=datasource_name, param_id = param_id, param_name= param_name, origin_resource = oResource)
         self._datasources[datasourceid] = datasource
         pass
 
@@ -106,7 +143,9 @@ class QsDashboardStack(Stack):
     def read_params_file(self, params_file):
         with open(params_file) as f:
             data = yaml.load(f, Loader=SafeLoader)
-            return data
+            if data is None:
+                data = {}
+        return data
 
     def define_parameters(self, data):
         for key, value in data.items():

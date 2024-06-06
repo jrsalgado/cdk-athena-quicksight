@@ -41,11 +41,14 @@ def createDashboard(stack: Stack, dashboard_name:str , param_id:str, origin_reso
     data_set_identifier_declarations= []
     idds = oDefinition.get('DataSetIdentifierDeclarations')
     #print(idds)
-    for i in range(len(idds)):
-        #print(i)
+    #print(stack._datasets['pre-3722fc25-0b0a-4a8c-a3c7-cb046d20298d-cyscxb'].get_att('arn'))
+    #for i in range(len(idds)):
+    #    print(idds[i])
+    for key, dataset in stack._datasets.items():
+        #print(dataset)
         idp = quicksight.CfnDashboard.DataSetIdentifierDeclarationProperty(
-            data_set_arn = idds[i]['DataSetArn'],
-            identifier = idds[i]['Identifier']
+            data_set_arn = dataset.attr_arn,
+            identifier = key
         )
         data_set_identifier_declarations.append(idp)
 
@@ -67,8 +70,8 @@ def createDashboard(stack: Stack, dashboard_name:str , param_id:str, origin_reso
         stack,
         dashboard_name,
         aws_account_id= Aws.ACCOUNT_ID,
-        dashboard_id= stack.configParams[param_id].value_as_string,
-        name= f"{stack.configParams['Environment'].value_as_string}-{stack.configParams[param_id].value_as_string}",
+        dashboard_id= stack.configParams['DashboardId'].value_as_string,
+        name= f"{stack.configParams['Environment'].value_as_string}-{stack.configParams['DashboardName'].value_as_string}",
         permissions= humps.camelize(permissions),
         definition= definition
     )
@@ -83,12 +86,34 @@ def definitions_sheets_builder(oSheets):
         visuals = [ conv_digits_to_ints(humps.camelize(visual)) for visual in glom(sheet, 'Visuals')  ]
         layouts = [ conv_digits_to_ints(humps.camelize(layout)) for layout in glom(sheet, 'Layouts')  ]
 
+        filter_controls = None
+        if 'FilterControls' in sheet:
+            filter_controls = [ conv_digits_to_ints(humps.camelize(filter_control)) for filter_control in glom(sheet, 'FilterControls')]
+
+        parameter_controls = None
+        if 'ParameterControls' in sheet:
+            parameter_controls = [ conv_digits_to_ints(humps.camelize(parameter_controls)) for parameter_controls in glom(sheet, 'ParameterControls')]
+
+        sheet_control_layouts = None
+        if 'SheetControlLayouts' in sheet:
+            sheet_control_layouts = [ conv_digits_to_ints(humps.camelize(sheet_control_layouts)) for sheet_control_layouts in glom(sheet, 'SheetControlLayouts')]
+
+        text_boxes = None
+        if 'TextBoxes' in sheet:
+            text_boxes = [ conv_digits_to_ints(humps.camelize(text_boxes)) for text_boxes in glom(sheet, 'TextBoxes')]
+
         sheets.append(quicksight.CfnDashboard.SheetDefinitionProperty(
             sheet_id= sheet.get('SheetId'),
-            name= sheet.get('Name'),
             content_type= sheet.get('ContentType'),
-            visuals= visuals,
+            description= sheet.get('Description', None),
+            filter_controls= filter_controls,
             layouts= layouts,
+            parameter_controls= parameter_controls,
+            sheet_control_layouts= sheet_control_layouts,
+            text_boxes= text_boxes,
+            name= sheet.get('Name'),
+            title = sheet.get('Title'),
+            visuals= visuals,
         ))
 
     return sheets
